@@ -1,0 +1,249 @@
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    margin: 0;
+    color: #333;
+}
+
+/* --- NAVIGASI & DROPDOWN --- */
+
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 30px 50px;
+    position: relative;
+}
+
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    border: 3px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: 0.3s;
+    text-decoration: none;
+    font-size: 24px;
+    color: #555;
+}
+
+.profile-circle:hover {
+    border-color: #316eea;
+}
+
+.dropdown-content {
+    display: none; /* Dikontrol oleh JS dengan delay 2 detik */
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+
+/* Class Active dipanggil oleh assets/js/script.js */
+.dropdown-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: #f8f9fa;
+    color: #316eea;
+}
+
+/* --- TOMBOL & FORM STYLING --- */
+
+/* Tombol Home Kotak Biru */
+.btn-home {
+    background-color: #316eea;
+    color: white !important;
+    padding: 10px 25px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+    border: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-home:hover {
+    background-color: #2656b3;
+}
+
+/* Container Card (Login / Register / Profile) */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+
+.auth-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    border: 1px solid #eaeaea;
+}
+
+.auth-card h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+.auth-card p.subtitle {
+    color: #777;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+/* Form Layout agar input tersusun rapi ke bawah */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Memberi jarak antar input otomatis */
+}
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #316eea;
+}
+
+/* Tombol Biru di dalam Form */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: #316eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2656b3;
+}
+
+.footer-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.footer-text a {
+    color: #316eea;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Animasi */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Container untuk input password agar logo mata bisa menempel */
+/* --- PERBAIKAN POSISI MATA --- */
+
+.password-container {
+    position: relative;
+    width: 100%;
+    /* Menambahkan flex agar container memiliki konteks penyelarasan yang jelas */
+    display: flex;
+    align-items: center; 
+}
+
+.password-container input {
+    /* Pastikan padding kanan cukup agar teks tidak tertutup ikon */
+    padding-right: 45px !important; 
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    /* Teknik centering: pindah ke 50% lalu tarik balik setengah tinggi ikon */
+    top: 50%;
+    transform: translateY(-50%);
+    
+    cursor: pointer;
+    color: #888;
+    z-index: 10;
+    font-size: 18px; /* Ukuran sedikit diperbesar agar lebih proporsional */
+    
+    /* Menghilangkan sisa ruang antar baris (line-height) bawaan font ikon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.toggle-password:hover {
+    color: #316eea; /* Berubah biru saat diarahkan mouse */
+}
+
+/* Styling Label di Profile */
+.input-group {
+    text-align: left;
+    margin-bottom: 12px;
+}
+
+.input-group label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #666;
+    display: block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+.password-container { position: relative; width: 100%; }
+.password-container input { padding-right: 45px !important; }
+.toggle-password { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888; z-index: 10; font-size: 16px; }
+#profileForm input { margin-bottom: 10px; }
