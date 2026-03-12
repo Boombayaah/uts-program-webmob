@@ -1,4 +1,5 @@
 <?php
+$active = "cs";
 include "navbarr.php";
 include 'config/connection.php';
 if (isset($_POST['btnSubmit'])) {

@@ -1,10 +1,10 @@
 <?php
-session_start();
+
 $logged_in = isset($_SESSION['user_id']);
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #1E3A8A;">
   <div class="container-fluid px-5">
-    <a class="navbar-brand fw-bold d-flex align-items-center" href="index.php">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="home.php">
       <span style="color: #F59E0B; font-size: 1.5rem;" class="me-2">
         <i class="bi bi-train-front-fill"></i>
       </span>
@@ -18,11 +18,11 @@ $logged_in = isset($_SESSION['user_id']);
     <div class="collapse navbar-collapse" id="navLostFound">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" href="dashboard.php">Beranda</a>
+          <a class="nav-link <?php if($active=='home') echo 'active'; ?>" href="home.php">Beranda</a>
         </li>
 
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" id="cust" role="button">
+          <a href="#" class="nav-link dropdown-toggle <?php if($active=='cs') echo 'active'; ?>" id="cust" role="button">
             Customer Service
           </a>
 

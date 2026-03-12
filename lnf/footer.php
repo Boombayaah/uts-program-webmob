@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row g-4">
       <div class="col-lg-4 col-md-6">
-        <h5 class="fw-bold mb-3">CommuterLink Nusantara</h5>
+        <h5 class="fw-bold mb-3" style="color: #F59E0B;">CommuterLink Nusantara</h5>
         <p class="small text-white-50">
           Sistem manajemen barang tertinggal untuk mempermudah pencocokan barang temuan dengan laporan kehilangan penumpang KRL secara transparan.
         </p>
