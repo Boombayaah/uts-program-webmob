@@ -271,3 +271,7 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+INSERT INTO `roles` (`role_id`, `role_name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'Admin Leader', current_timestamp(), 'Fernando', current_timestamp(), 'Fernando'), (NULL, 'Admin Staff', current_timestamp(), 'Fernando', current_timestamp(), 'Fernando'), (NULL, 'User', current_timestamp(), 'Fernando', current_timestamp(), 'Fernando');
+INSERT INTO `users` (`user_id`, `role_id`, `nik`, `profile_image`, `full_name`, `email`, `phone`, `password_hash`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, '2', '123456789123456789', NULL, 'Budianto Suryano', 'budiantosuryano@krl.id', '621722364272', '$2y$10$Os3It/IAkMwhqh2meOiFaOVMkCVfz4XmLQFDRCe5k7NAS.oBKHjuu', current_timestamp(), 'Fernando', current_timestamp(), 'Fernando');
