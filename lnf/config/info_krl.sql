@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Mar 2026 pada 17.21
+-- Waktu pembuatan: 12 Mar 2026 pada 08.06
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -117,6 +117,15 @@ CREATE TABLE `roles` (
   `updated_by` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `roles`
+--
+
+INSERT INTO `roles` (`role_id`, `role_name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 'Admin Leader', '2026-03-12 13:43:03', 'Fernando', '2026-03-12 13:43:03', 'Fernando'),
+(2, 'Admin Staff', '2026-03-12 13:43:03', 'Fernando', '2026-03-12 13:43:03', 'Fernando'),
+(3, 'User', '2026-03-12 13:43:03', 'Fernando', '2026-03-12 13:43:03', 'Fernando');
+
 -- --------------------------------------------------------
 
 --
@@ -137,6 +146,26 @@ CREATE TABLE `users` (
   `updated_at` datetime DEFAULT current_timestamp(),
   `updated_by` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`user_id`, `role_id`, `nik`, `profile_image`, `full_name`, `email`, `phone`, `password_hash`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 3, '1234567891234567', NULL, 'Budianto Suryano', 'budiantosuryano@krl.id', '621722364272', '$2y$10$Os3It/IAkMwhqh2meOiFaOVMkCVfz4XmLQFDRCe5k7NAS.oBKHjuu', '2026-03-12 13:46:09', 'Fernando', '2026-03-12 13:46:09', 'Fernando'),
+(2, 1, '316246151275721', NULL, 'Fernando', 's32240137@student.ubm.ac.id', '6216316274121', '$2y$10$Nkh7upIjDdoCtlbHGIt.6OBY7v38gX7PgutM3EZgEGNezIPW1QOnK', '2026-03-12 13:52:30', 'Fernando', '2026-03-12 13:52:30', 'Fernando'),
+(4, 2, '312174571857175', NULL, 'Kevin Kan', 's32240135@student.ubm.ac.id', '62162351461757', '$2y$10$4cIRcfoyzWvinqkpcP/om.89HxeLZKvG3JPwbcZRg2ikJ89o50VmC', '2026-03-12 14:03:59', 'Fernando', '2026-03-12 14:03:59', 'Fernando'),
+(5, 2, '1283174752182581', NULL, 'Davin Leaw', 's32240143@student.ubm.ac.id', '6217264165', '$2y$10$XWp0heNGqXdfzkcV5z6mQ.uxoAIEtWckxycdFr7K.SZy.fcw28ImO', '2026-03-12 14:05:29', 'Fernando', '2026-03-12 14:05:29', 'Fernando'),
+(6, 2, '1237164671857165', NULL, 'Jap Cong Ho', 's32240142@student.ubm.ac.id', '62182717581', '$2y$10$d.Uh6RQqB.jwTdEb1PxAZegbhFgwFOwbauA1TVBI.b6oaTfdcwAuu', '2026-03-12 14:05:29', 'Fernando', '2026-03-12 14:05:29', 'Fernando');
+
+-- 
+-- PASSWORD
+-- budi
+-- nando
+-- kevin kan
+-- davin leaw
+-- jap cong ho
+--
 
 --
 -- Indexes for dumped tables
@@ -222,13 +251,13 @@ ALTER TABLE `pickup_schedules`
 -- AUTO_INCREMENT untuk tabel `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -271,7 +300,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-INSERT INTO `roles` (`role_id`, `role_name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'Admin Leader', current_timestamp(), 'Fernando', current_timestamp(), 'Fernando'), (NULL, 'Admin Staff', current_timestamp(), 'Fernando', current_timestamp(), 'Fernando'), (NULL, 'User', current_timestamp(), 'Fernando', current_timestamp(), 'Fernando');
-INSERT INTO `users` (`user_id`, `role_id`, `nik`, `profile_image`, `full_name`, `email`, `phone`, `password_hash`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, '2', '123456789123456789', NULL, 'Budianto Suryano', 'budiantosuryano@krl.id', '621722364272', '$2y$10$Os3It/IAkMwhqh2meOiFaOVMkCVfz4XmLQFDRCe5k7NAS.oBKHjuu', current_timestamp(), 'Fernando', current_timestamp(), 'Fernando');
