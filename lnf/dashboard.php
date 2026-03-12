@@ -1,7 +1,7 @@
 <?php
 session_start();
-$logged_in = isset($_SESSION['user_id']); 
-if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 1) {
+$logged_in = isset($_SESSION['user_id']);
+if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] > 2) {
     header("Location: index.php");
     exit();
 }
@@ -269,21 +269,21 @@ $total_proses = $data_proses['total'];
                         </li>
 
                         <?php if ($logged_in): ?>
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="user/profile.php">
-                                <i class="fas fa-user me-2"></i> Profile
-                            </a>
-                        </li>
+                            <li class="nav-item mb-2">
+                                <a class="nav-link" href="user/profile.php">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a>
+                            </li>
 
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="auth/logout.php">
-                                <i class="fas fa-sign-out me-2"></i> Logout
-                            </a>
-                        </li>
+                            <li class="nav-item mb-2">
+                                <a class="nav-link" href="auth/logout.php">
+                                    <i class="fas fa-sign-out me-2"></i> Logout
+                                </a>
+                            </li>
 
                         <?php endif; ?>
 
-                        
+
                     </ul>
 
                 </div>
@@ -296,28 +296,28 @@ $total_proses = $data_proses['total'];
                         <div class="col-sm-6 col-md-3">
                             <div class="dashboard-card" style="background-color: #EFF6FF;">
                                 <h5><i class="fas fa-box me-2"></i>Barang Temuan</h5>
-                                <h2 class="fw-bold"><?php echo $total_found;?></h2>
+                                <h2 class="fw-bold"><?php echo $total_found; ?></h2>
                                 <p class="text-muted mb-0">Hari ini</p>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-3">
                             <div class="dashboard-card" style="background-color: #FEF3C7;">
                                 <h5><i class="fas fa-search me-2"></i>Laporan Hilang</h5>
-                                <h2 class="fw-bold"><?php echo $total_lost;?></h2>
+                                <h2 class="fw-bold"><?php echo $total_lost; ?></h2>
                                 <p class="text-muted mb-0">Hari ini</p>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-3">
                             <div class="dashboard-card" style="background-color: #D1FAE5;">
                                 <h5 class="text-nowrap"><i class="fas fa-handshake me-2"></i>Dikembalikan</h5>
-                                <h2 class="fw-bold"><?php echo $total_selesai;?></h2>
+                                <h2 class="fw-bold"><?php echo $total_selesai; ?></h2>
                                 <p class="text-muted mb-0">Hari ini</p>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-3">
                             <div class="dashboard-card" style="background-color: #FEE2E2;">
                                 <h5><i class="fas fa-clock me-2"></i>Dalam Proses</h5>
-                                <h2 class="fw-bold"><?php echo $total_proses;?></h2>
+                                <h2 class="fw-bold"><?php echo $total_proses; ?></h2>
                                 <p class="text-muted mb-0">Total</p>
                             </div>
                         </div>

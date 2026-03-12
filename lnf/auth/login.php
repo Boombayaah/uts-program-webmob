@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['full_name'] = $user['full_name'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['role_id'] = $user['role_id'];
-        
+
         if ($user['role_id'] == 1) {
             header("location: ../dashboard.php");
             exit();
@@ -28,4 +28,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Data login atau Password salah!'); window.history.back();</script>";
     }
 }
-?>

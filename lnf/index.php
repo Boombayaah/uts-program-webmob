@@ -1,8 +1,8 @@
 <?php
-include "navbarr.php";
+include "navbar.php";
 include 'config/connection.php';
 if (isset($_POST['btnSubmit'])) {
-    
+
     $reported_by = $_SESSION['user_id'];
 
     $q = mysqli_query($conn, "SELECT full_name FROM users WHERE user_id = '$reported_by'");
@@ -26,7 +26,6 @@ if (isset($_POST['btnSubmit'])) {
     } else {
         echo "Error" . mysqli_error($conn);
     }
-
 }
 
 $limit = 7;
@@ -277,16 +276,16 @@ $total_page = ceil($total_data / $limit);
     </style>
 
     <script>
-        $(document).ready(function () {
-            $("#searchBar").on("keyup", function () {
+        $(document).ready(function() {
+            $("#searchBar").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function () {
+                $("#tableData tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -404,7 +403,7 @@ $total_page = ceil($total_data / $limit);
                                                     </span>';
                                 }
 
-                                ?>
+                        ?>
                                 <tr class="text-center">
                                     <td><?php echo $tanggal; ?></td>
                                     <td><?php echo $laporan; ?></td>
@@ -416,15 +415,15 @@ $total_page = ceil($total_data / $limit);
                                         if ($bukti == "") {
                                             echo "";
                                         } else {
-                                            ?>
+                                        ?>
                                             <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                            <?php
+                                        <?php
                                         }
                                         ?>
                                     </td>
                                     <td><?php echo $badge; ?></td>
                                 </tr>
-                                <?php
+                        <?php
                             }
                             mysqli_free_result($hasil);
                         }
@@ -437,14 +436,14 @@ $total_page = ceil($total_data / $limit);
                     <ul class="pagination">
                         <!-- prev -->
                         <li class="page-item <?php if ($page <= 1)
-                            echo 'disabled'; ?>">
+                                                    echo 'disabled'; ?>">
                             <a href="index.php?page=<?php echo $page - 1; ?>" class="page-link">Prev</a>
                         </li>
 
                         <!-- halaman -->
                         <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                             <li class="page-item <?php if ($i == $page)
-                                echo 'active'; ?>">
+                                                        echo 'active'; ?>">
                                 <a href="index.php?page=<?php echo $i; ?>" class="page-link">
                                     <?php echo $i; ?>
                                 </a>
@@ -453,8 +452,8 @@ $total_page = ceil($total_data / $limit);
 
                         <!-- next -->
                         <li class="page-item <?php if ($page >= $total_page)
-                            echo 'disabled' ?>">
-                                <a href="index.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
+                                                    echo 'disabled' ?>">
+                            <a href="index.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
                         </li>
                     </ul>
                 </div>
