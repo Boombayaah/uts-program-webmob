@@ -20,37 +20,48 @@ $logged_in = isset($_SESSION['user_id']);
         <li class="nav-item">
           <a class="nav-link <?php if($active=='home') echo 'active'; ?>" href="home.php">Beranda</a>
         </li>
+
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle <?php if($active=='cs') echo 'active'; ?>" id="cust" role="button">
             Customer Service
           </a>
+
           <ul class="dropdown-menu">
             <li><a href="index.php" class="dropdown-item">Pusat Pelaporan</a></li>
           </ul>
         </li>
       </ul>
+
       <ul class="navbar-nav ms-auto align-items-center gap-2">
+
         <?php if ($logged_in): ?>
+
           <li class="nav-item">
             <a href="user/profile.php" class="btn btn-outline-light btn-sm px-4">Profile</a>
           </li>
+
           <li class="nav-item">
             <a href="auth/logout.php" class="btn btn-sm px-4"
               style="background-color:#F59E0B;color:#1E3A8A;font-weight:600;">
               Logout
             </a>
           </li>
+
         <?php else: ?>
+
           <li class="nav-item">
             <a href="auth/login_page.php" class="btn btn-outline-light btn-sm px-4">Login</a>
           </li>
+
           <li class="nav-item">
             <a href="auth/register.php" class="btn btn-sm px-4"
               style="background-color:#F59E0B;color:#1E3A8A;font-weight:600;">
               Register
             </a>
           </li>
+
         <?php endif; ?>
+
       </ul>
     </div>
   </div>

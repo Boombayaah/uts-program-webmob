@@ -22,7 +22,7 @@
         <ul class="list-unstyled small">
           <li class="mb-2 d-flex align-items-center">
             <i class="bi bi-envelope-fill me-2 text-info"></i>
-            commuterlink_nusantara@gmail.com
+            commuterlink_nusantara@gmail.com 
           </li>
           <li class="mb-2 d-flex align-items-center">
             <i class="bi bi-geo-alt-fill me-2 text-info"></i>
