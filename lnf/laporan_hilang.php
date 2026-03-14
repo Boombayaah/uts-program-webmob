@@ -226,16 +226,16 @@ $total_page = ceil($total_data / $limit);
         }
     </style>
     <script>
-        $(document).ready(function () {
-            $("#searchBar").on("keyup", function () {
+        $(document).ready(function() {
+            $("#searchBar").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function () {
+                $("#tableData tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -311,17 +311,17 @@ $total_page = ceil($total_data / $limit);
                         </li>
 
                         <?php if ($logged_in): ?>
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="user/profile.php">
-                                <i class="fas fa-user me-2"></i> Profile
-                            </a>
-                        </li>
+                            <li class="nav-item mb-2">
+                                <a class="nav-link" href="user/profile.php">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a>
+                            </li>
 
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="auth/logout.php">
-                                <i class="fas fa-sign-out me-2"></i> Logout
-                            </a>
-                        </li>
+                            <li class="nav-item mb-2">
+                                <a class="nav-link" href="auth/logout.php">
+                                    <i class="fas fa-sign-out me-2"></i> Logout
+                                </a>
+                            </li>
 
                         <?php endif; ?>
                     </ul>
@@ -410,7 +410,7 @@ $total_page = ceil($total_data / $limit);
                                                     </span>';
                                     }
 
-                                    ?>
+                            ?>
                                     <tr class="text-center">
                                         <td>
                                             <?php echo $tanggal; ?>
@@ -432,9 +432,9 @@ $total_page = ceil($total_data / $limit);
                                             if ($bukti == "") {
                                                 echo "";
                                             } else {
-                                                ?>
+                                            ?>
                                                 <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                                <?php
+                                            <?php
                                             }
                                             ?>
                                         </td>
@@ -442,7 +442,7 @@ $total_page = ceil($total_data / $limit);
                                             <?php echo $badge; ?>
                                         </td>
                                     </tr>
-                                    <?php
+                            <?php
                                 }
                                 mysqli_free_result($hasil);
                             }
@@ -455,14 +455,14 @@ $total_page = ceil($total_data / $limit);
                         <ul class="pagination">
                             <!-- prev -->
                             <li class="page-item <?php if ($page <= 1)
-                                echo 'disabled'; ?>">
+                                                        echo 'disabled'; ?>">
                                 <a href="index.php?page=<?php echo $page - 1; ?>" class="page-link">Prev</a>
                             </li>
 
                             <!-- halaman -->
                             <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                                 <li class="page-item <?php if ($i == $page)
-                                    echo 'active'; ?>">
+                                                            echo 'active'; ?>">
                                     <a href="index.php?page=<?php echo $i; ?>" class="page-link">
                                         <?php echo $i; ?>
                                     </a>
@@ -471,8 +471,8 @@ $total_page = ceil($total_data / $limit);
 
                             <!-- next -->
                             <li class="page-item <?php if ($page >= $total_page)
-                                echo 'disabled' ?>">
-                                    <a href="index.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
+                                                        echo 'disabled' ?>">
+                                <a href="index.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
                             </li>
                         </ul>
                     </div>

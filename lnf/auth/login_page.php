@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +26,7 @@
             border: 2px solid #007bff;
             background: transparent;
             color: #007bff;
-            border-radius: 30px; 
+            border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -52,7 +53,7 @@
             opacity: 0;
             transform: scale(0.8);
             pointer-events: none;
-            margin: -20px 0; 
+            margin: -20px 0;
         }
 
         /* Area Form */
@@ -84,20 +85,25 @@
         .password-container {
             position: relative;
             width: 100%;
-            display: flex; /* Menggunakan flexbox */
-            align-items: center; /* Meratakan secara vertikal */
+            display: flex;
+            /* Menggunakan flexbox */
+            align-items: center;
+            /* Meratakan secara vertikal */
         }
 
         .password-container input {
             width: 100%;
-            padding-right: 45px !important; /* Ruang agar teks tidak tertutup ikon */
+            padding-right: 45px !important;
+            /* Ruang agar teks tidak tertutup ikon */
         }
 
         .toggle-password {
             position: absolute;
             right: 15px;
-            top: 50%; /* Letakkan di tengah tinggi container */
-            transform: translateY(-50%); /* Geser ke atas 50% dari tinggi ikon itu sendiri */
+            top: 50%;
+            /* Letakkan di tengah tinggi container */
+            transform: translateY(-50%);
+            /* Geser ke atas 50% dari tinggi ikon itu sendiri */
             cursor: pointer;
             color: #888;
             z-index: 10;
@@ -105,15 +111,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            line-height: 1; /* Menghilangkan spasi font-awesome */
+            line-height: 1;
+            /* Menghilangkan spasi font-awesome */
         }
     </style>
 </head>
+
 <body>
     <div class="auth-wrapper">
         <div class="auth-card">
             <h2 id="login-title">Login Method</h2>
-            
+
             <button type="button" id="reset-btn" class="btn-reset" style="display:none;" onclick="resetSelector()">← Ganti Metode</button>
 
             <div class="method-selector" id="selector">
@@ -157,10 +165,10 @@
 
             selector.classList.add('active');
             document.getElementById('m-' + type).classList.add('selected');
-            
+
             title.innerText = "Login";
             resetBtn.style.display = "inline-block";
-            
+
             if (type === 'nik') {
                 label.innerText = "Masukkan 16 Digit NIK:";
                 input.placeholder = "Contoh: 3201xxxxxxxxxxxx";
@@ -199,7 +207,7 @@
             selector.classList.remove('active');
             title.innerText = "Login Method";
             resetBtn.style.display = "none";
-            
+
             document.querySelectorAll('.btn-method').forEach(btn => {
                 btn.classList.remove('selected');
             });
@@ -217,4 +225,5 @@
         }
     </script>
 </body>
+
 </html>
