@@ -35,7 +35,7 @@
 
             <ul class="nav flex-column" id="sidebar-nav">
                 <li class="nav-item mb-2">
-                    <a class="nav-link <?php if($currentPage == 'dashboardleader.php') echo 'active'; ?>" href="dashboard.php">
+                    <a class="nav-link <?php if($currentPage == 'dashboardleader.php') echo 'active'; ?>" href="dashboardleader.php">
                         <i class="fas fa-home me-2"></i> Dashboard
                     </a>
                 </li>
@@ -54,13 +54,13 @@
 
                 <?php if ($logged_in): ?>
                     <li class="nav-item mb-2">
-                        <a class="nav-link" href="user/profile.php">
+                        <a class="nav-link" href="../user/profile.php">
                             <i class="fas fa-user me-2"></i> Profil
                         </a>
                     </li>
 
                     <li class="nav-item mb-2">
-                        <a class="nav-link" href="auth/logout.php">
+                        <a class="nav-link" href="../auth/logout.php">
                             <i class="fas fa-sign-out me-2"></i> Logout
                         </a>
                     </li>

@@ -4,10 +4,10 @@ include "../config/connection.php";
 $logged_in = isset($_SESSION['user_id']);
 
 if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
-    header("Location: dashboardleader.php");
+    header("Location: ../admin_leader-page/dashboardleader.php");
     exit();
 } else if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 3) {
-    header("Location: index.php");
+    header("Location: ../home.php");
     exit();
 }
 

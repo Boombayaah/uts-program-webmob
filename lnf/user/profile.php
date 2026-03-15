@@ -81,11 +81,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="auth-wrapper">
         <div class="auth-card">
             <?php if ($user['role_id'] == 1) { ?>
-                <a href="../dashboard.PHP" class="btn-home">Home</a>
+                <a href="../admin-page/dashboard.php" class="btn-home">Home</a>
             <?php
             } else {
             ?>
-                <a href="../index.PHP" class="btn-home">Home</a>
+                <a href="../index.php" class="btn-home">Home</a>
             <?php } ?>
 
             <div class="profile-circle" style="margin: 0 auto 20px;">👤</div>
