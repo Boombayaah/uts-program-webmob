@@ -18,6 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['role_id'] = $user['role_id'];
 
         if ($user['role_id'] == 1) {
+            header("location: ../dashboardleader.php");
+            exit();
+        } else if ($user['role_id'] == 2) {
             header("location: ../dashboard.php");
             exit();
         } else {

@@ -320,9 +320,6 @@ $total_page = ceil($total_data / $limit);
 </head>
 
 <body>
-
-
-
     <main class="flex-fill container-fluid">
         <div class="main-container mt-4">
             <div class="row mb-3">
