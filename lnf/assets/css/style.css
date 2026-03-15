@@ -1,4 +1,6 @@
-/* Reset & Base Styles */
+/* =========================================
+   1. RESET & BASE STYLES
+   ========================================= */
 * {
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -10,8 +12,9 @@ body {
     color: #333;
 }
 
-/* --- NAVIGASI & DROPDOWN --- */
-
+/* =========================================
+   2. NAVIGASI & DROPDOWN
+   ========================================= */
 .navbar {
     display: flex;
     justify-content: flex-end;
@@ -46,7 +49,7 @@ body {
 }
 
 .dropdown-content {
-    display: none; /* Dikontrol oleh JS dengan delay 2 detik */
+    display: none;
     position: absolute;
     right: 0;
     background-color: #ffffff;
@@ -59,7 +62,6 @@ body {
     overflow: hidden;
 }
 
-/* Class Active dipanggil oleh assets/js/script.js */
 .dropdown-content.active {
     display: block;
     animation: fadeIn 0.3s ease;
@@ -79,28 +81,9 @@ body {
     color: #316eea;
 }
 
-/* --- TOMBOL & FORM STYLING --- */
-
-/* Tombol Home Kotak Biru */
-.btn-home {
-    background-color: #316eea;
-    color: white !important;
-    padding: 10px 25px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    display: inline-block;
-    margin-bottom: 20px;
-    border: none;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.btn-home:hover {
-    background-color: #2656b3;
-}
-
-/* Container Card (Login / Register / Profile) */
+/* =========================================
+   3. AUTH CARD & WRAPPER
+   ========================================= */
 .auth-wrapper {
     display: flex;
     justify-content: center;
@@ -132,11 +115,13 @@ body {
     font-size: 14px;
 }
 
-/* Form Layout agar input tersusun rapi ke bawah */
+/* =========================================
+   4. FORM & INPUT STYLING
+   ========================================= */
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Memberi jarak antar input otomatis */
+    gap: 15px;
 }
 
 input {
@@ -153,7 +138,6 @@ input:focus {
     border-color: #316eea;
 }
 
-/* Tombol Biru di dalam Form */
 .btn-primary {
     width: 100%;
     padding: 12px;
@@ -171,6 +155,112 @@ input:focus {
     background-color: #2656b3;
 }
 
+/* =========================================
+   5. PERBAIKAN POSISI MATA PASSWORD
+   ========================================= */
+.password-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center; 
+}
+
+.password-container input {
+    padding-right: 45px !important; 
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    z-index: 10;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.toggle-password:hover {
+    color: #316eea;
+}
+
+/* =========================================
+   6. ANIMASI GANTI METODE (MODIFIKASI)
+   ========================================= */
+.method-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+    transition: all 0.5s ease-in-out; /* Animasi saat container berubah */
+}
+
+.btn-method {
+    width: 100%;
+    max-width: 200px;
+    padding: 12px;
+    border: 2px solid #316eea;
+    background: transparent;
+    color: #316eea;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    /* Transisi all ditambahkan agar saat kelas dicopot, elemen kembali halus */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    position: relative;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.btn-method:hover {
+    background: rgba(49, 110, 234, 0.05);
+    transform: translateY(-2px);
+}
+
+.btn-method.selected {
+    background: #316eea;
+    color: white;
+    max-width: 100%;
+    border-radius: 8px;
+    transform: scale(1.02);
+}
+
+/* Transisi menghilang untuk tombol yang TIDAK dipilih */
+.method-selector.active .btn-method:not(.selected) {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    margin: -20px 0;
+}
+
+/* Transisi Area Form */
+#login-form-area {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+}
+
+#login-form-area.show {
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 10px;
+}
+
+/* =========================================
+   7. ANIMASI KEYFRAMES & FOOTER
+   ========================================= */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .footer-text {
     margin-top: 20px;
     font-size: 14px;
@@ -181,52 +271,6 @@ input:focus {
     color: #316eea;
     text-decoration: none;
     font-weight: bold;
-}
-
-/* Animasi */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Container untuk input password agar logo mata bisa menempel */
-/* --- PERBAIKAN POSISI MATA --- */
-
-.password-container {
-    position: relative;
-    width: 100%;
-    /* Menambahkan flex agar container memiliki konteks penyelarasan yang jelas */
-    display: flex;
-    align-items: center; 
-}
-
-.password-container input {
-    /* Pastikan padding kanan cukup agar teks tidak tertutup ikon */
-    padding-right: 45px !important; 
-    width: 100%;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 15px;
-    /* Teknik centering: pindah ke 50% lalu tarik balik setengah tinggi ikon */
-    top: 50%;
-    transform: translateY(-50%);
-    
-    cursor: pointer;
-    color: #888;
-    z-index: 10;
-    font-size: 18px; /* Ukuran sedikit diperbesar agar lebih proporsional */
-    
-    /* Menghilangkan sisa ruang antar baris (line-height) bawaan font ikon */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-}
-
-.toggle-password:hover {
-    color: #316eea; /* Berubah biru saat diarahkan mouse */
 }
 
 /* Styling Label di Profile */
@@ -243,7 +287,3 @@ input:focus {
     margin-bottom: 4px;
     text-transform: uppercase;
 }
-.password-container { position: relative; width: 100%; }
-.password-container input { padding-right: 45px !important; }
-.toggle-password { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888; z-index: 10; font-size: 16px; }
-#profileForm input { margin-bottom: 10px; }
