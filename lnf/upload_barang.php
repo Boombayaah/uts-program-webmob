@@ -3,6 +3,14 @@ session_start();
 $logged_in = isset($_SESSION['user_id']);
 include "config/connection.php";
 
+if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
+    header("Location: dashboardleader.php");
+    exit();
+} else if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 3) {
+    header("Location: index.php");
+    exit();
+}
+
 if (isset($_POST['btnSubmit'])) {
 
     $reported_by = $_SESSION['user_id'];

@@ -3,12 +3,11 @@ include "config/connection.php";
 
 session_start();
 $logged_in = isset($_SESSION['user_id']);
-if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 2) {
-    if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
-        header("Location: dashboardleader.php");
-    } else {
-        header("Location: index.php");
-    }
+if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
+    header("Location: dashboardleader.php");
+    exit();
+} else if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 3) {
+    header("Location: index.php");
     exit();
 }
 
