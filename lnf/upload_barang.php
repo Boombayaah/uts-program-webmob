@@ -2,7 +2,7 @@
 session_start();
 $logged_in = isset($_SESSION['user_id']);
 include "config/connection.php";
-
+ 
 if (isset($_POST['btnSubmit'])) {
 
     $reported_by = $_SESSION['user_id'];
@@ -28,6 +28,7 @@ if (isset($_POST['btnSubmit'])) {
     } else {
         echo "Error" . mysqli_error($conn);
     }
+
 }
 ?>
 <!DOCTYPE html>
@@ -221,6 +222,47 @@ if (isset($_POST['btnSubmit'])) {
         .sidebar .nav-link.active {
             color: #2563eb;
         }
+
+        #sidebar-nav .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #000;
+            font-size: 16px;
+            padding: 10px 12px;
+            border-radius: 6px;
+        }
+
+        #sidebar-nav .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        #sidebar-nav .nav-link:hover {
+            background-color: #f2f2f2;
+        }
+
+        #sidebar-nav .nav-link.active {
+            color: #2f6fed;
+            font-weight: 600;
+        }
+
+        .sidebar-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: #2c4c8c;
+        }
+
+        .sidebar-title i {
+            font-size: 26px;
+            color: #2f6fed;
+        }
+
+        .sidebar-title span {
+            font-size: 22px;
+        }
     </style>
 </head>
 
@@ -230,9 +272,9 @@ if (isset($_POST['btnSubmit'])) {
         <div class="row">
             <div class="col-md-3 col-lg-2 sidebar p-0">
                 <div class="p-4">
-                    <h3 class="mb-4">
+                    <h3 class="sidebar-title mb-4">
                         <i class="fas fa-train text-primary me-2"></i>
-                        CommuterLink
+                        <span>CommuterLink</span>
                     </h3>
 
                     <ul class="nav flex-column" id="sidebar-nav">
@@ -267,19 +309,21 @@ if (isset($_POST['btnSubmit'])) {
                         </li>
 
                         <?php if ($logged_in): ?>
-                            <li class="nav-item mb-2">
-                                <a class="nav-link" href="user/profile.php">
-                                    <i class="fas fa-user me-2"></i> Profile
-                                </a>
-                            </li>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" href="user/profile.php">
+                                <i class="fas fa-user me-2"></i> Profile
+                            </a>
+                        </li>
 
-                            <li class="nav-item mb-2">
-                                <a class="nav-link" href="auth/logout.php">
-                                    <i class="fas fa-sign-out me-2"></i> Logout
-                                </a>
-                            </li>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" href="auth/logout.php">
+                                <i class="fas fa-sign-out me-2"></i> Logout
+                            </a>
+                        </li>
+
                         <?php endif; ?>
                     </ul>
+
                 </div>
             </div>
 

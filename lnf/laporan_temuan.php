@@ -228,18 +228,59 @@ $total_page = ceil($total_data / $limit);
             max-width: 400px;
             word-wrap: break-word;
         }
+
+        #sidebar-nav .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #000;
+            font-size: 16px;
+            padding: 10px 12px;
+            border-radius: 6px;
+        }
+
+        #sidebar-nav .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        #sidebar-nav .nav-link:hover {
+            background-color: #f2f2f2;
+        }
+
+        #sidebar-nav .nav-link.active {
+            color: #2f6fed;
+            font-weight: 600;
+        }
+
+        .sidebar-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: #2c4c8c;
+        }
+
+        .sidebar-title i {
+            font-size: 26px;
+            color: #2f6fed;
+        }
+
+        .sidebar-title span {
+            font-size: 22px;
+        }
     </style>
     <script>
-        $(document).ready(function() {
-            $("#searchBar").on("keyup", function() {
+        $(document).ready(function () {
+            $("#searchBar").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function() {
+                $("#tableData tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -278,9 +319,9 @@ $total_page = ceil($total_data / $limit);
         <div class="row">
             <div class="col-md-3 col-lg-2 sidebar p-0">
                 <div class="p-4">
-                    <h3 class="mb-4">
+                    <h3 class="sidebar-title mb-4">
                         <i class="fas fa-train text-primary me-2"></i>
-                        CommuterLink
+                        <span>CommuterLink</span>
                     </h3>
 
                     <ul class="nav flex-column" id="sidebar-nav">
@@ -315,17 +356,17 @@ $total_page = ceil($total_data / $limit);
                         </li>
 
                         <?php if ($logged_in): ?>
-                            <li class="nav-item mb-2">
-                                <a class="nav-link" href="user/profile.php">
-                                    <i class="fas fa-user me-2"></i> Profile
-                                </a>
-                            </li>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" href="user/profile.php">
+                                <i class="fas fa-user me-2"></i> Profile
+                            </a>
+                        </li>
 
-                            <li class="nav-item mb-2">
-                                <a class="nav-link" href="auth/logout.php">
-                                    <i class="fas fa-sign-out me-2"></i> Logout
-                                </a>
-                            </li>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" href="auth/logout.php">
+                                <i class="fas fa-sign-out me-2"></i> Logout
+                            </a>
+                        </li>
 
                         <?php endif; ?>
                     </ul>
@@ -414,7 +455,7 @@ $total_page = ceil($total_data / $limit);
                                                     </span>';
                                     }
 
-                            ?>
+                                    ?>
                                     <tr class="text-center">
                                         <td>
                                             <?php echo $tanggal; ?>
@@ -436,9 +477,9 @@ $total_page = ceil($total_data / $limit);
                                             if ($bukti == "") {
                                                 echo "";
                                             } else {
-                                            ?>
+                                                ?>
                                                 <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                            <?php
+                                                <?php
                                             }
                                             ?>
                                         </td>
@@ -446,7 +487,7 @@ $total_page = ceil($total_data / $limit);
                                             <?php echo $badge; ?>
                                         </td>
                                     </tr>
-                            <?php
+                                    <?php
                                 }
                                 mysqli_free_result($hasil);
                             }
@@ -459,14 +500,14 @@ $total_page = ceil($total_data / $limit);
                         <ul class="pagination">
                             <!-- prev -->
                             <li class="page-item <?php if ($page <= 1)
-                                                        echo 'disabled'; ?>">
+                                echo 'disabled'; ?>">
                                 <a href="index.php?page=<?php echo $page - 1; ?>" class="page-link">Prev</a>
                             </li>
 
                             <!-- halaman -->
                             <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                                 <li class="page-item <?php if ($i == $page)
-                                                            echo 'active'; ?>">
+                                    echo 'active'; ?>">
                                     <a href="index.php?page=<?php echo $i; ?>" class="page-link">
                                         <?php echo $i; ?>
                                     </a>
@@ -475,8 +516,8 @@ $total_page = ceil($total_data / $limit);
 
                             <!-- next -->
                             <li class="page-item <?php if ($page >= $total_page)
-                                                        echo 'disabled' ?>">
-                                <a href="index.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
+                                echo 'disabled' ?>">
+                                    <a href="index.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
                             </li>
                         </ul>
                     </div>

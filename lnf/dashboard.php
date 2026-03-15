@@ -1,7 +1,7 @@
 <?php
 session_start();
 $logged_in = isset($_SESSION['user_id']);
-if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] > 2) {
+if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 1) {
     header("Location: index.php");
     exit();
 }
@@ -210,6 +210,7 @@ $total_proses = $data_proses['total'];
 
         .sidebar .nav-link {
             color: black;
+
         }
 
         .sidebar .nav-link:hover {
@@ -219,6 +220,49 @@ $total_proses = $data_proses['total'];
         .sidebar .nav-link.active {
             color: #2563eb;
         }
+
+        #sidebar-nav .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #000;
+            font-size: 16px;
+            padding: 10px 12px;
+            border-radius: 6px;
+        }
+
+        #sidebar-nav .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        #sidebar-nav .nav-link:hover {
+            background-color: #f2f2f2;
+        }
+
+        #sidebar-nav .nav-link.active {
+            color: #2f6fed;
+            font-weight: 600;
+        }
+
+        .sidebar-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: #2c4c8c;
+        }
+
+        .sidebar-title i {
+            font-size: 26px;
+            color: #2f6fed;
+        }
+
+        .sidebar-title span {
+            font-size: 22px;
+        }
+
+        
     </style>
 </head>
 
@@ -228,9 +272,9 @@ $total_proses = $data_proses['total'];
         <div class="row">
             <div class="col-md-3 col-lg-2 sidebar p-0">
                 <div class="p-4">
-                    <h3 class="mb-4">
+                    <h3 class="sidebar-title mb-4">
                         <i class="fas fa-train text-primary me-2"></i>
-                        CommuterLink
+                        <span>CommuterLink</span>
                     </h3>
 
                     <ul class="nav flex-column" id="sidebar-nav">

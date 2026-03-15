@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row g-4">
       <div class="col-lg-4 col-md-6">
-        <h5 class="fw-bold mb-3">CommuterLink Nusantara</h5>
+        <h5 class="fw-bold mb-3" style="color: #F59E0B;">CommuterLink Nusantara</h5>
         <p class="small text-white-50">
           Sistem manajemen barang tertinggal untuk mempermudah pencocokan barang temuan dengan laporan kehilangan penumpang KRL secara transparan.
         </p>
@@ -22,7 +22,7 @@
         <ul class="list-unstyled small">
           <li class="mb-2 d-flex align-items-center">
             <i class="bi bi-envelope-fill me-2 text-info"></i>
-            commuterlink_nusantara@gmail.com
+            commuterlink_nusantara@gmail.com 
           </li>
           <li class="mb-2 d-flex align-items-center">
             <i class="bi bi-geo-alt-fill me-2 text-info"></i>

@@ -2,9 +2,9 @@
 session_start();
 
 // GANTI PENGECEKAN KE USER_ID
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../auth/login_page.php");
-    exit();
+if (!isset($_SESSION['user_id'])) { 
+    header("Location: ../auth/login_page.php"); 
+    exit(); 
 }
 
 include '../config/connection.php';
@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>My Profile</title>
@@ -45,25 +44,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .password-container {
             position: relative;
             width: 100%;
-            display: flex;
-            /* Menggunakan flexbox untuk penyelarasan */
-            align-items: center;
-            /* Meratakan elemen secara vertikal */
+            display: flex; /* Menggunakan flexbox untuk penyelarasan */
+            align-items: center; /* Meratakan elemen secara vertikal */
         }
 
         .password-container input {
             width: 100%;
-            padding-right: 45px !important;
-            /* Ruang agar teks tidak tertutup ikon */
+            padding-right: 45px !important; /* Ruang agar teks tidak tertutup ikon */
         }
 
         .toggle-password {
             position: absolute;
             right: 15px;
-            top: 50%;
-            /* Letakkan di tengah tinggi container */
-            transform: translateY(-50%);
-            /* Geser balik ke atas 50% dari tinggi ikon sendiri */
+            top: 50%; /* Letakkan di tengah tinggi container */
+            transform: translateY(-50%); /* Geser balik ke atas 50% dari tinggi ikon sendiri */
             cursor: pointer;
             color: #888;
             z-index: 10;
@@ -71,16 +65,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: flex;
             align-items: center;
             justify-content: center;
-            line-height: 1;
-            /* Menghilangkan spasi font-awesome agar tidak miring */
+            line-height: 1; /* Menghilangkan spasi font-awesome agar tidak miring */
         }
     </style>
 </head>
-
 <body>
     <div class="auth-wrapper">
         <div class="auth-card">
-            <?php if ($user['role_id'] == 1) { ?>
+            <?php if ($user['role_id'] == 1 ) { ?>
                 <a href="../dashboard.PHP" class="btn-home">Home</a>
             <?php
             } else {
@@ -94,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" name="full_name" value="<?php echo $user['full_name']; ?>" readonly required placeholder="Nama Lengkap">
                 <input type="email" name="email" value="<?php echo $user['email']; ?>" readonly placeholder="Email (Opsional)">
                 <input type="text" name="phone" value="<?php echo $user['phone']; ?>" readonly required placeholder="Nomor Telepon" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-
+                
                 <div id="confirmArea" style="display: none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
                     <p style="font-size: 11px; color: red; text-align: left; margin-bottom: 5px;">Konfirmasi Password Akun:</p>
                     <div class="password-container">
@@ -111,13 +103,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
         function enableEdit() {
             document.querySelectorAll('#profileForm input').forEach(i => {
-                if (i.name !== 'confirm_password') i.readOnly = false;
+                if(i.name !== 'confirm_password') i.readOnly = false;
             });
             document.getElementById('ebtn').style.display = 'none';
             document.getElementById('sbtn').style.display = 'block';
             document.getElementById('confirmArea').style.display = 'block';
         }
-
         function togglePassword(id, el) {
             const input = document.getElementById(id);
             if (input.type === "password") {
@@ -130,5 +121,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </script>
 </body>
-
 </html>
