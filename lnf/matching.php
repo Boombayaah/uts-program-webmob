@@ -57,6 +57,11 @@ $sql_2 = "SELECT lost_reports.*, users.full_name, users.phone
           ORDER BY lost_date";
 $hasil_lost = mysqli_query($conn, $sql_2);
 
+$sql_category = "SELECT * 
+                FROM item_category
+                ORDER BY category";
+$hasil_category = mysqli_query($conn, $sql_category);
+
 $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost) == 0) ? "disabled" : "";
 ?>
 

@@ -29,7 +29,7 @@ $hasil_matching = mysqli_query($conn, $sql);
 $sql_category = "SELECT * 
                 FROM item_category
                 ORDER BY category";
-$hasil_category = mysqli_query($conn, $sql_category)
+$hasil_category = mysqli_query($conn, $sql_category);
 
 // $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost) == 0) ? "disabled" : "";
 ?>
@@ -319,14 +319,12 @@ $hasil_category = mysqli_query($conn, $sql_category)
             <div class="col-md-9 col-lg-10 main-content">
                 <?php if ($category == "") { ?>
                     <div class="component-card" style="max-width:500px;">
-
-                        <form action="matching.php" method="GET">
-
+                        <form action="verification.php" method="GET">
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Pilih Kategori Barang</label>
                                 <select class="form-select" name="category" required>
                                     <option value="">-- Pilih Kategori --</option>
-                                    <?php foreach($hasil_category as $single_category) {
+                                    <?php foreach ($hasil_category as $single_category) {
                                         echo "<option value=$single_category[category]>$single_category[category]</option>";
                                     }; ?>
                                 </select>
@@ -334,13 +332,9 @@ $hasil_category = mysqli_query($conn, $sql_category)
                             <button class="btn btn-primary">
                                 <i class="fas fa-search"></i> Lihat Data
                             </button>
-
                         </form>
-
                     </div>
-
             </div>
-
         <?php } ?>
 
         <?php if ($category != "") { ?>
