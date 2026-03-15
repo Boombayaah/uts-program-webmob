@@ -80,15 +80,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="auth-wrapper">
         <div class="auth-card">
-            <?php if ($user['role_id'] == 1) { ?>
-                <a href="../admin-page/dashboard.php" class="btn-home">Home</a>
-            <?php
-            } else {
-            ?>
-                <a href="../index.php" class="btn-home">Home</a>
-            <?php } ?>
+            <a href="../admin-page/dashboard.php" class="btn-home">Back To Page</a>
 
-            <div class="profile-circle" style="margin: 0 auto 20px;">👤</div>
+            <div class="profile-circle" style="margin: 0 auto 20px;">
+                <?php $image_source = "../assets/images/profile/";
+                    if(!empty($user['profile_image'])) {
+                        $image_source .= $user_profile;
+                    } else {
+                        $image_source .= 'default-avatar.jpg';
+                    }
+                ?>
+                <img src="<?php echo $image_source; ?>" alt="Profile Image" class="img-fluid rounded-circle" width="60" height="60">
+            </div>
             <h2><?php echo $user['full_name']; ?></h2>
             <form method="POST" id="profileForm">
                 <input type="text" name="full_name" value="<?php echo $user['full_name']; ?>" readonly required placeholder="Nama Lengkap">
@@ -102,9 +105,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('p_conf', this)"></i>
                     </div>
                 </div>
-
-                <button type="button" id="ebtn" class="btn-primary" onclick="enableEdit()" style="background-color: #6c757d; margin-top: 15px;">Ubah Informasi Akun</button>
-                <button type="submit" id="sbtn" class="btn-primary" style="display: none; margin-top: 15px;">Simpan Perubahan</button>
+                <?php if ($_SESSION['role_id'] != 2) {
+                    echo '<button type="button" id="ebtn" class="btn-primary" onclick="enableEdit()" style="background-color: #6c757d; margin-top: 15px;">Ubah Informasi Akun</button>';
+                    echo '<button type="submit" id="sbtn" class="btn-primary" style="display: none; margin-top: 15px;">Simpan Perubahan</button>';
+                }
+                ?>
             </form>
         </div>
     </div>

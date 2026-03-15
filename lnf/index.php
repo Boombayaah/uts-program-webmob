@@ -435,14 +435,14 @@ $total_page = ceil($total_data / $limit);
                         <!-- prev -->
                         <li class="page-item <?php if ($page <= 1)
                                                     echo 'disabled'; ?>">
-                            <a href="index.php?page=<?php echo $page - 1; ?>" class="page-link">Prev</a>
+                            <a href="<?php echo basename($_SERVER['PHP_SELF'])?>?page=<?php echo $page - 1; ?>" class="page-link">Prev</a>
                         </li>
 
                         <!-- halaman -->
                         <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                             <li class="page-item <?php if ($i == $page)
                                                         echo 'active'; ?>">
-                                <a href="index.php?page=<?php echo $i; ?>" class="page-link">
+                                <a href="<?php echo basename($_SERVER['PHP_SELF'])?>?page=<?php echo $i; ?>" class="page-link">
                                     <?php echo $i; ?>
                                 </a>
                             </li>
@@ -451,7 +451,7 @@ $total_page = ceil($total_data / $limit);
                         <!-- next -->
                         <li class="page-item <?php if ($page >= $total_page)
                                                     echo 'disabled' ?>">
-                            <a href="index.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
+                            <a href="<?php echo basename($_SERVER['PHP_SELF'])?>?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
                         </li>
                     </ul>
                 </div>
@@ -577,8 +577,6 @@ $total_page = ceil($total_data / $limit);
                                 </div>
                             </form>
                         </div>
-
-
                     </div>
                 </div>
             </div>

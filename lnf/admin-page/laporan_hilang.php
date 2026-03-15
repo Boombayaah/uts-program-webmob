@@ -101,67 +101,9 @@ $total_page = ceil($total_data / $limit);
 </head>
 
 <body>
-    <!-- Sidebar Navigation -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-lg-2 sidebar p-0">
-                <div class="p-4">
-                    <h3 class="sidebar-title mb-4">
-                        <i class="fas fa-train text-primary me-2"></i>
-                        <span>CommuterLink</span>
-                    </h3>
-
-                    <ul class="nav flex-column" id="sidebar-nav">
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="dashboard.php">
-                                <i class="fas fa-home me-2"></i> Dashboard
-                            </a>
-                        </li>
-
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="upload_barang.php">
-                                <i class="fas fa-upload me-2"></i> Upload Barang
-                            </a>
-                        </li>
-
-                        <li class="nav-item mb-2">
-                            <a class="nav-link active" href="laporan_hilang.php">
-                                <i class="fas fa-box-open me-2"></i> Barang Hilang
-                            </a>
-                        </li>
-
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="laporan_temuan.php">
-                                <i class="fas fa-search me-2"></i> Barang Temuan
-                            </a>
-                        </li>
-
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="matching.php">
-                                <i class="fas fa-handshake me-2"></i> Matching
-                            </a>
-                        </li>
-
-                        <?php if ($logged_in): ?>
-                            <li class="nav-item mb-2">
-                                <a class="nav-link" href="user/profile.php">
-                                    <i class="fas fa-user me-2"></i> Profile
-                                </a>
-                            </li>
-
-                            <li class="nav-item mb-2">
-                                <a class="nav-link" href="auth/logout.php">
-                                    <i class="fas fa-sign-out me-2"></i> Logout
-                                </a>
-                            </li>
-
-                        <?php endif; ?>
-                    </ul>
-
-                </div>
-            </div>
-
-
+            <?php include "admin_sidebar.php"; ?>
             <div class="col-md-9 col-lg-10 mt-4">
                 <div class="row mb-3">
                     <div class="col-md-6">
