@@ -344,7 +344,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                         <div class="col-lg-12">
                             <?php
                             if ($category != "") { // pastikan kategori sudah dipilih
-                                if (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost) == 0) {
+                                if (mysqli_num_rows($hasil_matching) == 0) {
                                     echo "<div class='alert alert-warning text-center'>
                 Tidak cukup data untuk melakukan matching
               </div>";
