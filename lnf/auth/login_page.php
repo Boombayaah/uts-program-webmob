@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Info KRL</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/styleloginregister.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Container Utama Pilihan */
@@ -25,7 +26,7 @@
             border: 2px solid #007bff;
             background: transparent;
             color: #007bff;
-            border-radius: 30px; 
+            border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -53,7 +54,7 @@
             opacity: 0;
             transform: scale(0.8);
             pointer-events: none;
-            margin: -20px 0; 
+            margin: -20px 0;
         }
 
         /* Area Form */
@@ -110,11 +111,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="auth-wrapper">
         <div class="auth-card">
             <h2 id="login-title">Login Method</h2>
-            
+
             <button type="button" id="reset-btn" class="btn-reset" style="display:none;" onclick="resetSelector()">← Ganti Metode</button>
 
             <div class="method-selector" id="selector">
@@ -158,10 +160,10 @@
 
             selector.classList.add('active');
             document.getElementById('m-' + type).classList.add('selected');
-            
+
             title.innerText = "Login";
             resetBtn.style.display = "inline-block";
-            
+
             if (type === 'nik') {
                 label.innerText = "Masukkan 16 Digit NIK:";
                 input.placeholder = "Contoh: 3201xxxxxxxxxxxx";
@@ -204,7 +206,7 @@
                 selector.classList.remove('active');
                 title.innerText = "Login Method";
                 resetBtn.style.display = "none";
-                
+
                 document.querySelectorAll('.btn-method').forEach(btn => {
                     btn.classList.remove('selected');
                 });
@@ -223,4 +225,5 @@
         }
     </script>
 </body>
+
 </html>
