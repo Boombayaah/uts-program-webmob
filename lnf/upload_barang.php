@@ -2,7 +2,7 @@
 session_start();
 $logged_in = isset($_SESSION['user_id']);
 include "config/connection.php";
- 
+
 if (isset($_POST['btnSubmit'])) {
 
     $reported_by = $_SESSION['user_id'];
@@ -28,7 +28,6 @@ if (isset($_POST['btnSubmit'])) {
     } else {
         echo "Error" . mysqli_error($conn);
     }
-
 }
 ?>
 <!DOCTYPE html>
@@ -309,17 +308,17 @@ if (isset($_POST['btnSubmit'])) {
                         </li>
 
                         <?php if ($logged_in): ?>
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="user/profile.php">
-                                <i class="fas fa-user me-2"></i> Profile
-                            </a>
-                        </li>
+                            <li class="nav-item mb-2">
+                                <a class="nav-link" href="user/profile.php">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a>
+                            </li>
 
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="auth/logout.php">
-                                <i class="fas fa-sign-out me-2"></i> Logout
-                            </a>
-                        </li>
+                            <li class="nav-item mb-2">
+                                <a class="nav-link" href="auth/logout.php">
+                                    <i class="fas fa-sign-out me-2"></i> Logout
+                                </a>
+                            </li>
 
                         <?php endif; ?>
                     </ul>

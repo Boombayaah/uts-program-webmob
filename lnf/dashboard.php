@@ -261,8 +261,6 @@ $total_proses = $data_proses['total'];
         .sidebar-title span {
             font-size: 22px;
         }
-
-        
     </style>
 </head>
 

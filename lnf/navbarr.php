@@ -18,11 +18,11 @@ $logged_in = isset($_SESSION['user_id']);
     <div class="collapse navbar-collapse" id="navLostFound">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link <?php if($active=='home') echo 'active'; ?>" href="home.php">Beranda</a>
+          <a class="nav-link <?php if ($active == 'home') echo 'active'; ?>" href="home.php">Beranda</a>
         </li>
 
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle <?php if($active=='cs') echo 'active'; ?>" id="cust" role="button">
+          <a href="#" class="nav-link dropdown-toggle <?php if ($active == 'cs') echo 'active'; ?>" id="cust" role="button">
             Customer Service
           </a>
 
