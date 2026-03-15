@@ -1,10 +1,10 @@
 <?php
 session_start();
+include "../config/connection.php";
 $logged_in = isset($_SESSION['user_id']);
-include "config/connection.php";
 
-if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 2) {
-    header("Location: dashboard.php");
+if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
+    header("Location: dashboardleader.php");
     exit();
 } else if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 3) {
     header("Location: index.php");
@@ -12,26 +12,57 @@ if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 2) {
 }
 
 $category = "";
+$file_name = "";
+
+if (isset($_FILES['file']) && $_FILES['file']['name'] != "") {
+    $file_name = $_FILES['file']['name'];
+    $tmp_name = $_FILES['file']['tmp_name'];
+
+    move_uploaded_file($tmp_name, "uploads/" . $file_name);
+}
+
+if (isset($_POST['btnMatch'])) {
+
+    $idFound = $_POST['found_item_id'];
+    $idLost = $_POST['lost_report_id'];
+
+    $sql = "UPDATE found_items
+            set status = 'Menunggu Verifikasi Atasan',
+            matched_lost_id = '$idLost'
+            where found_item_id = '$idFound'";
+
+    if (mysqli_query($conn, $sql)) {
+        header("location:matching.php");
+        exit;
+    }
+}
 
 if (isset($_GET['category'])) {
     $category = $_GET['category'];
 }
 
-$sql = "SELECT *
-        FROM matchings m
-        NATURAL JOIN found_items f
-        NATURAL JOIN lost_reports l
-        WHERE f.category = '$category'
-        AND m.approval_status = 'Diajukan ke Atasan'
-        ORDER BY m.created_at";
-$hasil_matching = mysqli_query($conn, $sql);
+$sql = "SELECT found_items.*, users.full_name, users.phone
+        FROM found_items
+        JOIN users ON found_items.reported_by = users.user_id
+        WHERE category = '$category'
+        AND status = 'Diproses'
+        ORDER BY found_date";
+$hasil_found = mysqli_query($conn, $sql);
+
+$sql_2 = "SELECT lost_reports.*, users.full_name, users.phone
+          FROM lost_reports
+          JOIN users ON lost_reports.reported_by = users.user_id
+          WHERE category = '$category' 
+          AND status = 'Sedang Diproses'
+          ORDER BY lost_date";
+$hasil_lost = mysqli_query($conn, $sql_2);
 
 $sql_category = "SELECT * 
                 FROM item_category
                 ORDER BY category";
 $hasil_category = mysqli_query($conn, $sql_category);
 
-// $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost) == 0) ? "disabled" : "";
+$disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost) == 0) ? "disabled" : "";
 ?>
 
 <!DOCTYPE html>
@@ -294,8 +325,26 @@ $hasil_category = mysqli_query($conn, $sql_category);
                         </li>
 
                         <li class="nav-item mb-2">
-                            <a class="nav-link active" href="verification.php">
-                                <i class="fas fa-handshake me-2"></i> Verification
+                            <a class="nav-link" href="upload_barang.php">
+                                <i class="fas fa-upload me-2"></i> Upload Barang
+                            </a>
+                        </li>
+
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" href="laporan_hilang.php">
+                                <i class="fas fa-box-open me-2"></i> Barang Hilang
+                            </a>
+                        </li>
+
+                        <li class="nav-item mb-2">
+                            <a class="nav-link" href="laporan_temuan.php">
+                                <i class="fas fa-search me-2"></i> Barang Temuan
+                            </a>
+                        </li>
+
+                        <li class="nav-item mb-2">
+                            <a class="nav-link active" href="matching.php">
+                                <i class="fas fa-handshake me-2"></i> Matching
                             </a>
                         </li>
 
@@ -319,7 +368,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
             <div class="col-md-9 col-lg-10 main-content">
                 <?php if ($category == "") { ?>
                     <div class="component-card" style="max-width:500px;">
-                        <form action="verification.php" method="GET">
+                        <form action="matching.php" method="GET">
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Pilih Kategori Barang</label>
                                 <select class="form-select" name="category" required>
@@ -329,12 +378,17 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                     }; ?>
                                 </select>
                             </div>
+
                             <button class="btn btn-primary">
                                 <i class="fas fa-search"></i> Lihat Data
                             </button>
+
                         </form>
+
                     </div>
+
             </div>
+
         <?php } ?>
 
         <?php if ($category != "") { ?>
@@ -344,7 +398,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                         <div class="col-lg-12">
                             <?php
                             if ($category != "") { // pastikan kategori sudah dipilih
-                                if (mysqli_num_rows($hasil_matching) == 0) {
+                                if (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost) == 0) {
                                     echo "<div class='alert alert-warning text-center'>
                 Tidak cukup data untuk melakukan matching
               </div>";

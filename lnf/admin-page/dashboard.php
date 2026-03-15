@@ -1,7 +1,7 @@
 <?php
 session_start();
+include "../config/connection.php";
 $logged_in = isset($_SESSION['user_id']);
-include "config/connection.php";
 
 if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
     header("Location: dashboardleader.php");
@@ -11,32 +11,25 @@ if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
     exit();
 }
 
-if (isset($_POST['btnSubmit'])) {
+$sql1 = "select count(*) as total from found_items";
+$hasil_found = mysqli_query($conn, $sql1);
+$data_found = mysqli_fetch_assoc($hasil_found);
+$total_found = $data_found['total'];
 
-    $reported_by = $_SESSION['user_id'];
+$sql2 = "select count(*) as total from lost_reports";
+$hasil_lost = mysqli_query($conn, $sql2);
+$data_lost = mysqli_fetch_assoc($hasil_lost);
+$total_lost = $data_lost['total'];
 
-    $q = mysqli_query($conn, "SELECT full_name FROM users WHERE user_id = '$reported_by'");
-    $user = mysqli_fetch_assoc($q);
-    $full_name = $user['full_name'];
+$sql3 = "select count(*) as total from lost_reports where status = 'Selesai'";
+$hasil_selesai = mysqli_query($conn, $sql3);
+$data_selesai = mysqli_fetch_assoc($hasil_selesai);
+$total_selesai = $data_selesai['total'];
 
-    $file_name = "";
-
-    if ($_FILES['file']['name'] != "") {
-        $file_name = $_FILES['file']['name'];
-        $tmp_name = $_FILES['file']['tmp_name'];
-
-        move_uploaded_file($tmp_name, "uploads/" . $file_name);
-    }
-
-    $sql = "insert into found_items (reported_by, item_name, category, description, location, found_date, file)";
-    $sql .= "values ('$reported_by', '$_POST[item_name]', '$_POST[category]', '$_POST[description]', '$_POST[location]', '$_POST[found_date]', '$file_name')";
-
-    if (mysqli_query($conn, $sql)) {
-        header("location:laporan_temuan.php");
-    } else {
-        echo "Error" . mysqli_error($conn);
-    }
-}
+$sql4 = "select count(*) as total from lost_reports where status = 'Sedang Diproses'";
+$hasil_proses = mysqli_query($conn, $sql4);
+$data_proses = mysqli_fetch_assoc($hasil_proses);
+$total_proses = $data_proses['total'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -220,6 +213,7 @@ if (isset($_POST['btnSubmit'])) {
 
         .sidebar .nav-link {
             color: black;
+
         }
 
         .sidebar .nav-link:hover {
@@ -286,13 +280,13 @@ if (isset($_POST['btnSubmit'])) {
 
                     <ul class="nav flex-column" id="sidebar-nav">
                         <li class="nav-item mb-2">
-                            <a class="nav-link" href="dashboard.php">
+                            <a class="nav-link active" href="dashboard.php">
                                 <i class="fas fa-home me-2"></i> Dashboard
                             </a>
                         </li>
 
                         <li class="nav-item mb-2">
-                            <a class="nav-link active" href="upload_barang.php">
+                            <a class="nav-link" href="upload_barang.php">
                                 <i class="fas fa-upload me-2"></i> Upload Barang
                             </a>
                         </li>
@@ -304,7 +298,7 @@ if (isset($_POST['btnSubmit'])) {
                         </li>
 
                         <li class="nav-item mb-2">
-                            <a class="nav-link" href="laporan_temuan.php">
+                            <a class="nav-link" href="laporan_hilang.php">
                                 <i class="fas fa-search me-2"></i> Barang Temuan
                             </a>
                         </li>
@@ -329,95 +323,58 @@ if (isset($_POST['btnSubmit'])) {
                             </li>
 
                         <?php endif; ?>
+
+
                     </ul>
 
                 </div>
             </div>
 
             <div class="col-md-9 col-lg-10 main-content">
-                <h4 class="mt-4">Upload Barang Temuan</h4>
-                <form method="post" enctype="multipart/form-data" class="w-100">
-                    <div class="wireframe-box">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="mb-3">
-                                    <label class="form-label">Nama Barang</label>
-                                    <input type="text" class="form-control" placeholder="Contoh: Dompet kulit coklat"
-                                        name="item_name" id="item_name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Kategori</label>
-                                    <select class="form-select" name="category" id="category">
-                                        <option value="">Pilih kategori</option>
-                                        <option value="elektronik">Elektronik</option>
-                                        <option value="dompet-tas">Dompet & Tas</option>
-                                        <option value="dokumen">Dokumen</option>
-                                        <option value="aksesoris">Aksesoris</option>
-                                        <option value="kunci">Kunci</option>
-                                        <option value="lainnya">Lainnya</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Lokasi Penemuan</label>
-                                    <input type="text" class="form-control"
-                                        placeholder="Contoh: Stasiun Sudirman, Gerbong 3" name="location" id="location"
-                                        required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Tanggal Penemuan</label>
-                                    <input type="date" class="form-control" name="found_date" id="found_date" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Deskripsi</label>
-                                    <textarea class="form-control" rows="3" placeholder="Deskripsi detail barang..."
-                                        name="description" id="description"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label class="form-label">Upload Foto</label>
-                                    <div class="border rounded p-4 text-center" id="uploadArea"
-                                        style="cursor: pointer;">
-                                        <i class="fas fa-cloud-upload-alt fa-3x text-secondary mb-3"></i>
-                                        <p>Klik untuk upload</p>
-                                        <button class="btn btn-outline-secondary btn-sm" id="uploadBtn">Pilih
-                                            File</button>
-                                    </div>
-                                    <p class="text-muted mt-2"><small>Format: JPG, PNG. Maksimal 5MB</small></p>
-                                    <input type="file" class="d-none" id="fileInput" name="file" accept=".jpg, .png">
-                                    <p class="mt-2" id="fileName"></p>
-                                </div>
+                <h4 class="mt-4">Dashboard Admin</h4>
+                <div class="wireframe-box">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="dashboard-card" style="background-color: #EFF6FF;">
+                                <h5><i class="fas fa-box me-2"></i>Barang Temuan</h5>
+                                <h2 class="fw-bold"><?php echo $total_found; ?></h2>
+                                <p class="text-muted mb-0">Hari ini</p>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-secondary me-2" data-bs-dismiss="modal">Batal</button>
-                            <button class="btn btn-accent" name="btnSubmit">Upload Barang</button>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="dashboard-card" style="background-color: #FEF3C7;">
+                                <h5><i class="fas fa-search me-2"></i>Laporan Hilang</h5>
+                                <h2 class="fw-bold"><?php echo $total_lost; ?></h2>
+                                <p class="text-muted mb-0">Hari ini</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="dashboard-card" style="background-color: #D1FAE5;">
+                                <h5 class="text-nowrap"><i class="fas fa-handshake me-2"></i>Dikembalikan</h5>
+                                <h2 class="fw-bold"><?php echo $total_selesai; ?></h2>
+                                <p class="text-muted mb-0">Hari ini</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="dashboard-card" style="background-color: #FEE2E2;">
+                                <h5><i class="fas fa-clock me-2"></i>Dalam Proses</h5>
+                                <h2 class="fw-bold"><?php echo $total_proses; ?></h2>
+                                <p class="text-muted mb-0">Total</p>
+                            </div>
                         </div>
                     </div>
-                </form>
+
+                    <div class="mt-4">
+                        <h5>Aktivitas Terbaru</h5>
+                        <div id="activity-list">
+                            <!-- Activity items will be rendered here -->
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const uploadArea = document.getElementById('uploadArea');
-        const fileName = document.getElementById('fileName');
-
-        // klik tombol atau area → trigger input file
-        uploadBtn.addEventListener('click', () => fileInput.click());
-        uploadArea.addEventListener('click', (e) => {
-            if (e.target.id !== 'uploadBtn') fileInput.click();
-        });
-
-        // tampilkan nama file yg dipilih
-        fileInput.addEventListener('change', () => {
-            fileName.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : '';
-        });
-    </script>
 </body>
 
 </html>

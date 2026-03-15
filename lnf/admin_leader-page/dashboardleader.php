@@ -1,13 +1,14 @@
 <?php
-include "config/connection.php";
-
 session_start();
+include "../config/connection.php";
 $logged_in = isset($_SESSION['user_id']);
-if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
-    header("Location: dashboardleader.php");
-    exit();
-} else if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 3) {
-    header("Location: index.php");
+
+if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 1) {
+    if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 2) {
+        header("Location: dashboard.php");
+    } else {
+        header("Location: index.php");
+    }
     exit();
 }
 
@@ -268,68 +269,9 @@ $total_proses = $data_proses['total'];
 </head>
 
 <body>
-    <!-- Sidebar Navigation -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-lg-2 sidebar p-0">
-                <div class="p-4">
-                    <h3 class="sidebar-title mb-4">
-                        <i class="fas fa-train text-primary me-2"></i>
-                        <span>CommuterLink</span>
-                    </h3>
-
-                    <ul class="nav flex-column" id="sidebar-nav">
-                        <li class="nav-item mb-2">
-                            <a class="nav-link active" href="dashboard.php">
-                                <i class="fas fa-home me-2"></i> Dashboard
-                            </a>
-                        </li>
-
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="upload_barang.php">
-                                <i class="fas fa-upload me-2"></i> Upload Barang
-                            </a>
-                        </li>
-
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="laporan_hilang.php">
-                                <i class="fas fa-box-open me-2"></i> Barang Hilang
-                            </a>
-                        </li>
-
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="laporan_hilang.php">
-                                <i class="fas fa-search me-2"></i> Barang Temuan
-                            </a>
-                        </li>
-
-                        <li class="nav-item mb-2">
-                            <a class="nav-link" href="matching.php">
-                                <i class="fas fa-handshake me-2"></i> Matching
-                            </a>
-                        </li>
-
-                        <?php if ($logged_in): ?>
-                            <li class="nav-item mb-2">
-                                <a class="nav-link" href="user/profile.php">
-                                    <i class="fas fa-user me-2"></i> Profile
-                                </a>
-                            </li>
-
-                            <li class="nav-item mb-2">
-                                <a class="nav-link" href="auth/logout.php">
-                                    <i class="fas fa-sign-out me-2"></i> Logout
-                                </a>
-                            </li>
-
-                        <?php endif; ?>
-
-
-                    </ul>
-
-                </div>
-            </div>
-
+            <?php include "leader_sidebar.php"; ?>
             <div class="col-md-9 col-lg-10 main-content">
                 <h4 class="mt-4">Dashboard Admin</h4>
                 <div class="wireframe-box">
@@ -371,7 +313,6 @@ $total_proses = $data_proses['total'];
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
