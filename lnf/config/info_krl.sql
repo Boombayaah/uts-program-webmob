@@ -214,11 +214,11 @@ INSERT INTO `users` (`user_id`, `role_id`, `nik`, `profile_image`, `full_name`, 
 -------------------------
 -- PASSWORD
 -------------------------
--- budi
 -- nando
 -- kevin kan
 -- davin leaw
 -- jap cong ho
+-- budi
 -- 
 
 --
