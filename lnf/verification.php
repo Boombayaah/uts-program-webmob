@@ -26,6 +26,11 @@ $sql = "SELECT *
         ORDER BY m.created_at";
 $hasil_matching = mysqli_query($conn, $sql);
 
+$sql_category = "SELECT * 
+                FROM item_category
+                ORDER BY category";
+$hasil_category = mysqli_query($conn, $sql_category)
+
 // $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost) == 0) ? "disabled" : "";
 ?>
 
@@ -319,18 +324,13 @@ $hasil_matching = mysqli_query($conn, $sql);
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Pilih Kategori Barang</label>
-
                                 <select class="form-select" name="category" required>
                                     <option value="">-- Pilih Kategori --</option>
-                                    <option value="elektronik">Elektronik</option>
-                                    <option value="dompet-tas">Dompet & Tas</option>
-                                    <option value="dokumen">Dokumen</option>
-                                    <option value="aksesoris">Aksesoris</option>
-                                    <option value="kunci">Kunci</option>
-                                    <option value="Lainnya">Lainnya</option>
+                                    <?php foreach($hasil_category as $single_category) {
+                                        echo "<option value=$single_category[category]>$single_category[category]</option>";
+                                    }; ?>
                                 </select>
                             </div>
-
                             <button class="btn btn-primary">
                                 <i class="fas fa-search"></i> Lihat Data
                             </button>

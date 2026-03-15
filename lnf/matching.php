@@ -355,31 +355,22 @@ $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost
                                     <i class="fas fa-sign-out me-2"></i> Logout
                                 </a>
                             </li>
-
                         <?php endif; ?>
                     </ul>
-
                 </div>
             </div>
-
 
             <div class="col-md-9 col-lg-10 main-content">
                 <?php if ($category == "") { ?>
                     <div class="component-card" style="max-width:500px;">
-
                         <form action="matching.php" method="GET">
-
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Pilih Kategori Barang</label>
-
                                 <select class="form-select" name="category" required>
                                     <option value="">-- Pilih Kategori --</option>
-                                    <option value="elektronik">Elektronik</option>
-                                    <option value="dompet-tas">Dompet & Tas</option>
-                                    <option value="dokumen">Dokumen</option>
-                                    <option value="aksesoris">Aksesoris</option>
-                                    <option value="kunci">Kunci</option>
-                                    <option value="Lainnya">Lainnya</option>
+                                    <?php foreach ($hasil_category as $single_category) {
+                                        echo "<option value=$single_category[category]>$single_category[category]</option>";
+                                    }; ?>
                                 </select>
                             </div>
 
