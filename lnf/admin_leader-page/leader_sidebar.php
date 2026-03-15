@@ -1,3 +1,8 @@
+<?php
+    // Mendapatkan nama file saat ini
+    $currentPage = basename($_SERVER['PHP_SELF']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,19 +35,19 @@
 
             <ul class="nav flex-column" id="sidebar-nav">
                 <li class="nav-item mb-2">
-                    <a class="nav-link active" href="dashboard.php">
+                    <a class="nav-link <?php if($currentPage == 'dashboardleader.php') echo 'active'; ?>" href="dashboard.php">
                         <i class="fas fa-home me-2"></i> Dashboard
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a class="nav-link" href="verification.php">
+                    <a class="nav-link <?php if($currentPage == 'verification.php') echo 'active'; ?>" href="verification.php">
                         <i class="fas fa-handshake me-2"></i> Verifikasi Barang
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a class="nav-link" href="adminmanagement.php">
+                    <a class="nav-link <?php if($currentPage == 'adminmanagement.php') echo 'active'; ?>" href="adminmanagement.php">
                         <i class="fa-solid fa-people-group me-2"></i> Manajemen Admin
                     </a>
                 </li>

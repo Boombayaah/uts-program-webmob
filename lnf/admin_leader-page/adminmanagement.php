@@ -35,6 +35,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 1) {
 
 </head>
 <body>
-    
+    <div class="container-fluid">
+        <div class="row">
+            <?php include "leader_sidebar.php"; ?>
+        </div>
+    </div>
 </body>
 </html>
