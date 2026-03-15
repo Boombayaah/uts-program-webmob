@@ -27,10 +27,6 @@ $sql4 = "select count(*) as total from lost_reports where status = 'Sedang Dipro
 $hasil_proses = mysqli_query($conn, $sql4);
 $data_proses = mysqli_fetch_assoc($hasil_proses);
 $total_proses = $data_proses['total'];
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
