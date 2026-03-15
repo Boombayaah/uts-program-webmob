@@ -303,12 +303,8 @@ $total_proses = $data_proses['total'];
                                     <i class="fas fa-sign-out me-2"></i> Logout
                                 </a>
                             </li>
-
                         <?php endif; ?>
-
-
                     </ul>
-
                 </div>
             </div>
 
