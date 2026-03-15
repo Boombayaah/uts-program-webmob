@@ -1,0 +1,289 @@
+/* =========================================
+   1. RESET & BASE STYLES
+   ========================================= */
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    margin: 0;
+    color: #333;
+}
+
+/* =========================================
+   2. NAVIGASI & DROPDOWN
+   ========================================= */
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 30px 50px;
+    position: relative;
+}
+
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    border: 3px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: 0.3s;
+    text-decoration: none;
+    font-size: 24px;
+    color: #555;
+}
+
+.profile-circle:hover {
+    border-color: #316eea;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+
+.dropdown-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: #f8f9fa;
+    color: #316eea;
+}
+
+/* =========================================
+   3. AUTH CARD & WRAPPER
+   ========================================= */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+
+.auth-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    border: 1px solid #eaeaea;
+}
+
+.auth-card h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+.auth-card p.subtitle {
+    color: #777;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+/* =========================================
+   4. FORM & INPUT STYLING
+   ========================================= */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #316eea;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: #316eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2656b3;
+}
+
+/* =========================================
+   5. PERBAIKAN POSISI MATA PASSWORD
+   ========================================= */
+.password-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center; 
+}
+
+.password-container input {
+    padding-right: 45px !important; 
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    z-index: 10;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.toggle-password:hover {
+    color: #316eea;
+}
+
+/* =========================================
+   6. ANIMASI GANTI METODE (MODIFIKASI)
+   ========================================= */
+.method-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+    transition: all 0.5s ease-in-out; /* Animasi saat container berubah */
+}
+
+.btn-method {
+    width: 100%;
+    max-width: 200px;
+    padding: 12px;
+    border: 2px solid #316eea;
+    background: transparent;
+    color: #316eea;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    /* Transisi all ditambahkan agar saat kelas dicopot, elemen kembali halus */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    position: relative;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.btn-method:hover {
+    background: rgba(49, 110, 234, 0.05);
+    transform: translateY(-2px);
+}
+
+.btn-method.selected {
+    background: #316eea;
+    color: white;
+    max-width: 100%;
+    border-radius: 8px;
+    transform: scale(1.02);
+}
+
+/* Transisi menghilang untuk tombol yang TIDAK dipilih */
+.method-selector.active .btn-method:not(.selected) {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    margin: -20px 0;
+}
+
+/* Transisi Area Form */
+#login-form-area {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+}
+
+#login-form-area.show {
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 10px;
+}
+
+/* =========================================
+   7. ANIMASI KEYFRAMES & FOOTER
+   ========================================= */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.footer-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.footer-text a {
+    color: #316eea;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Styling Label di Profile */
+.input-group {
+    text-align: left;
+    margin-bottom: 12px;
+}
+
+.input-group label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #666;
+    display: block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
