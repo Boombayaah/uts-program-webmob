@@ -58,7 +58,6 @@ $sql_2 = "SELECT lost_reports.*, users.full_name, users.phone
 $hasil_lost = mysqli_query($conn, $sql_2);
 
 $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost) == 0) ? "disabled" : "";
-
 ?>
 
 <!DOCTYPE html>
