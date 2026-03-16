@@ -1,6 +1,6 @@
 <?php
+session_start();
 $active = "cs";
-include "navbarr.php";
 include 'config/connection.php';
 if (isset($_POST['btnSubmit'])) {
 
@@ -320,6 +320,7 @@ $total_page = ceil($total_data / $limit);
 </head>
 
 <body>
+    <?php include "navbarr.php"; ?>
     <main class="flex-fill container-fluid">
         <div class="main-container mt-4">
             <div class="row mb-3">
