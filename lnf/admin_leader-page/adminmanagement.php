@@ -52,11 +52,6 @@ $total_page = ceil($total_data / $limit);
     <link rel="stylesheet" href="../assets/css/admin-page.css">
 
     <style>
-        .button-edit-icon:hover {
-            background-color: #624004 !important;
-            color: #ffffff !important;
-        }
-
         .button-text-icon:hover {
             color: #624004 !important;
         }
@@ -115,7 +110,6 @@ $total_page = ceil($total_data / $limit);
                                             <th scope="col">Email</th>
                                             <th scope="col">Telephone</th>
                                             <th scope="col">Position</th>
-                                            <th class="text-wrap" style="width: 10px;" scope="col">Password</th>
                                             <th scope="col">Operation</th>
                                         </tr>
                                     </thead>
@@ -133,7 +127,6 @@ $total_page = ceil($total_data / $limit);
                                                 $email = $row['email'];
                                                 $telephone = $row['phone'];
                                                 $position = $row['role_name'];
-                                                $password = $row['password_hash'];
 
                                                 $image_source = "../assets/images/profile/";
                                                 if (!empty($user_profile)) {
@@ -151,7 +144,6 @@ $total_page = ceil($total_data / $limit);
                                                     <td><?php echo $email; ?></td>
                                                     <td><?php echo $telephone; ?></td>
                                                     <td class="text-center"><?php echo $position; ?></td>
-                                                    <td><a href="edit_password.php?nik=<?php echo $nik ?>"><button type="submit" class="button-edit-icon btn text-nowrap" style="background-color: #f59e0b;">Edit Password</button></a></td>
                                                     <td class="text-center">
                                                         <a href="edit_admin.php?nik=<?php echo $nik ?>"><i class="button-text-icon fa-regular fa-pen-to-square m-1" style="color: #f59e0b;"></i></a>
                                                         <a href="delete_admin.php?nik=<?php echo $nik ?>" onclick="return delete_confirm();"><i class="button-text-icon fa-regular fa-trash-can m-1" style="color: #f59e0b;"></i></a>
