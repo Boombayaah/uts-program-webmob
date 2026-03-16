@@ -84,11 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="profile-circle" style="margin: 0 auto 20px;">
                 <?php $image_source = "../assets/images/profile/";
-                    if(!empty($user['profile_image'])) {
-                        $image_source .= $user_profile;
-                    } else {
-                        $image_source .= 'default-avatar.jpg';
-                    }
+                if (!empty($user['profile_image'])) {
+                    $image_source .= "uploads/";
+                    $image_source .= $user['profile_image'];
+                } else {
+                    $image_source .= 'default-avatar.jpg';
+                }
                 ?>
                 <img src="<?php echo $image_source; ?>" alt="Profile Image" class="img-fluid rounded-circle" width="60" height="60">
             </div>
