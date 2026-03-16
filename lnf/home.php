@@ -1,9 +1,8 @@
 <?php
 session_start();
 $active = "home";
-include "navbarr.php";
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,8 +20,10 @@ include "navbarr.php";
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
         :root {
@@ -217,52 +218,75 @@ include "navbarr.php";
         }
 
         .hero-section {
-            background:
-
-                url("https://kci.id/app/sam/assets/home/9849a56f6082de47887b618e564abdac.png");
+            position: relative;
+            background: url("assets/images/6588183a4af899491f095fb1b8b1a46c.png");
             background-size: cover;
             background-position: center;
+            color: white;
+        }
+
+        /* overlay agar text terbaca */
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.3;
+            background: linear-gradient(rgba(30, 58, 138, 0.75),
+                    rgba(30, 58, 138, 0.65));
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .breathing {
+            animation: breathing 3s ease-in-out infinite;
+        }
+
+        @keyframes breathing {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
     </style>
 </head>
 
 <body>
-
+    <?php include "navbarr.php"; ?>
     <!-- HERO -->
     <section class="hero-section py-5 text-white">
         <div class="container py-5">
             <div class="row align-items-center">
-
                 <div class="col-lg-6">
                     <h1 class="fw-bold mb-4">
                         Sistem Pelaporan Barang Hilang KRL
                     </h1>
-
-                    <p class="lead mb-4 text-dark">
+                    <p class="lead mb-4 text-white">
                         CommuterLink membantu penumpang melaporkan kehilangan
                         dan menemukan kembali barang tertinggal secara cepat,
                         transparan, dan terintegrasi dengan sistem stasiun.
                     </p>
-
                     <a href="index.php" class="btn btn-lg px-4"
                         style="background:#F59E0B;color:#1E3A8A;font-weight:600;">
                         Laporkan Sekarang
                     </a>
                 </div>
-
-                <div class="col-lg-6 text-center">
-                    <i class="bi bi-train-front-fill" style="font-size:8rem;color:#F59E0B;"></i>
-                </div>
-
             </div>
         </div>
     </section>
 
-
     <!-- TENTANG KAMI -->
     <section class="py-5 bg-light">
         <div class="container">
-
             <div class="text-center mb-5">
                 <h2 class="fw-bold">Tentang Kami</h2>
                 <p class="text-muted">
@@ -272,7 +296,6 @@ include "navbarr.php";
             </div>
 
             <div class="row g-4">
-
                 <div class="col-md-4">
                     <div class="card border-0 shadow-sm h-100 text-center p-4">
                         <i class="bi bi-search fs-1 text-primary mb-3"></i>
@@ -305,24 +328,30 @@ include "navbarr.php";
                         </p>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </section>
 
+    <!-- Kantor Pusat -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-2">
+                <h2 class="fw-bold">Kantor Pusat</h2>
+                <p class="text-muted">Lt. 1 Pintu Utara gambir, Jl. Medan Merdeka Tim. No.17 2, RT.5/RW.2, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110</p>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31733.258130068447!2d106.7924839743164!3d-6.176615200000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f432b173073b%3A0xc46c57b0bc75ea34!2sPT.%20Kereta%20Api%20Pariwisata!5e0!3m2!1sid!2sid!4v1773681763052!5m2!1sid!2sid" width="1200" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
 
     <!-- FAQ -->
     <section class="py-5">
         <div class="container">
-
             <div class="text-center mb-5">
                 <h2 class="fw-bold">Pertanyaan Umum</h2>
                 <p class="text-muted">Informasi yang sering ditanyakan pengguna</p>
             </div>
 
             <div class="accordion" id="faq">
-
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#f1">
@@ -364,14 +393,11 @@ include "navbarr.php";
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </section>
 
     <?php include "footer.php"; ?>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

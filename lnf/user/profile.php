@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('p_conf', this)"></i>
                     </div>
                 </div>
-                <?php if ($_SESSION['role_id'] != 2) {
+                <?php if ($_SESSION['role_id'] == 3) {
                     echo '<button type="button" id="ebtn" class="btn-primary" onclick="enableEdit()" style="background-color: #6c757d; margin-top: 15px;">Ubah Informasi Akun</button>';
                     echo '<button type="submit" id="sbtn" class="btn-primary" style="display: none; margin-top: 15px;">Simpan Perubahan</button>';
                 }
