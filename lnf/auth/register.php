@@ -42,34 +42,40 @@
     <div class="auth-wrapper d-flex justify-content-center align-items-center vh-100 p-3">
         <div class="auth-card shadow-sm p-4 bg-white rounded-4 border" style="max-width: 450px; width: 100%;">
             <h2 class="fw-bold text-dark text-center mb-1">Create Account</h2>
-            <p class="text-muted text-center small mb-4">Isi data diri (Email bersifat opsional)</p>
+            <p class="text-muted text-center small mb-4">Informasi Data Diri</p>
 
             <form action="register_process.php" method="POST" class="d-flex flex-column gap-2">
-                <div class="mb-1">
+                <div class="mb-3 mt-3">
+                    <label for="phone">NIK:</label>
                     <input type="text" name="nik" class="form-control" placeholder="NIK (16 Digit)" required maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
 
-                <div class="mb-1">
+                <div class="mb-3 mt-3">
+                    <label for="phone">Full Name:</label>
                     <input type="text" name="full_name" class="form-control" placeholder="Nama Lengkap" required>
                 </div>
 
-                <div class="mb-1">
+                <div class="mb-3 mt-3">
+                    <label for="phone">Email:</label>
                     <input type="email" name="email" class="form-control" placeholder="Email Address (Opsional)">
                 </div>
 
-                <div class="mb-1">
+                <div class="mb-3 mt-3">
+                    <label for="phone">Nomor Telepon:</label>
                     <input type="text" name="phone" class="form-control" placeholder="Nomor Telepon" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
 
-                <div class="mb-1">
+                <div class="mb-3 mt-3">
                     <div class="password-container">
+                        <label for="phone">Password:</label>
                         <input type="password" name="password" id="reg_pass" class="form-control" placeholder="Password" required>
                         <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('reg_pass', this)"></i>
                     </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 mt-3">
                     <div class="password-container">
+                        <label for="phone">Confirm Password:</label>
                         <input type="password" name="confirm_password" id="reg_confirm" class="form-control" placeholder="Konfirmasi Password" required>
                         <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('reg_confirm', this)"></i>
                     </div>
