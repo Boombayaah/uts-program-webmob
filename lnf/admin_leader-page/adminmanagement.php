@@ -60,6 +60,15 @@ $total_page = ceil($total_data / $limit);
             background-color: #9EC1FA !important;
             color: black !important;
         }
+
+        .input-group.rounded-pill {
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .input-group.rounded-pill input {
+            box-shadow: none !important;
+        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -96,11 +105,24 @@ $total_page = ceil($total_data / $limit);
                     <div class="row">
                         <div class="col-sm-6 col-md-12">
                             <div class="dashboard-card table-responsive" style="background-color: #EFF6FF;">
-                                <a class="m-5" href="add_admin.php">
-                                    <button type="button" class="button-new-icon btn text-white" style="background-color: #3b82f6;">NEW ADMIN</button></a>
-                                <input id="myInput" type="text" placeholder="Search here ...">
-                                <br>
-                                <br>
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <a href="add_admin.php">
+                                        <button type="button" class="button-new-icon btn text-white px-4"
+                                            style="background-color: #3b82f6;">
+                                            NEW ADMIN
+                                        </button>
+                                    </a>
+                                    <div class="input-group rounded-pill shadow-sm px-2 bg-white" style="max-width:350px;">
+                                        <span class="input-group-text bg-white border-0">
+                                            <i class="fa fa-search text-secondary"></i>
+                                        </span>
+                                        <input
+                                            id="myInput"
+                                            type="text"
+                                            class="form-control border-0 rounded-end-pill"
+                                            placeholder="Search here ...">
+                                    </div>
+                                </div>
                                 <table class="table table-hover">
                                     <thead class="text-center">
                                         <tr>
@@ -130,6 +152,7 @@ $total_page = ceil($total_data / $limit);
 
                                                 $image_source = "../assets/images/profile/";
                                                 if (!empty($user_profile)) {
+                                                    $image_source .= "uploads/";
                                                     $image_source .= $user_profile;
                                                 } else {
                                                     $image_source .= 'default-avatar.jpg';
