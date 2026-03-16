@@ -97,7 +97,6 @@ if (!isset($_GET['nik'])) {
             $new_phone = $_POST['phone'];
             $new_password = $_POST['password'];
             $confirm_password = $_POST['confirm_password'];
-            $new_image = $_FILES['fileToUpload']['name'];
 
             // Cek similaritas password
             if (isset($new_password) && ($new_password !== $confirm_password)) {

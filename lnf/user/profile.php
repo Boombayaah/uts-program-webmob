@@ -26,6 +26,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    if (!empty($_FILES['fileToUpload']['name'])) {
+        $target_dir = "../assets/images/profile/uploads/";
+        $file_name = basename($_FILES["fileToUpload"]["name"]);
+        $target_file = $target_dir . $file_name;
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            $sql = "UPDATE users 
+                    SET profile_image = '$file_name'
+                    WHERE user_id ='$uid'";
+            mysqli_query($conn, $sql);
+        }
+    }
+
     $sql = "UPDATE users SET full_name='$full_name', email='$email_baru', phone='$phone_baru' WHERE user_id='$uid'";
     if (mysqli_query($conn, $sql)) {
         echo "<script>alert('Profil berhasil diperbarui!'); window.location='profile.php';</script>";
@@ -94,16 +106,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <img src="<?php echo $image_source; ?>" alt="Profile Image" class="img-fluid rounded-circle" width="60" height="60">
             </div>
             <h2><?php echo $user['full_name']; ?></h2>
-            <form method="POST" id="profileForm">
+            <form method="POST" id="profileForm" enctype="multipart/form-data">
                 <input type="text" name="full_name" value="<?php echo $user['full_name']; ?>" readonly required placeholder="Nama Lengkap">
                 <input type="email" name="email" value="<?php echo $user['email']; ?>" readonly placeholder="Email (Opsional)">
                 <input type="text" name="phone" value="<?php echo $user['phone']; ?>" readonly required placeholder="Nomor Telepon" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-
-                <div id="confirmArea" style="display: none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
-                    <p style="font-size: 11px; color: red; text-align: left; margin-bottom: 5px;">Konfirmasi Password Akun:</p>
-                    <div class="password-container">
-                        <input type="password" name="confirm_password" id="p_conf" placeholder="Password">
-                        <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('p_conf', this)"></i>
+                <div id="confirmArea" style="display: none;">
+                    <div class="mb-3 mt-3">
+                        <label for="reg_pass">Profile Image:</label>
+                        <br>
+                        <input type="file" id="fileToUpload" name="fileToUpload">
+                    </div>
+                    <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+                        <p style="font-size: 11px; color: red; text-align: left; margin-bottom: 5px;">Konfirmasi Password Akun:</p>
+                        <div class="password-container">
+                            <input type="password" name="confirm_password" id="p_conf" placeholder="Password">
+                            <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('p_conf', this)"></i>
+                        </div>
                     </div>
                 </div>
                 <?php if ($_SESSION['role_id'] == 3) {

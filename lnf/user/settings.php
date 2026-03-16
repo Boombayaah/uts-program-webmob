@@ -16,6 +16,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Membersihkan input dari karakter selain angka secara otomatis di server
     $new_phone = preg_replace('/[^0-9]/', '', $new_phone);
 
+    if (!empty($_FILES['fileToUpload']['name'])) {
+        $target_dir = "../assets/images/profile/uploads/";
+        $file_name = basename($_FILES["fileToUpload"]["name"]);
+        $target_file = $target_dir . $file_name;
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            $sql = "UPDATE users 
+                            SET profile_image = '$file_name'
+                            WHERE email='$email_session'";
+            mysqli_query($conn, $sql);
+        }
+    }
     $sql = "UPDATE users SET full_name='$new_name', phone='$new_phone' WHERE email='$email_session'";
     if (mysqli_query($conn, $sql)) {
         $_SESSION['full_name'] = $new_name;
@@ -48,7 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     inputmode="numeric"
                     oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                     required>
-
                 <p style="font-size: 12px; color: gray; margin-top:15px;">Email dan NIK tidak dapat diubah.</p>
                 <button type="submit" class="btn-primary">Save Changes</button>
             </form>
