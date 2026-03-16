@@ -38,6 +38,18 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" type="text/css" href="../assets/css/select.dataTables.min.css">
     <!-- End plugin css for this page -->
 
+    <script>
+        function checkNIK(event) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nik = urlParams.get("nik");
+            if (!nik) {
+                event.preventDefault();
+                alert("Error: Silakan pilih admin terlebih dahulu sebelum melakukan modifikasi.");
+                return false;
+            }
+            window.location=urlParams;
+        }
+    </script>
 </head>
 
 <body>
@@ -65,13 +77,17 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <li class="nav-item mb-2">
                     <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
                         <i class="fa-solid fa-people-group me-2"></i>
-                        <span class="menu-title">Manajemen Admin</span>
+                        <span class="menu-title">Pengaturan Admin</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="tables">
+                    <div class="collapse <?php if ($currentPage == 'edit_admin.php') echo 'show'; ?>" id="tables">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link <?php if ($currentPage == 'add_admin.php') echo 'active'; ?>" href="add_admin.php">Add Admin</a></li>
-                            <li class="nav-item"> <a class="nav-link <?php if ($currentPage == 'edit_admin.php') echo 'active'; ?>" href="edit_admin.php">Edit Admin</a></li>
+                            <li class="nav-item"> <a class="ml-5 nav-link opacity-50 <?php if ($currentPage == 'adminmanagement.php') echo 'active'; ?>" href="adminmanagement.php"><i class="fa-solid fa-user-gear"></i>Manajemen</a></li>
+                            <li class="nav-item"> <a class="ml-5 nav-link opacity-50 <?php if ($currentPage == 'add_admin.php') echo 'active'; ?>" href="add_admin.php"><i class="fa-solid fa-plus"></i>Penambahan</a></li>
+                            <a class="ml-5 nav-link opacity-50 <?php if ($currentPage == 'edit_admin.php') echo 'active'; ?>"
+                                href="" onclick="return checkNIK(event)">
+                                <i class="fa-regular fa-pen-to-square"></i>Modifikasi
+                            </a>
                         </ul>
                     </div>
                 </li>
