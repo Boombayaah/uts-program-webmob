@@ -2,6 +2,7 @@
 session_start();
 $active = "cs";
 include 'config/connection.php';
+$logged_in = isset($_SESSION['user_id']);
 if (isset($_POST['btnSubmit'])) {
 
     $reported_by = $_SESSION['user_id'];
@@ -328,143 +329,146 @@ $hasil_category = mysqli_query($conn, $sql_category);
     <?php include "navbarr.php"; ?>
     <main class="flex-fill container-fluid">
         <div class="main-container mt-4">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="fas fa-search"></i>
-                        </span>
-                        <input id="searchBar" type="text" class="form-control"
-                            placeholder="Cari barang atau laporan...">
+            <?php if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 3) { ?>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <input id="searchBar" type="text" class="form-control"
+                                placeholder="Cari barang atau laporan...">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select class="form-select" id="statusFilter">
+                            <option value="">Semua Status</option>
+                            <option value="sedang diproses">Sedang Diproses</option>
+                            <option value="telah ditemukan">Telah Ditemukan</option>
+                            <option value="menunggu pengambilan">Menunggu Pengambilan</option>
+                            <option value="ditolak">Ditolak</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select class="form-select" id="categoryFilter">
+                            <option value="">Pilih kategori</option>
+
+                            <?php
+                            foreach ($hasil_category as $single_category) {
+                                echo "<option value='$single_category[category]'>$single_category[category]</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
+            
 
-                <div class="col-md-3">
-                    <select class="form-select" id="statusFilter">
-                        <option value="">Semua Status</option>
-                        <option value="sedang diproses">Sedang Diproses</option>
-                        <option value="telah ditemukan">Telah Ditemukan</option>
-                        <option value="menunggu pengambilan">Menunggu Pengambilan</option>
-                        <option value="ditolak">Ditolak</option>
-                    </select>
-                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr class="text-center">
+                                <th>Tanggal</th>
+                                <th>Laporan</th>
+                                <th>Kategori</th>
+                                <th>Keterangan</th>
+                                <th>Lokasi</th>
+                                <th>Bukti Barang</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableData">
+                            <?php
+                            if (mysqli_num_rows($hasil) > 0) {
+                                while ($row = mysqli_fetch_assoc($hasil)) {
+                                    $tanggal = $row['lost_date'];
+                                    $laporan = $row['item_name'];
+                                    $kategori = $row['category'];
+                                    $keterangan = $row['description'];
+                                    $lokasi = $row['location'];
+                                    $bukti = $row['file'];
+                                    $status = $row['status'];
 
-                <div class="col-md-3">
-                    <select class="form-select" id="categoryFilter">
-                        <option value="">Pilih kategori</option>
+                                    $badge = "";
 
-                        <?php
-                        foreach ($hasil_category as $single_category) {
-                            echo "<option value='$single_category[category]'>$single_category[category]</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
+                                    if ($status == "Sedang Diproses") {
+                                        $badge = '<span class="status-badge me-2" style="background-color: #FEF3C7; color: #92400E;">
+                                                            <i class="fas fa-clock me-1"></i>Sedang Diproses
+                                                        </span>';
+                                    } elseif ($status == "Telah Ditemukan") {
+                                        $badge = '<span class="status-badge me-2" style="background-color: #DBEAFE; color: #1E40AF;">
+                                                            <i class="fas fa-exchange-alt me-1"></i>Telah Ditemukan
+                                                        </span>';
+                                    } elseif ($status == "Menunggu Pengambilan") {
+                                        $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
+                                                            <i class="fas fa-check-circle me-1"></i>Menunggu Pengambilan
+                                                        </span>';
+                                    } else {
+                                        $badge = '<span class="status-badge me-2" style="background-color: #FEE2E2; color: #991B1B;">
+                                                            <i class="fas fa-times-circle me-1"></i> Ditolak
+                                                        </span>';
+                                    }
 
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
-                        <tr class="text-center">
-                            <th>Tanggal</th>
-                            <th>Laporan</th>
-                            <th>Kategori</th>
-                            <th>Keterangan</th>
-                            <th>Lokasi</th>
-                            <th>Bukti Barang</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableData">
-                        <?php
-                        if (mysqli_num_rows($hasil) > 0) {
-                            while ($row = mysqli_fetch_assoc($hasil)) {
-                                $tanggal = $row['lost_date'];
-                                $laporan = $row['item_name'];
-                                $kategori = $row['category'];
-                                $keterangan = $row['description'];
-                                $lokasi = $row['location'];
-                                $bukti = $row['file'];
-                                $status = $row['status'];
-
-                                $badge = "";
-
-                                if ($status == "Sedang Diproses") {
-                                    $badge = '<span class="status-badge me-2" style="background-color: #FEF3C7; color: #92400E;">
-                                                        <i class="fas fa-clock me-1"></i>Sedang Diproses
-                                                    </span>';
-                                } elseif ($status == "Telah Ditemukan") {
-                                    $badge = '<span class="status-badge me-2" style="background-color: #DBEAFE; color: #1E40AF;">
-                                                        <i class="fas fa-exchange-alt me-1"></i>Telah Ditemukan
-                                                    </span>';
-                                } elseif ($status == "Menunggu Pengambilan") {
-                                    $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
-                                                        <i class="fas fa-check-circle me-1"></i>Menunggu Pengambilan
-                                                    </span>';
-                                } else {
-                                    $badge = '<span class="status-badge me-2" style="background-color: #FEE2E2; color: #991B1B;">
-                                                        <i class="fas fa-times-circle me-1"></i> Ditolak
-                                                    </span>';
+                            ?>
+                                    <tr class="text-center">
+                                        <td><?php echo $tanggal; ?></td>
+                                        <td><?php echo $laporan; ?></td>
+                                        <td><?php echo $kategori; ?></td>
+                                        <td class="col-keterangan"><?php echo $keterangan; ?></td>
+                                        <td><?php echo $lokasi; ?></td>
+                                        <td>
+                                            <?php
+                                            if ($bukti == "") {
+                                                echo "";
+                                            } else {
+                                            ?>
+                                                <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
+                                            <?php
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?php echo $badge; ?></td>
+                                    </tr>
+                            <?php
                                 }
-
-                        ?>
-                                <tr class="text-center">
-                                    <td><?php echo $tanggal; ?></td>
-                                    <td><?php echo $laporan; ?></td>
-                                    <td><?php echo $kategori; ?></td>
-                                    <td class="col-keterangan"><?php echo $keterangan; ?></td>
-                                    <td><?php echo $lokasi; ?></td>
-                                    <td>
-                                        <?php
-                                        if ($bukti == "") {
-                                            echo "";
-                                        } else {
-                                        ?>
-                                            <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                        <?php
-                                        }
-                                        ?>
-                                    </td>
-                                    <td><?php echo $badge; ?></td>
-                                </tr>
-                        <?php
+                                mysqli_free_result($hasil);
                             }
-                            mysqli_free_result($hasil);
-                        }
-                        ?>
-                    </tbody>
+                            ?>
+                        </tbody>
 
-                </table>
+                    </table>
 
-                <div class="d-flex justify-content-center mt-3">
-                    <ul class="pagination">
-                        <!-- prev -->
-                        <li class="page-item <?php if ($page <= 1)
-                                                    echo 'disabled'; ?>">
-                            <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page - 1; ?>"
-                                class="page-link">Prev</a>
-                        </li>
-
-                        <!-- halaman -->
-                        <?php for ($i = 1; $i <= $total_page; $i++) { ?>
-                            <li class="page-item <?php if ($i == $page)
-                                                        echo 'active'; ?>">
-                                <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $i; ?>"
-                                    class="page-link">
-                                    <?php echo $i; ?>
-                                </a>
+                    <div class="d-flex justify-content-center mt-3">
+                        <ul class="pagination">
+                            <!-- prev -->
+                            <li class="page-item <?php if ($page <= 1)
+                                                        echo 'disabled'; ?>">
+                                <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page - 1; ?>"
+                                    class="page-link">Prev</a>
                             </li>
-                        <?php } ?>
 
-                        <!-- next -->
-                        <li class="page-item <?php if ($page >= $total_page)
-                                                    echo 'disabled' ?>">
-                            <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page + 1; ?>"
-                                class="page-link">Next</a>
-                        </li>
-                    </ul>
+                            <!-- halaman -->
+                            <?php for ($i = 1; $i <= $total_page; $i++) { ?>
+                                <li class="page-item <?php if ($i == $page)
+                                                            echo 'active'; ?>">
+                                    <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $i; ?>"
+                                        class="page-link">
+                                        <?php echo $i; ?>
+                                    </a>
+                                </li>
+                            <?php } ?>
+
+                            <!-- next -->
+                            <li class="page-item <?php if ($page >= $total_page)
+                                                        echo 'disabled' ?>">
+                                <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page + 1; ?>"
+                                    class="page-link">Next</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
     </main>
 
