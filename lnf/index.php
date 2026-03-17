@@ -502,7 +502,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
             </p>
 
             <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                <?php if ($logged_in): ?>
+                <?php if ($logged_in && isset($_SESSION['user_id']) && $_SESSION['role_id'] == 3): ?>
 
                     <button type="button" class="btn btn-outline-warning text-black fw-semibold px-4 py-2 rounded-3 mt-3"
                         data-bs-toggle="modal" data-bs-target="#reportModal">
