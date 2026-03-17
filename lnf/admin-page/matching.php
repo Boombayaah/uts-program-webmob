@@ -127,13 +127,9 @@ $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost
                             <button class="btn btn-primary">
                                 <i class="fas fa-search"></i> Lihat Data
                             </button>
-
                         </form>
-
                     </div>
-
             </div>
-
         <?php } ?>
 
         <?php if ($category != "") { ?>
@@ -191,7 +187,6 @@ $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost
                                                     </span>';
                                             }
                                     ?>
-
                                             <div class="carousel-item <?= $i == 0 ? 'active' : '' ?>"
                                                 data-id="<?php echo $id; ?>">
                                                 <section class="component-card">
@@ -262,7 +257,6 @@ $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost
                                     <?php
                                     }
                                     ?>
-
                                 </div>
 
                                 <button class="carousel-control-prev" type="button" data-bs-target="#lostCarousel"
