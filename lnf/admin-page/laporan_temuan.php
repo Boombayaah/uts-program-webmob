@@ -3,6 +3,11 @@ session_start();
 include "../config/connection.php";
 $logged_in = isset($_SESSION['user_id']);
 
+$sql_category = "SELECT * 
+                FROM item_category
+                ORDER BY category";
+$hasil_category = mysqli_query($conn, $sql_category);
+
 if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
     header("Location: ../admin_leader-page/dashboardleader.php");
     exit();
@@ -58,19 +63,19 @@ $total_page = ceil($total_data / $limit);
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <!-- Style -->
-    <link rel="stylesheet" href="../assets/css/admin-page.css"> 
+    <link rel="stylesheet" href="../assets/css/admin-page.css">
 
     <script>
-        $(document).ready(function() {
-            $("#searchBar").on("keyup", function() {
+        $(document).ready(function () {
+            $("#searchBar").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function() {
+                $("#tableData tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -131,13 +136,13 @@ $total_page = ceil($total_data / $limit);
 
                     <div class="col-md-3">
                         <select class="form-select" id="categoryFilter">
-                            <option value="">Semua Kategori</option>
-                            <option value="elektronik">Elektronik</option>
-                            <option value="dompet & tas">Dompet & Tas</option>
-                            <option value="dokumen">Dokumen</option>
-                            <option value="aksesoris">Aksesoris</option>
-                            <option value="kunci">Kunci</option>
-                            <option value="lainnya">Lainnya</option>
+                            <option value="">Pilih kategori</option>
+
+                            <?php
+                            foreach ($hasil_category as $single_category) {
+                                echo "<option value='$single_category[category]'>$single_category[category]</option>";
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -187,7 +192,7 @@ $total_page = ceil($total_data / $limit);
                                                     </span>';
                                     }
 
-                            ?>
+                                    ?>
                                     <tr class="text-center">
                                         <td>
                                             <?php echo $tanggal; ?>
@@ -209,9 +214,9 @@ $total_page = ceil($total_data / $limit);
                                             if ($bukti == "") {
                                                 echo "";
                                             } else {
-                                            ?>
+                                                ?>
                                                 <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                            <?php
+                                                <?php
                                             }
                                             ?>
                                         </td>
@@ -219,7 +224,7 @@ $total_page = ceil($total_data / $limit);
                                             <?php echo $badge; ?>
                                         </td>
                                     </tr>
-                            <?php
+                                    <?php
                                 }
                                 mysqli_free_result($hasil);
                             }
@@ -232,15 +237,15 @@ $total_page = ceil($total_data / $limit);
                         <ul class="pagination">
                             <!-- prev -->
                             <li class="page-item <?php if ($page <= 1)
-                                                        echo 'disabled'; ?>">
-                                <a href="index.php?page=<?php echo $page - 1; ?>" class="page-link">Prev</a>
+                                echo 'disabled'; ?>">
+                                <a href="laporan_temuan.php?page=<?php echo $page - 1; ?>" class="page-link">Prev</a>
                             </li>
 
                             <!-- halaman -->
                             <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                                 <li class="page-item <?php if ($i == $page)
-                                                            echo 'active'; ?>">
-                                    <a href="index.php?page=<?php echo $i; ?>" class="page-link">
+                                    echo 'active'; ?>">
+                                    <a href="laporan_temuan.php?page=<?php echo $i; ?>" class="page-link">
                                         <?php echo $i; ?>
                                     </a>
                                 </li>
@@ -248,8 +253,8 @@ $total_page = ceil($total_data / $limit);
 
                             <!-- next -->
                             <li class="page-item <?php if ($page >= $total_page)
-                                                        echo 'disabled' ?>">
-                                <a href="index.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
+                                echo 'disabled' ?>">
+                                    <a href="laporan_temuan.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
                             </li>
                         </ul>
                     </div>

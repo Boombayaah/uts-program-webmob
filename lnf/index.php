@@ -45,6 +45,11 @@ $data_total = mysqli_fetch_assoc($results_total);
 $total_data = $data_total['total'];
 
 $total_page = ceil($total_data / $limit);
+
+$sql_category = "SELECT * 
+                FROM item_category
+                ORDER BY category";
+$hasil_category = mysqli_query($conn, $sql_category);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -277,16 +282,16 @@ $total_page = ceil($total_data / $limit);
     </style>
 
     <script>
-        $(document).ready(function() {
-            $("#searchBar").on("keyup", function() {
+        $(document).ready(function () {
+            $("#searchBar").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function() {
+                $("#tableData tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -346,13 +351,13 @@ $total_page = ceil($total_data / $limit);
 
                 <div class="col-md-3">
                     <select class="form-select" id="categoryFilter">
-                        <option value="">Semua Kategori</option>
-                        <option value="elektronik">Elektronik</option>
-                        <option value="dompet-tas">Dompet & Tas</option>
-                        <option value="dokumen">Dokumen</option>
-                        <option value="aksesoris">Aksesoris</option>
-                        <option value="kunci">Kunci</option>
-                        <option value="lainnya">Lainnya</option>
+                        <option value="">Pilih kategori</option>
+
+                        <?php
+                        foreach ($hasil_category as $single_category) {
+                            echo "<option value='$single_category[category]'>$single_category[category]</option>";
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -402,7 +407,7 @@ $total_page = ceil($total_data / $limit);
                                                     </span>';
                                 }
 
-                        ?>
+                                ?>
                                 <tr class="text-center">
                                     <td><?php echo $tanggal; ?></td>
                                     <td><?php echo $laporan; ?></td>
@@ -414,15 +419,15 @@ $total_page = ceil($total_data / $limit);
                                         if ($bukti == "") {
                                             echo "";
                                         } else {
-                                        ?>
+                                            ?>
                                             <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                        <?php
+                                            <?php
                                         }
                                         ?>
                                     </td>
                                     <td><?php echo $badge; ?></td>
                                 </tr>
-                        <?php
+                                <?php
                             }
                             mysqli_free_result($hasil);
                         }
@@ -435,15 +440,17 @@ $total_page = ceil($total_data / $limit);
                     <ul class="pagination">
                         <!-- prev -->
                         <li class="page-item <?php if ($page <= 1)
-                                                    echo 'disabled'; ?>">
-                            <a href="<?php echo basename($_SERVER['PHP_SELF'])?>?page=<?php echo $page - 1; ?>" class="page-link">Prev</a>
+                            echo 'disabled'; ?>">
+                            <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page - 1; ?>"
+                                class="page-link">Prev</a>
                         </li>
 
                         <!-- halaman -->
                         <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                             <li class="page-item <?php if ($i == $page)
-                                                        echo 'active'; ?>">
-                                <a href="<?php echo basename($_SERVER['PHP_SELF'])?>?page=<?php echo $i; ?>" class="page-link">
+                                echo 'active'; ?>">
+                                <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $i; ?>"
+                                    class="page-link">
                                     <?php echo $i; ?>
                                 </a>
                             </li>
@@ -451,8 +458,9 @@ $total_page = ceil($total_data / $limit);
 
                         <!-- next -->
                         <li class="page-item <?php if ($page >= $total_page)
-                                                    echo 'disabled' ?>">
-                            <a href="<?php echo basename($_SERVER['PHP_SELF'])?>?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
+                            echo 'disabled' ?>">
+                                <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page + 1; ?>"
+                                class="page-link">Next</a>
                         </li>
                     </ul>
                 </div>
@@ -527,12 +535,12 @@ $total_page = ceil($total_data / $limit);
                                                 <label class="form-label">Kategori</label>
                                                 <select class="form-select" name="category" id="category">
                                                     <option value="">Pilih kategori</option>
-                                                    <option value="elektronik">Elektronik</option>
-                                                    <option value="dompet-tas">Dompet & Tas</option>
-                                                    <option value="dokumen">Dokumen</option>
-                                                    <option value="aksesoris">Aksesoris</option>
-                                                    <option value="kunci">Kunci</option>
-                                                    <option value="lainnya">Lainnya</option>
+
+                                                    <?php
+                                                    foreach ($hasil_category as $single_category) {
+                                                        echo "<option value='$single_category[category]'>$single_category[category]</option>";
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                             <div class="mb-3">

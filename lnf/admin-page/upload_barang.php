@@ -3,6 +3,11 @@ session_start();
 include "../config/connection.php";
 $logged_in = isset($_SESSION['user_id']);
 
+$sql_category = "SELECT * 
+                FROM item_category
+                ORDER BY category";
+$hasil_category = mysqli_query($conn, $sql_category);
+
 if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
     header("Location: ../admin_leader-page/dashboardleader.php");
     exit();
@@ -56,7 +61,7 @@ if (isset($_POST['btnSubmit'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Style -->
-    <link rel="stylesheet" href="../assets/css/admin-page.css"> 
+    <link rel="stylesheet" href="../assets/css/admin-page.css">
 
 </head>
 
@@ -79,12 +84,13 @@ if (isset($_POST['btnSubmit'])) {
                                     <label class="form-label">Kategori</label>
                                     <select class="form-select" name="category" id="category">
                                         <option value="">Pilih kategori</option>
-                                        <option value="elektronik">Elektronik</option>
-                                        <option value="dompet-tas">Dompet & Tas</option>
-                                        <option value="dokumen">Dokumen</option>
-                                        <option value="aksesoris">Aksesoris</option>
-                                        <option value="kunci">Kunci</option>
-                                        <option value="lainnya">Lainnya</option>
+
+                                        <?php
+                                        foreach ($hasil_category as $single_category) {
+                                            echo "<option value='$single_category[category]'>$single_category[category]</option>";
+                                        }
+                                        ?>
+
                                     </select>
                                 </div>
                                 <div class="mb-3">
