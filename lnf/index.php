@@ -282,16 +282,16 @@ $hasil_category = mysqli_query($conn, $sql_category);
     </style>
 
     <script>
-        $(document).ready(function () {
-            $("#searchBar").on("keyup", function () {
+        $(document).ready(function() {
+            $("#searchBar").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function () {
+                $("#tableData tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -407,7 +407,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                                     </span>';
                                 }
 
-                                ?>
+                        ?>
                                 <tr class="text-center">
                                     <td><?php echo $tanggal; ?></td>
                                     <td><?php echo $laporan; ?></td>
@@ -419,15 +419,15 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                         if ($bukti == "") {
                                             echo "";
                                         } else {
-                                            ?>
+                                        ?>
                                             <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                            <?php
+                                        <?php
                                         }
                                         ?>
                                     </td>
                                     <td><?php echo $badge; ?></td>
                                 </tr>
-                                <?php
+                        <?php
                             }
                             mysqli_free_result($hasil);
                         }
@@ -440,7 +440,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                     <ul class="pagination">
                         <!-- prev -->
                         <li class="page-item <?php if ($page <= 1)
-                            echo 'disabled'; ?>">
+                                                    echo 'disabled'; ?>">
                             <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page - 1; ?>"
                                 class="page-link">Prev</a>
                         </li>
@@ -448,7 +448,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                         <!-- halaman -->
                         <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                             <li class="page-item <?php if ($i == $page)
-                                echo 'active'; ?>">
+                                                        echo 'active'; ?>">
                                 <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $i; ?>"
                                     class="page-link">
                                     <?php echo $i; ?>
@@ -458,8 +458,8 @@ $hasil_category = mysqli_query($conn, $sql_category);
 
                         <!-- next -->
                         <li class="page-item <?php if ($page >= $total_page)
-                            echo 'disabled' ?>">
-                                <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page + 1; ?>"
+                                                    echo 'disabled' ?>">
+                            <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page + 1; ?>"
                                 class="page-link">Next</a>
                         </li>
                     </ul>
