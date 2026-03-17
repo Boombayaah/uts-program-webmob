@@ -47,7 +47,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 alert("Error: Silakan pilih admin terlebih dahulu sebelum melakukan modifikasi.");
                 return false;
             }
-            window.location=urlParams;
+            window.location = urlParams;
         }
     </script>
 </head>
@@ -90,6 +90,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             </a>
                         </ul>
                     </div>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a class="nav-link <?php if ($currentPage == 'categorymanagement.php') echo 'active'; ?>" href="categorymanagement.php">
+                        <i class="fa-solid fa-layer-group me-2"></i> Pengaturan Kategori
+                    </a>
                 </li>
 
                 <?php if ($logged_in): ?>
