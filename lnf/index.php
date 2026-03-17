@@ -2,7 +2,8 @@
 session_start();
 $active = "cs";
 include 'config/connection.php';
-$logged_in = isset($_SESSION['user_id']);
+$user_id = $_SESSION['user_id'];
+
 if (isset($_POST['btnSubmit'])) {
 
     $reported_by = $_SESSION['user_id'];
@@ -36,10 +37,19 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
 $start = ($page - 1) * $limit;
 
-$sql = "select * from lost_reports LIMIT $start,$limit";
+$sql = "SELECT 
+        l.*,
+        users.full_name
+
+        FROM lost_reports l
+        JOIN users on l.reported_by = users.user_id
+        WHERE l.reported_by = '$user_id'
+        LIMIT $start, $limit";
 $hasil = mysqli_query($conn, $sql);
 
-$sql_total = "select count(*) as total from lost_reports";
+$sql_total = "SELECT count(*) as total 
+              FROM lost_reports 
+              WHERE reported_by = '$user_id'";
 $results_total = mysqli_query($conn, $sql_total);
 $data_total = mysqli_fetch_assoc($results_total);
 
@@ -376,6 +386,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                 <th>Lokasi</th>
                                 <th>Bukti Barang</th>
                                 <th>Status</th>
+                                <th>Pelapor</th>
                             </tr>
                         </thead>
                         <tbody id="tableData">
@@ -389,6 +400,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                     $lokasi = $row['location'];
                                     $bukti = $row['file'];
                                     $status = $row['status'];
+                                    $pelapor = $row['full_name'];
 
                                     $badge = "";
 
@@ -429,6 +441,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                             ?>
                                         </td>
                                         <td><?php echo $badge; ?></td>
+                                        <td><?php echo $pelapor;?></td>
                                     </tr>
                             <?php
                                 }
