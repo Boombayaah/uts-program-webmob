@@ -45,6 +45,8 @@ if (isset($_POST['btnSubmit'])) {
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
@@ -62,8 +64,6 @@ if (isset($_POST['btnSubmit'])) {
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
         :root {

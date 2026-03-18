@@ -78,7 +78,6 @@
 </head>
 
 <body>
-
     <div class="d-flex justify-content-center align-items-center vh-100 p-3">
         <div class="auth-card bg-white p-4 rounded-4 shadow-sm border">
 
