@@ -2,7 +2,7 @@
 session_start();
 $active = "cs";
 include 'config/connection.php';
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'] ?? null;
 
 if (isset($_POST['btnSubmit'])) {
 

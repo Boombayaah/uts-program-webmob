@@ -105,6 +105,13 @@ $total_page = ceil($total_data / $limit);
             categoryFilter.addEventListener("change", filterTable);
 
         });
+
+        function delete_confirm() {
+            if (confirm("Are you sure?"))
+                return true;
+            else
+                return false;
+        }
     </script>
 </head>
 
@@ -158,12 +165,14 @@ $total_page = ceil($total_data / $limit);
                                 <th>Lokasi</th>
                                 <th>Bukti Barang</th>
                                 <th>Status</th>
+                                <th>Operasi</th>
                             </tr>
                         </thead>
                         <tbody id="tableData">
                             <?php
                             if (mysqli_num_rows($hasil) > 0) {
                                 while ($row = mysqli_fetch_assoc($hasil)) {
+                                    $id = $row['found_item_id'];
                                     $tanggal = $row['found_date'];
                                     $laporan = $row['item_name'];
                                     $kategori = $row['category'];
@@ -222,6 +231,15 @@ $total_page = ceil($total_data / $limit);
                                         </td>
                                         <td>
                                             <?php echo $badge; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="temuan_edit.php?found_item_id=<?php echo $id ?>"><i
+                                                    class="button-text-icon fa-regular fa-pen-to-square m-1"
+                                                    style="color: #f59e0b;"></i></a>
+                                            <a href="delete_laporan.php?type=found&id=<?php echo $id ?>"
+                                                onclick="return delete_confirm();"><i
+                                                    class="button-text-icon fa-regular fa-trash-can m-1"
+                                                    style="color: #f59e0b;"></i></a>
                                         </td>
                                     </tr>
                             <?php

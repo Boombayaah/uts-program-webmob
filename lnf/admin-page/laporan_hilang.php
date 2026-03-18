@@ -63,16 +63,16 @@ $total_page = ceil($total_data / $limit);
     <link rel="stylesheet" href="../assets/css/admin-page.css">
 
     <script>
-        $(document).ready(function() {
-            $("#searchBar").on("keyup", function() {
+        $(document).ready(function () {
+            $("#searchBar").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function() {
+                $("#tableData tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -102,6 +102,13 @@ $total_page = ceil($total_data / $limit);
             categoryFilter.addEventListener("change", filterTable);
 
         });
+
+        function delete_confirm() {
+            if (confirm("Are you sure?"))
+                return true;
+            else
+                return false;
+        }
     </script>
 </head>
 
@@ -155,12 +162,14 @@ $total_page = ceil($total_data / $limit);
                                 <th>Lokasi</th>
                                 <th>Bukti Barang</th>
                                 <th>Status</th>
+                                <th>Operasi</th>
                             </tr>
                         </thead>
                         <tbody id="tableData">
                             <?php
                             if (mysqli_num_rows($hasil) > 0) {
                                 while ($row = mysqli_fetch_assoc($hasil)) {
+                                    $id = $row['lost_report_id'];
                                     $tanggal = $row['lost_date'];
                                     $laporan = $row['item_name'];
                                     $kategori = $row['category'];
@@ -189,7 +198,7 @@ $total_page = ceil($total_data / $limit);
                                                     </span>';
                                     }
 
-                            ?>
+                                    ?>
                                     <tr class="text-center">
                                         <td>
                                             <?php echo $tanggal; ?>
@@ -211,17 +220,26 @@ $total_page = ceil($total_data / $limit);
                                             if ($bukti == "") {
                                                 echo "";
                                             } else {
-                                            ?>
+                                                ?>
                                                 <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                            <?php
+                                                <?php
                                             }
                                             ?>
                                         </td>
                                         <td>
                                             <?php echo $badge; ?>
                                         </td>
+                                        <td class="text-center">
+                                            <a href="hilang_edit.php?lost_report_id=<?php echo $id ?>"><i
+                                                    class="button-text-icon fa-regular fa-pen-to-square m-1"
+                                                    style="color: #f59e0b;"></i></a>
+                                            <a href="delete_laporan.php?type=lost&id=<?php echo $id ?>"
+                                                onclick="return delete_confirm();"><i
+                                                    class="button-text-icon fa-regular fa-trash-can m-1"
+                                                    style="color: #f59e0b;"></i></a>
+                                        </td>
                                     </tr>
-                            <?php
+                                    <?php
                                 }
                                 mysqli_free_result($hasil);
                             }
@@ -234,14 +252,14 @@ $total_page = ceil($total_data / $limit);
                         <ul class="pagination">
                             <!-- prev -->
                             <li class="page-item <?php if ($page <= 1)
-                                                        echo 'disabled'; ?>">
+                                echo 'disabled'; ?>">
                                 <a href="laporan_hilang.php?page=<?php echo $page - 1; ?>" class="page-link">Prev</a>
                             </li>
 
                             <!-- halaman -->
                             <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                                 <li class="page-item <?php if ($i == $page)
-                                                            echo 'active'; ?>">
+                                    echo 'active'; ?>">
                                     <a href="laporan_hilang.php?page=<?php echo $i; ?>" class="page-link">
                                         <?php echo $i; ?>
                                     </a>
@@ -250,8 +268,8 @@ $total_page = ceil($total_data / $limit);
 
                             <!-- next -->
                             <li class="page-item <?php if ($page >= $total_page)
-                                                        echo 'disabled' ?>">
-                                <a href="laporan_hilang.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
+                                echo 'disabled' ?>">
+                                    <a href="laporan_hilang.php?page=<?php echo $page + 1; ?>" class="page-link">Next</a>
                             </li>
                         </ul>
                     </div>
