@@ -116,7 +116,7 @@ if (isset($_POST['btnSubmit'])) {
                                         style="cursor: pointer;">
                                         <i class="fas fa-cloud-upload-alt fa-3x text-secondary mb-3"></i>
                                         <p>Klik untuk upload</p>
-                                        <button class="btn btn-outline-secondary btn-sm" id="uploadBtn">Pilih
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" id="uploadBtn">Pilih
                                             File</button>
                                     </div>
                                     <p class="text-muted mt-2"><small>Format: JPG, PNG. Maksimal 5MB</small></p>
