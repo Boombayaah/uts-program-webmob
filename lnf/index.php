@@ -2,7 +2,9 @@
 session_start();
 $active = "cs";
 include 'config/connection.php';
-$user_id = $_SESSION['user_id'];
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
 
 if (isset($_POST['btnSubmit'])) {
 
@@ -37,7 +39,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
 $start = ($page - 1) * $limit;
 
-$sql = "SELECT 
+if (isset($_SESSION['user_id'])) {
+    $sql = "SELECT 
         l.*,
         users.full_name
 
@@ -45,18 +48,18 @@ $sql = "SELECT
         JOIN users on l.reported_by = users.user_id
         WHERE l.reported_by = '$user_id'
         LIMIT $start, $limit";
-$hasil = mysqli_query($conn, $sql);
+    $hasil = mysqli_query($conn, $sql);
 
-$sql_total = "SELECT count(*) as total 
+    $sql_total = "SELECT count(*) as total 
               FROM lost_reports 
               WHERE reported_by = '$user_id'";
-$results_total = mysqli_query($conn, $sql_total);
-$data_total = mysqli_fetch_assoc($results_total);
+    $results_total = mysqli_query($conn, $sql_total);
+    $data_total = mysqli_fetch_assoc($results_total);
 
-$total_data = $data_total['total'];
+    $total_data = $data_total['total'];
 
-$total_page = ceil($total_data / $limit);
-
+    $total_page = ceil($total_data / $limit);
+}
 $sql_category = "SELECT * 
                 FROM item_category
                 ORDER BY category";
@@ -82,6 +85,24 @@ $hasil_category = mysqli_query($conn, $sql_category);
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -333,24 +354,6 @@ $hasil_category = mysqli_query($conn, $sql_category);
 
         });
     </script>
-
-    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/favicon/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
