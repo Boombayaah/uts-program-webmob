@@ -4,21 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account - Info KRL</title>
+    <title>Commuter | Register Akun</title>
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/styleloginregister.css">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/styleloginregister.css">
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="../assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../assets/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../assets/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../assets/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../assets/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../assets/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../assets/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../assets/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
     <style>
-        /* CSS Tambahan agar harmoni dengan Bootstrap */
+        body {
+            background: #f8f9fa;
+        }
+
+        .auth-card {
+            max-width: 450px;
+            width: 100%;
+        }
+
         .password-container {
             position: relative;
-            width: 100%;
-            display: flex;
-            align-items: center;
         }
 
         .password-container input {
-            padding-right: 45px !important;
+            padding-right: 45px;
         }
 
         .toggle-password {
@@ -28,65 +59,108 @@
             transform: translateY(-50%);
             cursor: pointer;
             color: #888;
-            z-index: 10;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #316eea;
+        }
+
+        .btn-primary {
+            background-color: #316eea;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #2557c7;
         }
     </style>
 </head>
 
-<body class="bg-light">
-    <div class="auth-wrapper d-flex justify-content-center align-items-center vh-100 p-3">
-        <div class="auth-card shadow-sm p-4 bg-white rounded-4 border" style="max-width: 450px; width: 100%;">
-            <h2 class="fw-bold text-dark text-center mb-1">Create Account</h2>
-            <p class="text-muted text-center small mb-4">Informasi Data Diri</p>
+<body>
 
-            <form action="register_process.php" method="POST" class="d-flex flex-column gap-2">
-                <div class="mb-3 mt-3">
-                    <label for="phone">NIK:</label>
-                    <input type="text" name="nik" class="form-control" placeholder="NIK (16 Digit)" required maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+    <div class="d-flex justify-content-center align-items-center vh-100 p-3">
+        <div class="auth-card bg-white p-4 rounded-4 shadow-sm border">
+
+            <h3 class="fw-bold text-center mb-1">Membuat Akun</h3>
+            <p class="text-muted text-center small mb-4">Lengkapi data diri Anda</p>
+
+            <form action="register_process.php" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-3">
+                <!-- NIK -->
+                <div>
+                    <label class="form-label">NIK</label>
+                    <input type="text" name="nik" class="form-control"
+                        placeholder="16 digit NIK"
+                        maxlength="16"
+                        required
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
 
-                <div class="mb-3 mt-3">
-                    <label for="phone">Full Name:</label>
-                    <input type="text" name="full_name" class="form-control" placeholder="Nama Lengkap" required>
+                <!-- Nama -->
+                <div>
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="full_name" class="form-control"
+                        placeholder="Nama lengkap" required>
                 </div>
 
-                <div class="mb-3 mt-3">
-                    <label for="phone">Email:</label>
-                    <input type="email" name="email" class="form-control" placeholder="Email Address (Opsional)">
+                <!-- Email -->
+                <div>
+                    <label class="form-label">Email (opsional)</label>
+                    <input type="email" name="email" class="form-control"
+                        placeholder="example@email.com">
                 </div>
 
-                <div class="mb-3 mt-3">
-                    <label for="phone">Nomor Telepon:</label>
-                    <input type="text" name="phone" class="form-control" placeholder="Nomor Telepon" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                <!-- Phone -->
+                <div>
+                    <label class="form-label">Nomor Telepon</label>
+                    <input type="text" name="phone" class="form-control"
+                        placeholder="08xxxxxxxxxx"
+                        maxlength="16"
+                        required
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
 
-                <div class="mb-3 mt-3">
+                <!-- Upload -->
+                <div>
+                    <label class="form-label">Profile Picture (opsional)</label>
+                    <input type="file" name="fileToUpload" class="form-control" required>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="form-label">Password</label>
                     <div class="password-container">
-                        <label for="phone">Password:</label>
-                        <input type="password" name="password" id="reg_pass" class="form-control" placeholder="Password" required>
-                        <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('reg_pass', this)"></i>
+                        <input type="password" name="password" id="reg_pass"
+                            class="form-control" placeholder="Masukkan password" required>
+                        <i class="fa-solid fa-eye toggle-password"
+                            onclick="togglePassword('reg_pass', this)"></i>
                     </div>
                 </div>
 
-                <div class="mb-3 mt-3">
+                <!-- Confirm Password -->
+                <div>
+                    <label class="form-label">Confirm Password</label>
                     <div class="password-container">
-                        <label for="phone">Confirm Password:</label>
-                        <input type="password" name="confirm_password" id="reg_confirm" class="form-control" placeholder="Konfirmasi Password" required>
-                        <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('reg_confirm', this)"></i>
+                        <input type="password" name="confirm_password" id="reg_confirm"
+                            class="form-control" placeholder="Ulangi password" required>
+                        <i class="fa-solid fa-eye toggle-password"
+                            onclick="togglePassword('reg_confirm', this)"></i>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary py-2 fw-bold shadow-sm" style="background-color: #316eea; border: none;">Sign up</button>
+                <!-- Button -->
+                <button type="submit" class="btn btn-primary py-2 fw-bold">
+                    Sign Up
+                </button>
             </form>
 
-            <p class="text-center mt-4 mb-0 small text-muted">
-                Sudah punya akun? <a href="login_page.php" class="text-decoration-none fw-bold" style="color: #316eea;">Sign in</a>
+            <p class="text-center mt-4 small text-muted">
+                Sudah punya akun?
+                <a href="login_page.php" class="fw-bold text-decoration-none" style="color:#316eea;">
+                    Sign in
+                </a>
             </p>
+
         </div>
     </div>
 
@@ -102,6 +176,7 @@
             }
         }
     </script>
+
 </body>
 
 </html>

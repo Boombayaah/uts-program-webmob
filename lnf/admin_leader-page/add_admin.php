@@ -147,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                     <div class="mb-3 mt-3">
                                         <label for="phone">Nomor Telepon:</label>
-                                        <input type="text" name="phone" class="form-control" placeholder="Nomor telepon" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                        <input type="text" name="phone" class="form-control" placeholder="Nomor telepon" maxlength="16" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
 
                                     <div class="mb-3 mt-3">
