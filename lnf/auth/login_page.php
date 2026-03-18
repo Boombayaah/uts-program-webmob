@@ -134,7 +134,7 @@
 <body>
     <div class="auth-wrapper">
         <div class="auth-card">
-            <h2 id="login-title">Login Method</h2>
+            <h2 id="login-title">Metode Login</h2>
 
             <button type="button" id="reset-btn" class="btn-reset" style="display:none;" onclick="resetSelector()">← Ganti Metode</button>
 
