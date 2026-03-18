@@ -194,7 +194,7 @@ if (!isset($_GET['nik'])) {
 
                                     <div class="mb-3 mt-3">
                                         <label for="phone">Nomor Telepon:</label>
-                                        <input type="text" name="phone" class="form-control" placeholder="<?php echo $phone ?>" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                        <input type="text" name="phone" class="form-control" placeholder="<?php echo $phone ?>" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
 
                                     <div class="mb-3 mt-3">

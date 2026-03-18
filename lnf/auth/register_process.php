@@ -5,6 +5,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nik = mysqli_real_escape_string($conn, $_POST['nik']);
     $full_name = mysqli_real_escape_string($conn, $_POST['full_name']);
 
+    $target_dir = "../assets/images/profile/uploads/";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $uploadOk = 0;
+
+    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+        $uploadOk = 1;
+        $file_name = $_FILES["fileToUpload"]["name"];
+    } else {
+        $uploadOk = 0;
+        $file_name = "";
+    }
+
     // Email opsional
     $email = !empty($_POST['email']) ? "'" . mysqli_real_escape_string($conn, $_POST['email']) . "'" : "NULL";
 
@@ -27,8 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
     // Simpan ke database
-    $sql = "INSERT INTO users (role_id, nik, full_name, email, phone, password_hash) 
-            VALUES (3, '$nik', '$full_name', $email, '$phone', '$hash')";
+    $sql = "INSERT INTO users (role_id, nik, profile_image, full_name, email, phone, password_hash) 
+            VALUES (2, '$nik', '$file_name', '$full_name', $email, '$phone', '$hash')";
 
     if (mysqli_query($conn, $sql)) {
         // FITUR REDIRECT: Munculkan alert lalu pindah ke login_page.php
