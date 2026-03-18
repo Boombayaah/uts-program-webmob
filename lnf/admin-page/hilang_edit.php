@@ -38,10 +38,12 @@ if (isset($_POST['btnSubmit'])) {
     $file_name = "";
 
     if ($_FILES['file']['name'] != "") {
-        $file_name = $_FILES['file']['name'];
+        $file_name = time() . "_" . $_FILES['file']['name'];
         $tmp_name = $_FILES['file']['tmp_name'];
 
-        move_uploaded_file($tmp_name, "uploads/" . $file_name);
+        move_uploaded_file($tmp_name, "../assets/images/" . $file_name);
+    } else {
+        $file_name = $data['file']; 
     }
 
     $sql = "UPDATE lost_reports
@@ -49,7 +51,8 @@ if (isset($_POST['btnSubmit'])) {
                 category = '$kategori',
                 location = '$lokasi',
                 lost_date = '$tanggal',
-                description = '$deskripsi'
+                description = '$deskripsi',
+                file = '$file_name'
                 WHERE lost_report_id = '$id'";
 
     if (mysqli_query($conn, $sql)) {
@@ -182,12 +185,13 @@ if (isset($_POST['btnCancel'])) {
                                         style="cursor: pointer;">
                                         <i class="fas fa-cloud-upload-alt fa-3x text-secondary mb-3"></i>
                                         <p>Klik untuk upload</p>
-                                        <button class="btn btn-outline-secondary btn-sm" id="uploadBtn">Pilih
-                                            File</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" id="uploadBtn">Pilih File</button>
                                     </div>
                                     <p class="text-muted mt-2"><small>Format: JPG, PNG. Maksimal 5MB</small></p>
-                                    <input type="file" class="d-none" id="fileInput" name="file" accept=".jpg, .png">
-                                    <p class="mt-2" id="fileName"></p>
+                                    <input type="file" class="d-none" id="fileInput" name="file" accept=".jpg, .png" value="<?php echo $data['file'] ? $data['file'] : ''; ?>">
+                                    <p class="mt-2" id="fileName">
+                                        <?php echo $data['file'] ? $data['file'] : ''; ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -202,6 +206,24 @@ if (isset($_POST['btnCancel'])) {
 
         </div>
     </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileName = document.getElementById('fileName');
+
+        // klik tombol atau area → trigger input file
+        uploadBtn.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('click', (e) => {
+            if (e.target.id !== 'uploadBtn') fileInput.click();
+        });
+
+        // tampilkan nama file yg dipilih
+        fileInput.addEventListener('change', () => {
+            fileName.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : '';
+        });
+    </script>
 </body>
 
 </html>

@@ -14,16 +14,15 @@ if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
 } else if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 3) {
     header("Location: ../home.php");
     exit();
-} 
+}
 
 
-if (isset($_GET['found_item_id']))
-    {
-        $id = $_GET['found_item_id'];
-        $sql = "select * from found_items where found_item_id = '$id'";
-        $result = mysqli_query($conn, $sql);
-        $data = mysqli_fetch_assoc($result);
-    }
+if (isset($_GET['found_item_id'])) {
+    $id = $_GET['found_item_id'];
+    $sql = "select * from found_items where found_item_id = '$id'";
+    $result = mysqli_query($conn, $sql);
+    $data = mysqli_fetch_assoc($result);
+}
 
 if (isset($_POST['btnSubmit'])) {
 
@@ -38,10 +37,12 @@ if (isset($_POST['btnSubmit'])) {
     $file_name = "";
 
     if ($_FILES['file']['name'] != "") {
-        $file_name = $_FILES['file']['name'];
+        $file_name = time() . "_" . $_FILES['file']['name'];
         $tmp_name = $_FILES['file']['tmp_name'];
 
-        move_uploaded_file($tmp_name, "uploads/" . $file_name);
+        move_uploaded_file($tmp_name, "../assets/images/" . $file_name);
+    } else {
+        $file_name = $data['file']; 
     }
 
     $sql = "UPDATE found_items
@@ -49,7 +50,8 @@ if (isset($_POST['btnSubmit'])) {
                 category = '$kategori',
                 location = '$lokasi',
                 found_date = '$tanggal',
-                description = '$deskripsi'
+                description = '$deskripsi',
+                file = '$file_name'
                 WHERE found_item_id = '$id'";
 
     if (mysqli_query($conn, $sql)) {
@@ -60,7 +62,7 @@ if (isset($_POST['btnSubmit'])) {
 }
 
 if (isset($_POST['btnCancel'])) {
-    header("Location: laporan_hilang.php");
+    header("Location: laporan_temuan.php");
     exit();
 }
 
@@ -143,13 +145,14 @@ if (isset($_POST['btnCancel'])) {
                                 <div class="mb-3">
                                     <label class="form-label">Nama Barang</label>
                                     <input type="hidden" name="found_item_id" value="<?= $id ?>">
-                                    <input type="text" class="form-control" value="<?php echo $data['item_name'];?>"
+                                    <input type="text" class="form-control" value="<?php echo $data['item_name']; ?>"
                                         name="item_name" id="item_name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Kategori</label>
-                                    <select class="form-select" name="category" id="category" >
-                                        <option value="<?php echo $data['category'];?>"><?php echo $data['category'];?></option>
+                                    <select class="form-select" name="category" id="category">
+                                        <option value="<?php echo $data['category']; ?>"><?php echo $data['category']; ?>
+                                        </option>
 
                                         <?php
                                         foreach ($hasil_category as $single_category) {
@@ -161,18 +164,18 @@ if (isset($_POST['btnCancel'])) {
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Lokasi Kehilangan</label>
-                                    <input type="text" class="form-control"
-                                        value="<?php echo $data['location'];?>" name="location" id="location"
-                                        required>
+                                    <input type="text" class="form-control" value="<?php echo $data['location']; ?>"
+                                        name="location" id="location" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Tanggal Kehilangan</label>
-                                    <input type="date" class="form-control" value="<?php echo $data['found_date'];?>" name="found_date" id="found_date" required>
+                                    <input type="date" class="form-control" value="<?php echo $data['found_date']; ?>"
+                                        name="found_date" id="found_date" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Deskripsi</label>
-                                    <textarea class="form-control" rows="3" value=""
-                                        name="description" id="description"><?php echo $data['description'];?></textarea>
+                                    <textarea class="form-control" rows="3" value="" name="description"
+                                        id="description"><?php echo $data['description']; ?></textarea>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -182,12 +185,14 @@ if (isset($_POST['btnCancel'])) {
                                         style="cursor: pointer;">
                                         <i class="fas fa-cloud-upload-alt fa-3x text-secondary mb-3"></i>
                                         <p>Klik untuk upload</p>
-                                        <button class="btn btn-outline-secondary btn-sm" id="uploadBtn">Pilih
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" id="uploadBtn">Pilih
                                             File</button>
                                     </div>
                                     <p class="text-muted mt-2"><small>Format: JPG, PNG. Maksimal 5MB</small></p>
-                                    <input type="file" class="d-none" id="fileInput" name="file" accept=".jpg, .png">
-                                    <p class="mt-2" id="fileName"></p>
+                                    <input type="file" class="d-none" id="fileInput" name="file" accept=".jpg, .png" value="<?php echo $data['file']; ?>">
+                                    <p class="mt-2" id="fileName">
+                                        <?php echo $data['file'] ? $data['file'] : ''; ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -202,6 +207,24 @@ if (isset($_POST['btnCancel'])) {
 
         </div>
     </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileName = document.getElementById('fileName');
+
+        // klik tombol atau area → trigger input file
+        uploadBtn.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('click', (e) => {
+            if (e.target.id !== 'uploadBtn') fileInput.click();
+        });
+
+        // tampilkan nama file yg dipilih
+        fileInput.addEventListener('change', () => {
+            fileName.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : '';
+        });
+    </script>
 </body>
 
 </html>
