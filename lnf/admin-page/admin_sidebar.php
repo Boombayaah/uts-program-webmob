@@ -42,21 +42,31 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a class="nav-link <?php if ($currentPage == 'upload_barang.php') echo 'active'; ?>" href="upload_barang.php">
-                        <i class="fas fa-upload me-2"></i> Upload Barang
-                    </a>
-                </li>
-
-                <li class="nav-item mb-2">
                     <a class="nav-link <?php if ($currentPage == 'laporan_hilang.php') echo 'active'; ?>" href="laporan_hilang.php">
                         <i class="fas fa-box-open me-2"></i> Barang Hilang
                     </a>
                 </li>
-
                 <li class="nav-item mb-2">
-                    <a class="nav-link <?php if ($currentPage == 'laporan_temuan.php') echo 'active'; ?>" href="laporan_temuan.php">
-                        <i class="fas fa-search me-2"></i> Barang Temuan
+                    <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+                        <i class="fas fa-search me-2"></i>
+                        <span class="menu-title">Barang Temuan</span>
+                        <i class="menu-arrow"></i>
                     </a>
+                    <div class="collapse" id="tables">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item mb-2">
+                                <a class="ml-5 nav-link opacity-50 <?php if ($currentPage == 'laporan_temuan.php') echo 'active'; ?>" href="laporan_temuan.php">
+                                    <i class="fa-solid fa-user-gear"></i> Manajemen
+                                </a>
+                            </li>
+
+                            <li class="nav-item mb-2">
+                                <a class="ml-5 nav-link opacity-50 <?php if ($currentPage == 'upload_barang.php') echo 'active'; ?>" href="upload_barang.php">
+                                    <i class="fas fa-upload me-2"></i> Upload
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="nav-item mb-2">
@@ -87,4 +97,24 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </ul>
         </div>
     </div>
+    <!-- plugins:js -->
+    <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../assets/vendors/chart.js/chart.umd.js"></script>
+    <script src="../assets/vendors/progressbar.js/progressbar.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../assets/js/off-canvas.js"></script>
+    <script src="../assets/js/template.js"></script>
+    <script src="../assets/js/settings.js"></script>
+    <script src="../assets/js/hoverable-collapse.js"></script>
+    <script src="../assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
+    <!-- End custom js for this page-->
 </body>
