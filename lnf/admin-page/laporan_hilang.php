@@ -20,7 +20,7 @@ if (isset($_FILES['file']) && $_FILES['file']['name'] != "") {
     $file_name = $_FILES['file']['name'];
     $tmp_name = $_FILES['file']['tmp_name'];
 
-    move_uploaded_file($tmp_name, "../assets/images/" . $file_name);
+    move_uploaded_file($tmp_name, "../assets/images/uploads/" . $file_name);
 }
 
 $limit = 7;
@@ -224,7 +224,7 @@ $total_page = ceil($total_data / $limit);
                                                 echo "";
                                             } else {
                                             ?>
-                                                <a href="../assets/images/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
+                                                <a href="../assets/images/uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
                                             <?php
                                             }
                                             ?>

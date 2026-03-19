@@ -20,7 +20,7 @@ if (isset($_POST['btnSubmit'])) {
         $file_name = $_FILES['file']['name'];
         $tmp_name = $_FILES['file']['tmp_name'];
 
-        move_uploaded_file($tmp_name, "uploads/" . $file_name);
+        move_uploaded_file($tmp_name, "assets/images/uploads/" . $file_name);
     }
 
     $sql = "insert into lost_reports (reported_by, item_name, category, description, location, lost_date, file)";
@@ -42,10 +42,13 @@ $start = ($page - 1) * $limit;
 if (isset($_SESSION['user_id'])) {
     $sql = "SELECT 
         l.*,
-        users.full_name
+        users.full_name,
+        m.matching_id
 
         FROM lost_reports l
         JOIN users on l.reported_by = users.user_id
+        LEFT JOIN matchings m ON m.lost_report_id = l.lost_report_id
+
         WHERE l.reported_by = '$user_id'
         LIMIT $start, $limit";
     $hasil = mysqli_query($conn, $sql);
@@ -64,6 +67,42 @@ $sql_category = "SELECT *
                 FROM item_category
                 ORDER BY category";
 $hasil_category = mysqli_query($conn, $sql_category);
+
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);             
+if (isset($_POST['btnCheck'])) {
+    $matching_id = $_POST['matching_id'];
+    $pickup_date = $_POST['pickup_date'];
+
+    mysqli_begin_transaction($conn);
+
+    try {
+        $q = "SELECT
+              lost_report_id
+              from matchings
+              WHERE matching_id = '$matching_id'";
+        $res = mysqli_query($conn, $q);
+        $data = mysqli_fetch_assoc($res);
+        $lost_id = $data['lost_report_id'];
+
+        $q2 = "UPDATE lost_reports
+               set status = 'Menunggu Pengambilan'
+               WHERE lost_report_id = '$lost_id'";
+        $res2 = mysqli_query($conn, $q2);
+
+        $q3 = "INSERT into pickup_schedules
+               (matching_id, pickup_date, status)
+               VALUES
+               ('$matching_id', '$pickup_date', 'Dijadwalkan')";
+        $res3 = mysqli_query($conn, $q3);
+
+        mysqli_commit($conn);
+        header("location:index.php");
+    } catch (Exception $e) {
+        mysqli_rollback($conn);
+        echo "Error";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -408,6 +447,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                 <th>Bukti Barang</th>
                                 <th>Status</th>
                                 <th>Pelapor</th>
+                                <th>Jadwal Ambil</th>
                             </tr>
                         </thead>
                         <tbody id="tableData">
@@ -423,6 +463,7 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                     $status = $row['status'];
                                     $pelapor = $row['full_name'];
 
+                                    $matching_id = $row['matching_id'];
                                     $badge = "";
 
                                     if ($status == "Sedang Diproses") {
@@ -460,13 +501,29 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                                 echo "";
                                             } else {
                                             ?>
-                                                <a href="uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
+                                                <a href="assets/images/uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
                                             <?php
                                             }
                                             ?>
                                         </td>
                                         <td><?php echo $badge; ?></td>
                                         <td><?php echo $pelapor; ?></td>
+                                        <td>
+                                            <?php
+                                            if ($status == "Telah Ditemukan" && $matching_id) { ?>
+                                                <form method="POST">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <input type="hidden" name="matching_id" value="<?php echo $matching_id;?>">
+
+                                                        <input type="date" class="form-control form-control-sm" name="pickup_date" required>
+
+                                                        <button class="btn btn-outline-success btn-sm" name="btnCheck">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            <?php } ?>
+                                        </td>
                                     </tr>
                             <?php
                                 }

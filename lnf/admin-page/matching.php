@@ -18,7 +18,7 @@ if (isset($_FILES['file']) && $_FILES['file']['name'] != "") {
     $file_name = $_FILES['file']['name'];
     $tmp_name = $_FILES['file']['tmp_name'];
 
-    move_uploaded_file($tmp_name, "uploads/" . $file_name);
+    move_uploaded_file($tmp_name, "assets/images/uploads/" . $file_name);
 }
 
 if (isset($_POST['btnMatch'])) {
@@ -202,7 +202,7 @@ $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="border rounded p-3 text-center mb-3">
-                                                                        <img src="uploads/<?php echo $bukti; ?>" alt="Barang hilang"
+                                                                        <img src="assets/images/uploads/<?php echo $bukti; ?>" alt="Barang hilang"
                                                                             class="img-fluid rounded">
                                                                         <div class="mt-3">
                                                                             <button class="btn btn-outline-primary btn-sm me-2"><i
@@ -332,7 +332,7 @@ $disableBtn = (mysqli_num_rows($hasil_found) == 0 || mysqli_num_rows($hasil_lost
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="border rounded p-3 text-center mb-3">
-                                                                        <img src="uploads/<?php echo $bukti; ?>" alt="Barang temuan"
+                                                                        <img src="assets/images/uploads/<?php echo $bukti; ?>" alt="Barang temuan"
                                                                             class="img-fluid rounded">
                                                                         <div class="mt-3">
                                                                             <button class="btn btn-outline-primary btn-sm me-2"><i

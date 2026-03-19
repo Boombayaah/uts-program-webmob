@@ -18,7 +18,7 @@ if (isset($_FILES['file']) && $_FILES['file']['name'] != "") {
     $file_name = $_FILES['file']['name'];
     $tmp_name = $_FILES['file']['tmp_name'];
 
-    move_uploaded_file($tmp_name, "uploads/" . $file_name);
+    move_uploaded_file($tmp_name, "assets/images/uploads/" . $file_name);
 }
 
 $category = "";
@@ -89,7 +89,7 @@ if (isset($_FILES['file']) && $_FILES['file']['name'] != "") {
     $file_name = $_FILES['file']['name'];
     $tmp_name = $_FILES['file']['tmp_name'];
 
-    move_uploaded_file($tmp_name, "uploads/" . $file_name);
+    move_uploaded_file($tmp_name, "assets/images/uploads/" . $file_name);
 }
 
 $disableBtn = (mysqli_num_rows($hasil_matching) == 0) ? "disabled" : "";
@@ -294,7 +294,7 @@ if (isset($_POST['action'], $_POST['matching_id'])) {
                                                                     <div class="row">
                                                                         <div class="col-md-12">
                                                                             <div class="border rounded p-3 text-center mb-3">
-                                                                                <img src="uploads/<?php echo $f_file; ?>"
+                                                                                <img src="assets/images/uploads/<?php echo $f_file; ?>"
                                                                                     alt="Barang temuan" class="img-fluid rounded">
                                                                                 <div class="mt-3">
                                                                                     <button
@@ -365,7 +365,7 @@ if (isset($_POST['action'], $_POST['matching_id'])) {
                                                                     <div class="row">
                                                                         <div class="col-md-12">
                                                                             <div class="border rounded p-3 text-center mb-3">
-                                                                                <img src="uploads/<?php echo $l_file; ?>"
+                                                                                <img src="assets/images/uploads/<?php echo $l_file; ?>"
                                                                                     alt="Barang hilang" class="img-fluid rounded">
                                                                                 <div class="mt-3">
                                                                                     <button
