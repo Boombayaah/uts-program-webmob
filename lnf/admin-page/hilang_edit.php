@@ -3,27 +3,25 @@ session_start();
 include "../config/connection.php";
 $logged_in = isset($_SESSION['user_id']);
 
-$sql_category = "SELECT * 
-                FROM item_category
-                ORDER BY category";
-$hasil_category = mysqli_query($conn, $sql_category);
-
 if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
     header("Location: ../admin_leader-page/dashboardleader.php");
     exit();
 } else if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 3) {
     header("Location: ../home.php");
     exit();
-} 
+}
 
+$sql_category = "SELECT * 
+                FROM item_category
+                ORDER BY category";
+$hasil_category = mysqli_query($conn, $sql_category);
 
-if (isset($_GET['lost_report_id']))
-    {
-        $id = $_GET['lost_report_id'];
-        $sql = "select * from lost_reports where lost_report_id = '$id'";
-        $result = mysqli_query($conn, $sql);
-        $data = mysqli_fetch_assoc($result);
-    }
+if (isset($_GET['lost_report_id'])) {
+    $id = $_GET['lost_report_id'];
+    $sql = "select * from lost_reports where lost_report_id = '$id'";
+    $result = mysqli_query($conn, $sql);
+    $data = mysqli_fetch_assoc($result);
+}
 
 if (isset($_POST['btnSubmit'])) {
 
@@ -43,7 +41,7 @@ if (isset($_POST['btnSubmit'])) {
 
         move_uploaded_file($tmp_name, "../assets/images/" . $file_name);
     } else {
-        $file_name = $data['file']; 
+        $file_name = $data['file'];
     }
 
     $sql = "UPDATE lost_reports
@@ -91,16 +89,16 @@ if (isset($_POST['btnCancel'])) {
     <link rel="stylesheet" href="../assets/css/admin-page.css">
 
     <script>
-        $(document).ready(function () {
-            $("#searchBar").on("keyup", function () {
+        $(document).ready(function() {
+            $("#searchBar").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function () {
+                $("#tableData tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -146,13 +144,13 @@ if (isset($_POST['btnCancel'])) {
                                 <div class="mb-3">
                                     <label class="form-label">Nama Barang</label>
                                     <input type="hidden" name="lost_report_id" value="<?= $id ?>">
-                                    <input type="text" class="form-control" value="<?php echo $data['item_name'];?>"
+                                    <input type="text" class="form-control" value="<?php echo $data['item_name']; ?>"
                                         name="item_name" id="item_name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Kategori</label>
-                                    <select class="form-select" name="category" id="category" >
-                                        <option value="<?php echo $data['category'];?>"><?php echo $data['category'];?></option>
+                                    <select class="form-select" name="category" id="category">
+                                        <option value="<?php echo $data['category']; ?>"><?php echo $data['category']; ?></option>
 
                                         <?php
                                         foreach ($hasil_category as $single_category) {
@@ -165,17 +163,17 @@ if (isset($_POST['btnCancel'])) {
                                 <div class="mb-3">
                                     <label class="form-label">Lokasi Kehilangan</label>
                                     <input type="text" class="form-control"
-                                        value="<?php echo $data['location'];?>" name="location" id="location"
+                                        value="<?php echo $data['location']; ?>" name="location" id="location"
                                         required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Tanggal Kehilangan</label>
-                                    <input type="date" class="form-control" value="<?php echo $data['lost_date'];?>" name="lost_date" id="lost_date" required>
+                                    <input type="date" class="form-control" value="<?php echo $data['lost_date']; ?>" name="lost_date" id="lost_date" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Deskripsi</label>
                                     <textarea class="form-control" rows="3" value=""
-                                        name="description" id="description"><?php echo $data['description'];?></textarea>
+                                        name="description" id="description"><?php echo $data['description']; ?></textarea>
                                 </div>
                             </div>
                             <div class="col-md-4">

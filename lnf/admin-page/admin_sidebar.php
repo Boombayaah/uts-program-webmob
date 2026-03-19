@@ -1,6 +1,6 @@
 <?php
-    // Mendapatkan nama file saat ini
-    $currentPage = basename($_SERVER['PHP_SELF']);
+// Mendapatkan nama file saat ini
+$currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Style -->
-    <link rel="stylesheet" href="../assets/css/admin-page.css"> 
+    <link rel="stylesheet" href="../assets/css/admin-page.css">
 
 </head>
 
@@ -36,32 +36,38 @@
 
             <ul class="nav flex-column" id="sidebar-nav">
                 <li class="nav-item mb-2">
-                    <a class="nav-link <?php if($currentPage == 'dashboard.php') echo 'active'; ?>" href="dashboard.php">
+                    <a class="nav-link <?php if ($currentPage == 'dashboard.php') echo 'active'; ?>" href="dashboard.php">
                         <i class="fas fa-home me-2"></i> Dashboard
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a class="nav-link <?php if($currentPage == 'upload_barang.php') echo 'active'; ?>" href="upload_barang.php">
+                    <a class="nav-link <?php if ($currentPage == 'upload_barang.php') echo 'active'; ?>" href="upload_barang.php">
                         <i class="fas fa-upload me-2"></i> Upload Barang
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a class="nav-link <?php if($currentPage == 'laporan_hilang.php') echo 'active'; ?>" href="laporan_hilang.php">
+                    <a class="nav-link <?php if ($currentPage == 'laporan_hilang.php') echo 'active'; ?>" href="laporan_hilang.php">
                         <i class="fas fa-box-open me-2"></i> Barang Hilang
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a class="nav-link <?php if($currentPage == 'laporan_temuan.php') echo 'active'; ?>" href="laporan_temuan.php">
+                    <a class="nav-link <?php if ($currentPage == 'laporan_temuan.php') echo 'active'; ?>" href="laporan_temuan.php">
                         <i class="fas fa-search me-2"></i> Barang Temuan
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a class="nav-link <?php if($currentPage == 'matching.php') echo 'active'; ?>" href="matching.php">
+                    <a class="nav-link <?php if ($currentPage == 'matching.php') echo 'active'; ?>" href="matching.php">
                         <i class="fas fa-handshake me-2"></i> Matching
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a class="nav-link <?php if ($currentPage == 'pengembalian_barang.php') echo 'active'; ?>" href="pengembalian_barang.php">
+                        <i class="fa-regular fa-calendar-check me-2"></i> Jadwal Pengembalian
                     </a>
                 </li>
 

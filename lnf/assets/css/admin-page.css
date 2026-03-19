@@ -212,3 +212,27 @@ h6 {
 .sidebar-title span {
   font-size: 22px;
 }
+
+.table td {
+    vertical-align: middle;
+}
+
+.cell-split {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.cell-top,
+.cell-bottom {
+    flex: 1;
+    padding: 6px 0;
+}
+
+.cell-top {
+    border-bottom: 1px solid #007bff;
+}
+
+.table tr {
+    height: 100px; /* optional biar seragam */
+}

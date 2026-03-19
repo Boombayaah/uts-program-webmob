@@ -429,13 +429,17 @@ $hasil_category = mysqli_query($conn, $sql_category);
                                         $badge = '<span class="status-badge me-2" style="background-color: #FEF3C7; color: #92400E;">
                                                             <i class="fas fa-clock me-1"></i>Sedang Diproses
                                                         </span>';
-                                    } elseif ($status == "Telah Ditemukan") {
+                                    } else if ($status == "Telah Ditemukan") {
                                         $badge = '<span class="status-badge me-2" style="background-color: #DBEAFE; color: #1E40AF;">
                                                             <i class="fas fa-exchange-alt me-1"></i>Telah Ditemukan
                                                         </span>';
-                                    } elseif ($status == "Menunggu Pengambilan") {
+                                    } else if ($status == "Menunggu Pengambilan") {
                                         $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
-                                                            <i class="fas fa-check-circle me-1"></i>Menunggu Pengambilan
+                                                            <i class="fas fa-clock me-1"></i>Menunggu Pengambilan
+                                                        </span>';
+                                    } else if ($status == "Selesai") {
+                                        $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
+                                                            <i class="fas fa-check-circle me-1"></i>Selesai
                                                         </span>';
                                     } else {
                                         $badge = '<span class="status-badge me-2" style="background-color: #FEE2E2; color: #991B1B;">

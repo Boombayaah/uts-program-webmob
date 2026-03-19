@@ -3,11 +3,6 @@ session_start();
 include "../config/connection.php";
 $logged_in = isset($_SESSION['user_id']);
 
-$sql_category = "SELECT * 
-                FROM item_category
-                ORDER BY category";
-$hasil_category = mysqli_query($conn, $sql_category);
-
 if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
     header("Location: ../admin_leader-page/dashboardleader.php");
     exit();
@@ -15,6 +10,11 @@ if (isset($_SESSION['user_id']) && $_SESSION['role_id'] == 1) {
     header("Location: ../home.php");
     exit();
 }
+
+$sql_category = "SELECT * 
+                FROM item_category
+                ORDER BY category";
+$hasil_category = mysqli_query($conn, $sql_category);
 
 $file_name = "";
 
@@ -195,10 +195,10 @@ $total_page = ceil($total_data / $limit);
                                         $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #991B1B;">
                                                         <i class="fas fa-check-circle me-1"></i>Dibatalkan
                                                     </span>';
-                                    } else {
-                                        $badge = '<span class="status-badge me-2" style="background-color: #FEE2E2; color: #065F46;">
-                                                        <i class="fas fa-times-circle me-1"></i>Diserahkan
-                                                    </span>';
+                                    } elseif  ($status == "Diserahkan")  {
+                                        $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
+                                                            <i class="fas fa-check-circle me-1"></i>Diserahkan
+                                                        </span>';
                                     }
 
                             ?>

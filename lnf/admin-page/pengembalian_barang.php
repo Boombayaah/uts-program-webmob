@@ -16,11 +16,25 @@ $sql_category = "SELECT *
                 ORDER BY category";
 $hasil_category = mysqli_query($conn, $sql_category);
 
+$sql_status = "SELECT COLUMN_TYPE 
+        FROM information_schema.COLUMNS 
+        WHERE TABLE_SCHEMA = 'info_krl' 
+        AND TABLE_NAME = 'pickup_schedules' 
+        AND COLUMN_NAME = 'status'";
+$hasil_enum = mysqli_query($conn, $sql_status);
+$status_enum = [];
+$row = mysqli_fetch_assoc($hasil_enum);
+
+preg_match("/^enum\(\'(.*)\'\)$/", $row['COLUMN_TYPE'], $matches);
+$status_enum = explode("','", $matches[1]);
+
+$file_name = "";
+
 if (isset($_FILES['file']) && $_FILES['file']['name'] != "") {
     $file_name = $_FILES['file']['name'];
     $tmp_name = $_FILES['file']['tmp_name'];
 
-    move_uploaded_file($tmp_name, "../assets/images/" . $file_name);
+    move_uploaded_file($tmp_name, "../assets/images/uploads/" . $file_name);
 }
 
 $limit = 7;
@@ -29,10 +43,46 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
 $start = ($page - 1) * $limit;
 
-$sql = "select * from lost_reports LIMIT $start,$limit";
+$sql = "";
+$sql = "
+SELECT 
+    ps.schedule_id,
+    ps.pickup_date,
+    ps.status AS schedule_status,
+
+    m.matching_id,
+
+    lr.lost_report_id,
+    lr.item_name AS lost_item,
+    lr.category AS lost_category,
+    lr.description AS lost_description,
+    lr.location AS lost_location,
+    lr.file AS lost_file,
+    lr.status AS lost_status,
+
+    fi.found_item_id,
+    fi.item_name AS found_item,
+    fi.category AS found_category,
+    fi.description AS found_description,
+    fi.location AS found_location,
+    fi.file AS found_file,
+    fi.status AS found_status
+
+FROM pickup_schedules ps
+JOIN matchings m ON ps.matching_id = m.matching_id
+JOIN lost_reports lr ON m.lost_report_id = lr.lost_report_id
+JOIN found_items fi ON m.found_item_id = fi.found_item_id
+
+ORDER BY ps.status, ps.pickup_date
+LIMIT $start, $limit
+";
 $hasil = mysqli_query($conn, $sql);
 
-$sql_total = "select count(*) as total from lost_reports";
+$sql_total = "
+SELECT COUNT(*) as total 
+FROM pickup_schedules ps
+JOIN matchings m ON ps.matching_id = m.matching_id
+";
 $results_total = mysqli_query($conn, $sql_total);
 $data_total = mysqli_fetch_assoc($results_total);
 
@@ -113,6 +163,28 @@ $total_page = ceil($total_data / $limit);
 </head>
 
 <body>
+    <?php
+    function getStatusBadge($status)
+    {
+        if ($status == "Dijadwalkan") {
+            return '<span class="status-badge me-2" style="background-color: #FEF3C7; color: #92400E;">
+                    <i class="fas fa-clock me-1"></i>' . $status . '
+                </span>';
+        } elseif ($status == "Barang Dikembalikan") {
+            return '<span class="status-badge me-2" style="background-color: #DBEAFE; color: #1E40AF;">
+                    <i class="fas fa-exchange-alt me-1"></i>' . $status . '
+                </span>';
+        } elseif ($status == "Diterima Pelapor") {
+            return '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
+                    <i class="fas fa-check-circle me-1"></i>' . $status . '
+                </span>';
+        } else {
+            return '<span class="status-badge me-2" style="background-color: #FEE2E2; color: #991B1B;">
+                    <i class="fas fa-times-circle me-1"></i>' . $status . '
+                </span>';
+        }
+    }
+    ?>
     <div class="container-fluid">
         <div class="row">
             <?php include "admin_sidebar.php"; ?>
@@ -131,22 +203,20 @@ $total_page = ceil($total_data / $limit);
                     <div class="col-md-3">
                         <select class="form-select" id="statusFilter">
                             <option value="">Semua Status</option>
-                            <option value="sedang diproses">Sedang Diproses</option>
-                            <option value="telah ditemukan">Telah Ditemukan</option>
-                            <option value="menunggu pengambilan">Menunggu Pengambilan</option>
-                            <option value="ditolak">Ditolak</option>
+                            <?php foreach ($status_enum as $status) { ?>
+                                <option value="<?php echo strtolower($status); ?>">
+                                    <?php echo $status; ?>
+                                </option>
+                            <?php } ?>
                         </select>
                     </div>
 
                     <div class="col-md-3">
-                        <select class="form-select" id="categoryFilter">
-                            <option value="">Pilih kategori</option>
-
-                            <?php
-                            foreach ($hasil_category as $single_category) {
-                                echo "<option value='$single_category[category]'>$single_category[category]</option>";
-                            }
-                            ?>
+                        <select class="form-select" id="categoryFilter" name="category">
+                            <option value="">-- Pilih Kategori --</option>
+                            <?php foreach ($hasil_category as $single_category) {
+                                echo "<option value=$single_category[category]>$single_category[category]</option>";
+                            }; ?>
                         </select>
                     </div>
                 </div>
@@ -155,7 +225,7 @@ $total_page = ceil($total_data / $limit);
                     <table class="table table-hover">
                         <thead class="table-light">
                             <tr class="text-center">
-                                <th>Tanggal</th>
+                                <th>Pengambilan</th>
                                 <th>Laporan</th>
                                 <th>Kategori</th>
                                 <th>Keterangan</th>
@@ -169,77 +239,84 @@ $total_page = ceil($total_data / $limit);
                             <?php
                             if (mysqli_num_rows($hasil) > 0) {
                                 while ($row = mysqli_fetch_assoc($hasil)) {
-                                    $id = $row['lost_report_id'];
-                                    $tanggal = $row['lost_date'];
-                                    $laporan = $row['item_name'];
-                                    $kategori = $row['category'];
-                                    $keterangan = $row['description'];
-                                    $lokasi = $row['location'];
-                                    $bukti = $row['file'];
-                                    $status = $row['status'];
-
-                                    $badge = "";
-                                    if ($status == "Sedang Diproses") {
-                                        $badge = '<span class="status-badge me-2" style="background-color: #FEF3C7; color: #92400E;">
-                                                            <i class="fas fa-clock me-1"></i>Sedang Diproses
-                                                        </span>';
-                                    } else if ($status == "Telah Ditemukan") {
-                                        $badge = '<span class="status-badge me-2" style="background-color: #DBEAFE; color: #1E40AF;">
-                                                            <i class="fas fa-exchange-alt me-1"></i>Telah Ditemukan
-                                                        </span>';
-                                    } else if ($status == "Menunggu Pengambilan") {
-                                        $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
-                                                            <i class="fas fa-clock me-1"></i>Menunggu Pengambilan
-                                                        </span>';
-                                    } else if ($status == "Selesai") {
-                                        $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
-                                                            <i class="fas fa-check-circle me-1"></i>Selesai
-                                                        </span>';
-                                    } else {
-                                        $badge = '<span class="status-badge me-2" style="background-color: #FEE2E2; color: #991B1B;">
-                                                            <i class="fas fa-times-circle me-1"></i> Ditolak
-                                                        </span>';
-                                    }
-
+                                    $id = $row['schedule_id'];
+                                    $tanggal = $row['pickup_date'];
+                                    $status = $row['schedule_status'];
                             ?>
-                                    <tr class="text-center">
+                                    <tr>
                                         <td>
                                             <?php echo $tanggal; ?>
                                         </td>
                                         <td>
-                                            <?php echo $laporan; ?>
+                                            <div style="border-bottom:1px solid #007bff; margin-bottom:5px;">
+                                                <strong style="color:red;">Lost:</strong><br>
+                                                <?php echo $row['lost_item']; ?>
+                                            </div>
+
+                                            <div>
+                                                <strong style="color:green;">Found:</strong><br>
+                                                <?php echo $row['found_item']; ?>
+                                            </div>
                                         </td>
                                         <td>
-                                            <?php echo $kategori; ?>
-                                        </td>
-                                        <td class="col-keterangan">
-                                            <?php echo $keterangan; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $lokasi; ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if ($bukti == "") {
-                                                echo "";
-                                            } else {
-                                            ?>
-                                                <a href="../assets/images/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                            <?php
-                                            }
-                                            ?>
+                                            <div style="border-bottom:1px solid #007bff;">
+                                                <?php echo $row['lost_category']; ?>
+                                            </div>
+                                            <div>
+                                                <?php echo $row['found_category']; ?>
+                                            </div>
                                         </td>
                                         <td>
-                                            <?php echo $badge; ?>
+                                            <div style="border-bottom:1px solid #007bff;">
+                                                <?php echo $row['lost_description']; ?>
+                                            </div>
+                                            <div>
+                                                <?php echo $row['found_description']; ?>
+                                            </div>
                                         </td>
-                                        <td class="text-center">
-                                            <a href="hilang_edit.php?lost_report_id=<?php echo $id ?>"><i
-                                                    class="button-text-icon fa-regular fa-pen-to-square m-1"
-                                                    style="color: #f59e0b;"></i></a>
-                                            <a href="delete_laporan.php?type=lost&id=<?php echo $id ?>"
-                                                onclick="return delete_confirm();"><i
-                                                    class="button-text-icon fa-regular fa-trash-can m-1"
-                                                    style="color: #f59e0b;"></i></a>
+                                        <td>
+                                            <div style="border-bottom:1px solid #007bff;">
+                                                <?php echo $row['lost_location']; ?>
+                                            </div>
+                                            <div>
+                                                <?php echo $row['found_location']; ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="border-bottom:1px solid #007bff;">
+                                                <?php if ($row['lost_file']) { ?>
+                                                    <a href="../assets/images/uploads/<?php echo $row['lost_file']; ?>" target="_blank">Lost</a>
+                                                <?php } ?>
+                                            </div>
+
+                                            <div>
+                                                <?php if ($row['found_file']) { ?>
+                                                    <a href="../assets/images/uploads/<?php echo $row['found_file']; ?>" target="_blank">Found</a>
+                                                <?php } ?>
+                                            </div>
+                                        </td>
+                                        <td class="status-cell">
+                                            <div style="margin-bottom:5px;">
+                                                <strong>Pickup:</strong><br>
+                                                <?php echo getStatusBadge($status); ?>
+                                            </div>
+                                        </td>
+                                        <td class="operation-cell text-center">
+                                            <?php if ($status == "Dijadwalkan") { ?>
+                                                <a href="update_status.php?action=kembalikan&id=<?php echo $id ?>"
+                                                    class="btn btn-success btn-sm"
+                                                    onclick="return confirm('Konfirmasi barang dikembalikan?')">
+                                                    Telah Dikembalikan
+                                                </a>
+                                            <?php } ?>
+
+                                            <?php if ($status == "Barang Dikembalikan") { ?>
+                                                <a href="update_status.php?action=terima&id=<?php echo $id ?>"
+                                                    class="btn btn-primary btn-sm"
+                                                    onclick="return confirm('Konfirmasi pelapor sudah menerima?')">
+                                                    Diterima Pelapor
+                                                </a>
+                                            <?php } ?>
                                         </td>
                                     </tr>
                             <?php
@@ -278,7 +355,6 @@ $total_page = ceil($total_data / $limit);
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </body>
