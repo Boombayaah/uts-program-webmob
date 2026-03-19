@@ -18,7 +18,7 @@ if (isset($_FILES['file']) && $_FILES['file']['name'] != "") {
     $file_name = $_FILES['file']['name'];
     $tmp_name = $_FILES['file']['tmp_name'];
 
-    move_uploaded_file($tmp_name, "assets/images/uploads/" . $file_name);
+    move_uploaded_file($tmp_name, "../assets/images/uploads/" . $file_name);
 }
 
 $category = "";
