@@ -69,7 +69,7 @@ $sql_category = "SELECT *
 $hasil_category = mysqli_query($conn, $sql_category);
 
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);             
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 if (isset($_POST['btnCheck'])) {
     $matching_id = $_POST['matching_id'];
     $pickup_date = $_POST['pickup_date'];
@@ -98,6 +98,50 @@ if (isset($_POST['btnCheck'])) {
 
         mysqli_commit($conn);
         header("location:index.php");
+    } catch (Exception $e) {
+        mysqli_rollback($conn);
+        echo "Error";
+    }
+}
+
+if (isset($_POST['btnCancel'])) {
+
+    $lost_id = $_POST['lost_report_id'];
+    $matching_id = !empty($_POST['matching_id']) ? $_POST['matching_id'] : null;
+
+    mysqli_begin_transaction($conn);
+
+    try {
+
+        $q = "SELECT status FROM lost_reports WHERE lost_report_id = '$lost_id'";
+        $res = mysqli_query($conn, $q);
+        $data = mysqli_fetch_assoc($res);
+        $status = $data['status'];
+
+        if ($status == "Sedang Diproses" && $matching_id) {
+
+            // yang ada matching (prioritas)
+
+            $q2 = "SELECT found_item_id 
+           FROM matchings 
+           WHERE matching_id = '$matching_id'";
+            $res2 = mysqli_query($conn, $q2);
+            $data2 = mysqli_fetch_assoc($res2);
+            $found_id = $data2['found_item_id'];
+
+            mysqli_query($conn, "UPDATE found_items SET status = 'Diproses' WHERE found_item_id = '$found_id'");
+            mysqli_query($conn, "UPDATE lost_reports SET status = 'Dibatalkan' WHERE lost_report_id = '$lost_id'");
+            mysqli_query($conn, "UPDATE matchings SET approval_status = 'Ditolak' WHERE matching_id = '$matching_id'");
+
+        } else if ($status == "Sedang Diproses") {
+
+            // yang belum match
+            mysqli_query($conn, "UPDATE lost_reports SET status = 'Dibatalkan' WHERE lost_report_id = '$lost_id'");
+        }
+
+        mysqli_commit($conn);
+        header("location:index.php");
+
     } catch (Exception $e) {
         mysqli_rollback($conn);
         echo "Error";
@@ -353,16 +397,16 @@ if (isset($_POST['btnCheck'])) {
     </style>
 
     <script>
-        $(document).ready(function() {
-            $("#searchBar").on("keyup", function() {
+        $(document).ready(function () {
+            $("#searchBar").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function() {
+                $("#tableData tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -446,7 +490,7 @@ if (isset($_POST['btnCheck'])) {
                                 <th>Lokasi</th>
                                 <th>Bukti Barang</th>
                                 <th>Status</th>
-                                <th>Pelapor</th>
+                                <th>Aksi</th>
                                 <th>Jadwal Ambil</th>
                             </tr>
                         </thead>
@@ -482,13 +526,17 @@ if (isset($_POST['btnCheck'])) {
                                         $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
                                                             <i class="fas fa-check-circle me-1"></i>Selesai
                                                         </span>';
+                                    } else if ($status == "Dibatalkan") {
+                                        $badge = '<span class="status-badge me-2" style="background-color: #FEE2E2; color: #991B1B;">
+                                                            <i class="fas fa-times-circle me-1"></i>Dibatalkan
+                                                        </span>';
                                     } else {
                                         $badge = '<span class="status-badge me-2" style="background-color: #FEE2E2; color: #991B1B;">
                                                             <i class="fas fa-times-circle me-1"></i> Ditolak
                                                         </span>';
                                     }
 
-                            ?>
+                                    ?>
                                     <tr class="text-center">
                                         <td><?php echo $tanggal; ?></td>
                                         <td><?php echo $laporan; ?></td>
@@ -500,22 +548,34 @@ if (isset($_POST['btnCheck'])) {
                                             if ($bukti == "") {
                                                 echo "";
                                             } else {
-                                            ?>
+                                                ?>
                                                 <a href="assets/images/uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                            <?php
+                                                <?php
                                             }
                                             ?>
                                         </td>
                                         <td><?php echo $badge; ?></td>
-                                        <td><?php echo $pelapor; ?></td>
+                                        <td>
+                                            <form method="post" class="d-flex justify-content-center">
+                                                <input type="hidden" name="lost_report_id"
+                                                    value="<?php echo $row['lost_report_id']; ?>">
+                                                <input type="hidden" name="matching_id" value="<?php echo $matching_id; ?>">
+
+                                                <button class="btn btn-outline-danger btn-sm d-flex align-items-center px-3"
+                                                    name="btnCancel">
+                                                    <i class="fas fa-times me-1"></i> Batal
+                                                </button>
+                                            </form>
+                                        </td>
                                         <td>
                                             <?php
                                             if ($status == "Telah Ditemukan" && $matching_id) { ?>
                                                 <form method="POST">
                                                     <div class="d-flex align-items-center gap-2">
-                                                        <input type="hidden" name="matching_id" value="<?php echo $matching_id;?>">
+                                                        <input type="hidden" name="matching_id" value="<?php echo $matching_id; ?>">
 
-                                                        <input type="date" class="form-control form-control-sm" name="pickup_date" required>
+                                                        <input type="date" class="form-control form-control-sm" name="pickup_date"
+                                                            required>
 
                                                         <button class="btn btn-outline-success btn-sm" name="btnCheck">
                                                             <i class="fas fa-check"></i>
@@ -525,7 +585,7 @@ if (isset($_POST['btnCheck'])) {
                                             <?php } ?>
                                         </td>
                                     </tr>
-                            <?php
+                                    <?php
                                 }
                                 mysqli_free_result($hasil);
                             }
@@ -538,7 +598,7 @@ if (isset($_POST['btnCheck'])) {
                         <ul class="pagination">
                             <!-- prev -->
                             <li class="page-item <?php if ($page <= 1)
-                                                        echo 'disabled'; ?>">
+                                echo 'disabled'; ?>">
                                 <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page - 1; ?>"
                                     class="page-link">Prev</a>
                             </li>
@@ -546,7 +606,7 @@ if (isset($_POST['btnCheck'])) {
                             <!-- halaman -->
                             <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                                 <li class="page-item <?php if ($i == $page)
-                                                            echo 'active'; ?>">
+                                    echo 'active'; ?>">
                                     <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $i; ?>"
                                         class="page-link">
                                         <?php echo $i; ?>
@@ -556,8 +616,8 @@ if (isset($_POST['btnCheck'])) {
 
                             <!-- next -->
                             <li class="page-item <?php if ($page >= $total_page)
-                                                        echo 'disabled' ?>">
-                                <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page + 1; ?>"
+                                echo 'disabled' ?>">
+                                    <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page + 1; ?>"
                                     class="page-link">Next</a>
                             </li>
                         </ul>
