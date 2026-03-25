@@ -39,9 +39,25 @@
             background: #f8f9fa;
         }
 
+        .auth-wrapper {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 15px;
+        }
+
         .auth-card {
             max-width: 450px;
             width: 100%;
+        }
+
+        @media (max-height: 750px) {
+            .auth-wrapper {
+                align-items: flex-start;
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
         }
 
         .password-container {
@@ -78,7 +94,7 @@
 </head>
 
 <body>
-    <div class="d-flex justify-content-center align-items-center vh-100 p-3">
+    <div class="auth-wrapper">
         <div class="auth-card bg-white p-4 rounded-4 shadow-sm border">
 
             <h3 class="fw-bold text-center mb-1">Membuat Akun</h3>
