@@ -237,7 +237,7 @@ $active = "home";
 
         .hero-section {
             position: relative;
-            background: url("assets/images/6588183a4af899491f095fb1b8b1a46c.png");
+            background: url("assets/images/uploads/6588183a4af899491f095fb1b8b1a46c.png");
             background-size: cover;
             background-position: center;
             color: white;
