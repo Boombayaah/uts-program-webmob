@@ -48,7 +48,7 @@ if ($_SESSION) {
               }
               ?>
               <img src="<?php echo $image_source; ?>" alt="Profile Image" class="img-fluid rounded-circle me-2" width="20" height="20">
-              <?php echo $_SESSION['full_name']; ?></a>
+              <?php echo $user['full_name']; ?></a>
           </li>
           <li class="nav-item">
             <a href="auth/logout.php" class="btn btn-sm px-4"
