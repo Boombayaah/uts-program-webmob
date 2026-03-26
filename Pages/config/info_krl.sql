@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Mar 2026 pada 13.14
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Generation Time: Mar 26, 2026 at 07:00 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `found_items`
+-- Table structure for table `found_items`
 --
 
 CREATE TABLE `found_items` (
@@ -44,7 +44,7 @@ CREATE TABLE `found_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `found_items`
+-- Dumping data for table `found_items`
 --
 
 INSERT INTO `found_items` (`found_item_id`, `reported_by`, `item_name`, `category`, `description`, `location`, `found_date`, `status`, `file`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
@@ -58,13 +58,13 @@ INSERT INTO `found_items` (`found_item_id`, `reported_by`, `item_name`, `categor
 (8, 2, 'Ransel Biru', 'Dompet/Tas', 'Tas ransel berisi buku sekolah', 'Stasiun Jatinegara', '2025-03-09', 'Diproses', NULL, '2026-03-11 21:11:19', NULL, '2026-03-11 21:11:19', NULL),
 (9, 2, 'SIM A', 'Dokumen', 'SIM A ditemukan di lantai peron', 'Stasiun Klender', '2025-03-10', 'Diproses', NULL, '2026-03-11 21:11:19', NULL, '2026-03-11 21:11:19', NULL),
 (10, 3, 'Jam Tangan Digital', 'Aksesoris', 'Jam tangan hitam digital', 'Stasiun Buaran', '2025-03-11', 'Diproses', NULL, '2026-03-11 21:11:19', NULL, '2026-03-11 21:11:19', NULL),
-(11, 2, 'Laporan Program Web', 'Dokumen', 'Buku laporan ubm', 'Stasiun Manggarai', '2026-02-22', 'Diproses', '1773846230_Desain tanpa judul (7).png', '2026-03-18 20:41:37', NULL, '2026-03-18 20:41:37', NULL),
-(12, 2, 'Laporan Program Web', 'Dokumen', '', 'Stasiun Sudirman', '2006-02-22', 'Diserahkan', 'Desain tanpa judul (7).png', '2026-03-18 22:05:23', NULL, '2026-03-18 22:05:23', NULL);
+(11, 2, 'Laporan Program Web', 'Dokumen', 'Buku laporan ubm', 'Stasiun Manggarai', '2026-02-22', 'Diproses', NULL, '2026-03-18 20:41:37', NULL, '2026-03-18 20:41:37', NULL),
+(12, 2, 'Laporan Program Web', 'Dokumen', '', 'Stasiun Sudirman', '2006-02-22', 'Diserahkan', 'Logo-UBM-Universitas-Bunda-Mulia-Original-1024x744-1.png', '2026-03-18 22:05:23', NULL, '2026-03-18 22:05:23', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `item_category`
+-- Table structure for table `item_category`
 --
 
 CREATE TABLE `item_category` (
@@ -72,7 +72,7 @@ CREATE TABLE `item_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `item_category`
+-- Dumping data for table `item_category`
 --
 
 INSERT INTO `item_category` (`category`) VALUES
@@ -86,7 +86,7 @@ INSERT INTO `item_category` (`category`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `lost_reports`
+-- Table structure for table `lost_reports`
 --
 
 CREATE TABLE `lost_reports` (
@@ -106,7 +106,7 @@ CREATE TABLE `lost_reports` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `lost_reports`
+-- Dumping data for table `lost_reports`
 --
 
 INSERT INTO `lost_reports` (`lost_report_id`, `reported_by`, `item_name`, `category`, `description`, `location`, `lost_date`, `status`, `file`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
@@ -124,7 +124,7 @@ INSERT INTO `lost_reports` (`lost_report_id`, `reported_by`, `item_name`, `categ
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `matchings`
+-- Table structure for table `matchings`
 --
 
 CREATE TABLE `matchings` (
@@ -142,7 +142,7 @@ CREATE TABLE `matchings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `matchings`
+-- Dumping data for table `matchings`
 --
 
 INSERT INTO `matchings` (`matching_id`, `found_item_id`, `lost_report_id`, `matched_by`, `supervisor_id`, `approval_status`, `supervisor_notes`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
@@ -152,7 +152,7 @@ INSERT INTO `matchings` (`matching_id`, `found_item_id`, `lost_report_id`, `matc
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pickup_schedules`
+-- Table structure for table `pickup_schedules`
 --
 
 CREATE TABLE `pickup_schedules` (
@@ -167,7 +167,7 @@ CREATE TABLE `pickup_schedules` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `pickup_schedules`
+-- Dumping data for table `pickup_schedules`
 --
 
 INSERT INTO `pickup_schedules` (`schedule_id`, `matching_id`, `pickup_date`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
@@ -176,7 +176,7 @@ INSERT INTO `pickup_schedules` (`schedule_id`, `matching_id`, `pickup_date`, `st
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -189,7 +189,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`role_id`, `role_name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
@@ -200,7 +200,7 @@ INSERT INTO `roles` (`role_id`, `role_name`, `created_at`, `created_by`, `update
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -219,7 +219,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `role_id`, `nik`, `profile_image`, `full_name`, `email`, `phone`, `password_hash`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
@@ -227,17 +227,24 @@ INSERT INTO `users` (`user_id`, `role_id`, `nik`, `profile_image`, `full_name`, 
 (2, 2, '312174571857175', 'code.gif', 'Kevin Kan', 's32240135@student.ubm.ac.id', '62162351461757', '$2y$10$4cIRcfoyzWvinqkpcP/om.89HxeLZKvG3JPwbcZRg2ikJ89o50VmC', '2026-03-12 14:03:59', 'Fernando', '2026-03-12 14:03:59', 'Fernando'),
 (3, 2, '1283174752182581', '9082df56a85f501054db9067508bb6a9.gif', 'Davin Leaw', 's32240143@student.ubm.ac.id', '6217264165', '$2y$10$XWp0heNGqXdfzkcV5z6mQ.uxoAIEtWckxycdFr7K.SZy.fcw28ImO', '2026-03-12 14:05:29', 'Fernando', '2026-03-12 14:05:29', 'Fernando'),
 (4, 2, '1237164671857165', 'nyan-cat.gif', 'Jap Cong Ho', 's32240142@student.ubm.ac.id', '62182717581', '$2y$10$d.Uh6RQqB.jwTdEb1PxAZegbhFgwFOwbauA1TVBI.b6oaTfdcwAuu', '2026-03-12 14:05:29', 'Fernando', '2026-03-12 14:05:29', 'Fernando'),
-(5, 3, '1234567891234567', 'snow (1).png', 'Budianto Suryano', 'budiantosuryano@krl.id', '621722364272', '$2y$10$Os3It/IAkMwhqh2meOiFaOVMkCVfz4XmLQFDRCe5k7NAS.oBKHjuu', '2026-03-12 13:46:09', 'Fernando', '2026-03-12 13:46:09', 'Fernando'),
+(5, 3, '1234567891234567', 'snow (1).png', 'Budianto Suryanoo', 'budiantosuryano@krl.id', '621722364272', '$2y$10$Os3It/IAkMwhqh2meOiFaOVMkCVfz4XmLQFDRCe5k7NAS.oBKHjuu', '2026-03-12 13:46:09', 'Fernando', '2026-03-12 13:46:09', 'Fernando'),
 (8, 2, '1234567891011123', 'otter-otters.gif', 'Dummy1', 'dummy1@gmail.com', '62717263162615', '$2y$10$APPPJaNHE74KFMXwucExq.ZC83vAJ3ifCUR9I1HUGZOkl5AqZmcJC', '2026-03-16 19:23:21', NULL, '2026-03-16 19:23:21', NULL),
 (9, 2, '1234567891011121', 'funnygifsbox.com-2019-09-15-07-44-38-22.gif', 'Dummy2', 'dummy2@gmail.com', '6212387416256', '$2y$10$4dWaKK8jMHuaezuj3.X2xOp7XY6uIcnF1iZMWLaXe5ApY3fH6DN6m', '2026-03-16 21:03:16', NULL, '2026-03-16 21:03:16', NULL),
-(10, 3, '2312417657151651', NULL, 'Suyanto', NULL, '6217231623173132', '$2y$10$6xhOyQ2uvxuh2ejD.afju.Q1p98s378CoZF.iWxPXZYXNVyK.TGfa', '2026-03-18 19:14:50', NULL, '2026-03-18 19:14:50', NULL);
+(10, 3, '2312417657151651', NULL, 'Suyanto', NULL, '6217231623173132', '$2y$10$6xhOyQ2uvxuh2ejD.afju.Q1p98s378CoZF.iWxPXZYXNVyK.TGfa', '2026-03-18 19:14:50', NULL, '2026-03-18 19:14:50', NULL),
+(11, 2, '2817258165165618', '94132137-7d4fc100-fe7c-11ea-8512-69f90cb65e48.gif', 'Budan', NULL, '0861263163136161', '$2y$10$Y5kb/kA4ZCSwCJVfCPxQxOlEXbg5XAfVIimRIVmU5XJphboePIHjm', '2026-03-26 13:18:16', NULL, '2026-03-26 13:18:16', NULL),
+(12, 2, '128361461751', '94132137-7d4fc100-fe7c-11ea-8512-69f90cb65e48.gif', 'budg', 'budg@gmail.com', '081273162461264', '$2y$10$6qHOWtNvtcVav/QHGDFBTegiEIxtZO4PUbm6IAWXWjVVhb9ze4kTW', '2026-03-26 13:18:45', NULL, '2026-03-26 13:18:45', NULL),
+(13, 3, '1723617264617617', '', 'nndo', 'nn@gmail.com', '08827147151515', '$2y$10$8KwHohx.Taw2WT.VKj2/6uApLjOavgpVSO./D/cKnZQIrGXYBdQ8O', '2026-03-26 13:28:58', NULL, '2026-03-26 13:28:58', NULL),
+(14, 3, '8123614716576517', '', 'budi', 'budi@gmail.com', '0812736116571517', '$2y$10$iJOXpNqqyCi6S/fo2tmZBuunTogEztr8xN26jRBchoRO6a8NV.ueC', '2026-03-26 20:15:28', NULL, '2026-03-26 20:15:28', NULL),
+(15, 3, '8931485151587857', '94132137-7d4fc100-fe7c-11ea-8512-69f90cb65e48.gif', 'judy', 'judy@gmail.com', '0982613763163717', '$2y$10$nYdgV5cl1PCjvTKMyOkAeOFwYjnyEDLSrC1In0F5btHbHQbxJ/Ufi', '2026-03-26 20:19:26', NULL, '2026-03-26 20:19:26', NULL),
+(16, 3, '1239164281676174', 'code.gif', 'jj', 'jj@gmail.com', '0281372156165165', '$2y$10$hdVZ3s.op2fGWg0S.bVvMufDROIqqRggT5uOTQ5ZA4KowrOGxZvz2', '2026-03-26 20:28:26', NULL, '2026-03-26 20:28:26', NULL),
+(17, 3, '1282936162176417', '', 'nada', 'nada@gmail.com', '012877165751167', '$2y$10$5lvE9RN5U7cMzCHRF.XBr.GO7jprHBWvivCilZPmpOzFMcPoeYzfy', '2026-03-26 20:35:09', NULL, '2026-03-26 20:35:09', NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `found_items`
+-- Indexes for table `found_items`
 --
 ALTER TABLE `found_items`
   ADD PRIMARY KEY (`found_item_id`),
@@ -245,13 +252,13 @@ ALTER TABLE `found_items`
   ADD KEY `found_items_ibfk_2` (`category`);
 
 --
--- Indeks untuk tabel `item_category`
+-- Indexes for table `item_category`
 --
 ALTER TABLE `item_category`
   ADD PRIMARY KEY (`category`);
 
 --
--- Indeks untuk tabel `lost_reports`
+-- Indexes for table `lost_reports`
 --
 ALTER TABLE `lost_reports`
   ADD PRIMARY KEY (`lost_report_id`),
@@ -259,7 +266,7 @@ ALTER TABLE `lost_reports`
   ADD KEY `lost_reports_ibfk_2` (`category`);
 
 --
--- Indeks untuk tabel `matchings`
+-- Indexes for table `matchings`
 --
 ALTER TABLE `matchings`
   ADD PRIMARY KEY (`matching_id`),
@@ -269,21 +276,21 @@ ALTER TABLE `matchings`
   ADD KEY `supervisor_id` (`supervisor_id`);
 
 --
--- Indeks untuk tabel `pickup_schedules`
+-- Indexes for table `pickup_schedules`
 --
 ALTER TABLE `pickup_schedules`
   ADD PRIMARY KEY (`schedule_id`),
   ADD KEY `matching_id` (`matching_id`);
 
 --
--- Indeks untuk tabel `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`role_id`),
   ADD UNIQUE KEY `role_name` (`role_name`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
@@ -293,65 +300,65 @@ ALTER TABLE `users`
   ADD KEY `role_id` (`role_id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `found_items`
+-- AUTO_INCREMENT for table `found_items`
 --
 ALTER TABLE `found_items`
   MODIFY `found_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `lost_reports`
+-- AUTO_INCREMENT for table `lost_reports`
 --
 ALTER TABLE `lost_reports`
   MODIFY `lost_report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `matchings`
+-- AUTO_INCREMENT for table `matchings`
 --
 ALTER TABLE `matchings`
   MODIFY `matching_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `pickup_schedules`
+-- AUTO_INCREMENT for table `pickup_schedules`
 --
 ALTER TABLE `pickup_schedules`
   MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `roles`
+-- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
   MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `found_items`
+-- Constraints for table `found_items`
 --
 ALTER TABLE `found_items`
   ADD CONSTRAINT `found_items_ibfk_1` FOREIGN KEY (`reported_by`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `found_items_ibfk_2` FOREIGN KEY (`category`) REFERENCES `item_category` (`category`);
 
 --
--- Ketidakleluasaan untuk tabel `lost_reports`
+-- Constraints for table `lost_reports`
 --
 ALTER TABLE `lost_reports`
   ADD CONSTRAINT `lost_reports_ibfk_1` FOREIGN KEY (`reported_by`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `lost_reports_ibfk_2` FOREIGN KEY (`category`) REFERENCES `item_category` (`category`);
 
 --
--- Ketidakleluasaan untuk tabel `matchings`
+-- Constraints for table `matchings`
 --
 ALTER TABLE `matchings`
   ADD CONSTRAINT `matchings_ibfk_1` FOREIGN KEY (`found_item_id`) REFERENCES `found_items` (`found_item_id`),
@@ -360,13 +367,13 @@ ALTER TABLE `matchings`
   ADD CONSTRAINT `matchings_ibfk_4` FOREIGN KEY (`supervisor_id`) REFERENCES `users` (`user_id`);
 
 --
--- Ketidakleluasaan untuk tabel `pickup_schedules`
+-- Constraints for table `pickup_schedules`
 --
 ALTER TABLE `pickup_schedules`
   ADD CONSTRAINT `pickup_schedules_ibfk_1` FOREIGN KEY (`matching_id`) REFERENCES `matchings` (`matching_id`);
 
 --
--- Ketidakleluasaan untuk tabel `users`
+-- Constraints for table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`);
