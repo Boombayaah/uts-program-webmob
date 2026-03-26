@@ -251,7 +251,7 @@ $total_page = ceil($total_data / $limit);
                                         <td>
                                             <?php echo $badge; ?>
                                         </td>
-                                        <?php if ($status != "Selesai" and $status != "Dibatalkan") {
+                                        <?php if ($status == "Sedang Diproses") {
                                             echo '
                                         <td class="text-center">
                                             <a href="hilang_edit.php?lost_report_id=<?php echo $id ?>"><i
@@ -263,6 +263,8 @@ $total_page = ceil($total_data / $limit);
                                                     style="color: #f59e0b;"></i></a>
                                         </td>
                                                                                         ';
+                                        } else {
+                                            echo '<td></td>';
                                         } ?>
                                     </tr>
                             <?php

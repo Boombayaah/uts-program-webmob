@@ -214,7 +214,7 @@ $total_page = ceil($total_data / $limit);
                                         $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #991B1B;">
                                                         <i class="fas fa-check-circle me-1"></i>Dibatalkan
                                                     </span>';
-                                    } elseif  ($status == "Diserahkan")  {
+                                    } elseif ($status == "Diserahkan") {
                                         $badge = '<span class="status-badge me-2" style="background-color: #D1FAE5; color: #065F46;">
                                                             <i class="fas fa-check-circle me-1"></i>Diserahkan
                                                         </span>';
@@ -251,6 +251,8 @@ $total_page = ceil($total_data / $limit);
                                         <td>
                                             <?php echo $badge; ?>
                                         </td>
+                                        <?php if ($status == "Diproses") {
+                                            echo '
                                         <td class="text-center">
                                             <a href="temuan_edit.php?found_item_id=<?php echo $id ?>"><i
                                                     class="button-text-icon fa-regular fa-pen-to-square m-1"
@@ -260,6 +262,10 @@ $total_page = ceil($total_data / $limit);
                                                     class="button-text-icon fa-regular fa-trash-can m-1"
                                                     style="color: #f59e0b;"></i></a>
                                         </td>
+                                                                                                                                ';
+                                        } else {
+                                            echo '<td></td>';
+                                        } ?>
                                     </tr>
                             <?php
                                 }
