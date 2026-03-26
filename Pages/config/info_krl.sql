@@ -232,19 +232,6 @@ INSERT INTO `users` (`user_id`, `role_id`, `nik`, `profile_image`, `full_name`, 
 (9, 2, '1234567891011121', 'funnygifsbox.com-2019-09-15-07-44-38-22.gif', 'Dummy2', 'dummy2@gmail.com', '6212387416256', '$2y$10$4dWaKK8jMHuaezuj3.X2xOp7XY6uIcnF1iZMWLaXe5ApY3fH6DN6m', '2026-03-16 21:03:16', NULL, '2026-03-16 21:03:16', NULL),
 (10, 3, '2312417657151651', NULL, 'Suyanto', NULL, '6217231623173132', '$2y$10$6xhOyQ2uvxuh2ejD.afju.Q1p98s378CoZF.iWxPXZYXNVyK.TGfa', '2026-03-18 19:14:50', NULL, '2026-03-18 19:14:50', NULL);
 
--------------------------
--- PASSWORD
--------------------------
--- nando
--- kevin kan
--- davin leaw
--- jap cong ho
--- budi
--- dummy1
--- dummy2
--- 
--- 
-
 --
 -- Indexes for dumped tables
 --

@@ -56,7 +56,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item mb-2">
                                 <a class="ml-5 nav-link opacity-50 <?php if ($currentPage == 'laporan_temuan.php') echo 'active'; ?>" href="laporan_temuan.php">
-                                    <i class="fa-solid fa-user-gear"></i> Manajemen
+                                    <i class="fa-solid fa-user-gear me-2"></i> Manajemen
                                 </a>
                             </li>
 
