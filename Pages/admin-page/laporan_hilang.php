@@ -251,6 +251,8 @@ $total_page = ceil($total_data / $limit);
                                         <td>
                                             <?php echo $badge; ?>
                                         </td>
+                                        <?php if ($status != "Selesai" and $status != "Dibatalkan") {
+                                            echo '
                                         <td class="text-center">
                                             <a href="hilang_edit.php?lost_report_id=<?php echo $id ?>"><i
                                                     class="button-text-icon fa-regular fa-pen-to-square m-1"
@@ -260,6 +262,8 @@ $total_page = ceil($total_data / $limit);
                                                     class="button-text-icon fa-regular fa-trash-can m-1"
                                                     style="color: #f59e0b;"></i></a>
                                         </td>
+                                                                                        ';
+                                        } ?>
                                     </tr>
                             <?php
                                 }
