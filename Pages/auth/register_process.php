@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Simpan ke database
     $sql = "INSERT INTO users (role_id, nik, profile_image, full_name, email, phone, password_hash) 
-            VALUES (2, '$nik', '$file_name', '$full_name', $email, '$phone', '$hash')";
+            VALUES (3, '$nik', '$file_name', '$full_name', $email, '$phone', '$hash')";
 
     if (mysqli_query($conn, $sql)) {
         // FITUR REDIRECT: Munculkan alert lalu pindah ke login_page.php

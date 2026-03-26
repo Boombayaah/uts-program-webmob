@@ -138,7 +138,7 @@
                 <!-- Upload -->
                 <div>
                     <label class="form-label">Profile Picture (opsional)</label>
-                    <input type="file" name="fileToUpload" class="form-control" required>
+                    <input type="file" name="fileToUpload" class="form-control">
                 </div>
 
                 <!-- Password -->
