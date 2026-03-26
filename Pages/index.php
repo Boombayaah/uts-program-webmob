@@ -132,7 +132,6 @@ if (isset($_POST['btnCancel'])) {
             mysqli_query($conn, "UPDATE found_items SET status = 'Diproses' WHERE found_item_id = '$found_id'");
             mysqli_query($conn, "UPDATE lost_reports SET status = 'Dibatalkan' WHERE lost_report_id = '$lost_id'");
             mysqli_query($conn, "UPDATE matchings SET approval_status = 'Ditolak' WHERE matching_id = '$matching_id'");
-
         } else if ($status == "Sedang Diproses") {
 
             // yang belum match
@@ -141,7 +140,6 @@ if (isset($_POST['btnCancel'])) {
 
         mysqli_commit($conn);
         header("location:index.php");
-
     } catch (Exception $e) {
         mysqli_rollback($conn);
         echo "Error";
@@ -397,16 +395,16 @@ if (isset($_POST['btnCancel'])) {
     </style>
 
     <script>
-        $(document).ready(function () {
-            $("#searchBar").on("keyup", function () {
+        $(document).ready(function() {
+            $("#searchBar").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $("#tableData tr").filter(function () {
+                $("#tableData tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const searchBar = document.getElementById("searchBar");
             const statusFilter = document.getElementById("statusFilter"); // tambahin id di select
@@ -536,7 +534,7 @@ if (isset($_POST['btnCancel'])) {
                                                         </span>';
                                     }
 
-                                    ?>
+                            ?>
                                     <tr class="text-center">
                                         <td><?php echo $tanggal; ?></td>
                                         <td><?php echo $laporan; ?></td>
@@ -548,9 +546,9 @@ if (isset($_POST['btnCancel'])) {
                                             if ($bukti == "") {
                                                 echo "";
                                             } else {
-                                                ?>
+                                            ?>
                                                 <a href="assets/images/uploads/<?php echo $bukti; ?>" target="_blank">Lihat Gambar</a>
-                                                <?php
+                                            <?php
                                             }
                                             ?>
                                         </td>
@@ -560,11 +558,14 @@ if (isset($_POST['btnCancel'])) {
                                                 <input type="hidden" name="lost_report_id"
                                                     value="<?php echo $row['lost_report_id']; ?>">
                                                 <input type="hidden" name="matching_id" value="<?php echo $matching_id; ?>">
-
-                                                <button class="btn btn-outline-danger btn-sm d-flex align-items-center px-3"
-                                                    name="btnCancel">
-                                                    <i class="fas fa-times me-1"></i> Batal
-                                                </button>
+                                                <?php if ($status != "Selesai" and $status != "Dibatalkan") {
+                                                    echo '
+                                                        <button class="btn btn-outline-danger btn-sm d-flex align-items-center px-3"
+                                                            name="btnCancel">
+                                                            <i class="fas fa-times me-1"></i> Batal
+                                                        </button>
+                                                ';
+                                                } ?>
                                             </form>
                                         </td>
                                         <td>
@@ -585,7 +586,7 @@ if (isset($_POST['btnCancel'])) {
                                             <?php } ?>
                                         </td>
                                     </tr>
-                                    <?php
+                            <?php
                                 }
                                 mysqli_free_result($hasil);
                             }
@@ -598,7 +599,7 @@ if (isset($_POST['btnCancel'])) {
                         <ul class="pagination">
                             <!-- prev -->
                             <li class="page-item <?php if ($page <= 1)
-                                echo 'disabled'; ?>">
+                                                        echo 'disabled'; ?>">
                                 <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page - 1; ?>"
                                     class="page-link">Prev</a>
                             </li>
@@ -606,7 +607,7 @@ if (isset($_POST['btnCancel'])) {
                             <!-- halaman -->
                             <?php for ($i = 1; $i <= $total_page; $i++) { ?>
                                 <li class="page-item <?php if ($i == $page)
-                                    echo 'active'; ?>">
+                                                            echo 'active'; ?>">
                                     <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $i; ?>"
                                         class="page-link">
                                         <?php echo $i; ?>
@@ -616,8 +617,8 @@ if (isset($_POST['btnCancel'])) {
 
                             <!-- next -->
                             <li class="page-item <?php if ($page >= $total_page)
-                                echo 'disabled' ?>">
-                                    <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page + 1; ?>"
+                                                        echo 'disabled' ?>">
+                                <a href="<?php echo basename($_SERVER['PHP_SELF']) ?>?page=<?php echo $page + 1; ?>"
                                     class="page-link">Next</a>
                             </li>
                         </ul>
