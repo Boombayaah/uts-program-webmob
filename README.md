@@ -1,1 +1,1 @@
-Tidak semua anggota tersambung ke github repository ini. Hanya yang memiliki akun github yang tersambung. Tetapi, tetap seluruh anggota telah menyelesaikan tanggung jawabnya masing-masing
+Tidak semua anggota tim terhubung secara langsung dengan repositori GitHub ini karena hanya anggota yang memiliki akun GitHub yang dapat mengakses dan berkontribusi melalui repositori. Meskipun demikian, seluruh anggota tim tetap berkontribusi dan menyelesaikan tanggung jawabnya masing-masing dalam pengembangan proyek.
